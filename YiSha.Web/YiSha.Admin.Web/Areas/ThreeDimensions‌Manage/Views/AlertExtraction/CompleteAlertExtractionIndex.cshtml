@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewData["Title"] = "CompleteAlertExtractionIndex";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+
+<div class="container-div">
+    <div class="row">
+        <div id="searchDiv" class="col-sm-12 search-collapse" style="display:none;">
+            <div class="select-list">
+                <ul>
+                    <li>
+                        Name：<input id="name" col="Name" type="text" />
+                    </li>
+                    <li>
+                        <a id="btnSearch" class="btn btn-primary btn-sm" onclick="searchGrid()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="btn-group-sm hidden-xs" id="toolbar" style="display:none;">
+            <a id="btnAdd" class="btn btn-success" onclick="showSaveForm(true)"><i class="fa fa-plus"></i> 新增</a>
+            <a id="btnEdit" class="btn btn-primary disabled" onclick="showSaveForm(false)"><i class="fa fa-edit"></i> 修改</a>
+            <a id="btnDelete" class="btn btn-danger disabled" onclick="deleteForm()"><i class="fa fa-remove"></i> 删除</a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="gridTable" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        initGrid();
+    });
+
+    var gridTimer = null;
+    var thresholdMap = {};
+
+    function initGrid() {
+        $('#gridTable').ysTable({
+            url: '',
+            showSearch: false,
+            showRefresh: false,
+            showToggle: false,
+            showColumns: false,
+            pagination: false,
+            columns: [
+                { checkbox: true, visible: false },
+                { field: 'Id', title: 'Id', visible: false },
+                { field: 'Param_Key', title: '参数' },
+                { field: 'Param_Value', title: '值(3k)' },
+                { field: 'Param_Value1', title: '值(kns)' },
+                { field: 'Source_SYS', title: '系统' },
+                { field: 'Status', title: '状态',visible: false },                
+            ]
+        });
+
+        loadGridData();
+        gridTimer = setInterval(loadGridData, 1000);
+        $(document).on('input', '.threshold-input', function () {
+            var id = $(this).data('id');
+            thresholdMap[id] = $(this).val();
+        });
+    }
+
+    function loadGridData() {
+        var queryUrl = '@Url.Content("~/ThreeDimensions‌Manage/AlertExtraction/CompleteGetPageListJson")';
+
+        $('.threshold-input').each(function () {
+            var id = $(this).data('id');
+            thresholdMap[id] = $(this).val();
+        });
+
+        $.ajax({
+            url: queryUrl,
+            type: 'GET',
+            dataType: 'json',
+            success: function (res) {
+                // API 返回的是 res.Data，不是 res.rows
+                $('#gridTable').bootstrapTable('load', res.Data || res.rows || res);
+            },
+            error: function () {
+                console.error('数据加载失败');
+            }
+        });
+    }
+
+    $(window).on('beforeunload', function () {
+        if (gridTimer) {
+            clearInterval(gridTimer);
+            gridTimer = null;
+        }
+    }); 
+
+</script>

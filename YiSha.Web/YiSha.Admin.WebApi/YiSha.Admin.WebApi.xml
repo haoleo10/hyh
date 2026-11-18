@@ -1,0 +1,440 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>YiSha.Admin.WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:YiSha.Admin.WebApi.Controllers._3KDataController">
+            <summary>
+            3K数据接口
+            </summary>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers._3KDataController.GetAllData">
+            <summary>
+            获取3K数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers._3KDataController.Get3KData(System.String)">
+            <summary>
+            获取通信单点信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers._3KDataController.Get3KDatas(System.String)">
+            <summary>
+            获取通信多点信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.DataDictController.GetList(YiSha.Model.Param.SystemManage.DataDictListParam)">
+            <summary>
+            获取数据字典列表
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YiSha.Admin.WebApi.Controllers.IotDBDataController">
+            <summary>
+            IotDB接口
+            </summary>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIOTDBechatrDatas(System.String,System.String,System.String,System.String)">
+            <summary>
+            EchartData接口
+            </summary>
+            <param name="DoneWorkName"></param>
+            <param name="StartTime"></param>
+            <param name="EndTime"></param>
+            <param name="State"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIOTDBDatasLS(System.String,System.String,System.String,System.String)">
+            <summary>
+            echartData接口历史数据
+            </summary>
+            <param name="DoneWorkName"></param>
+            <param name="StartTime"></param>
+            <param name="EndTime"></param>
+            <param name="State"></param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIOTDBDataSearch(System.String,System.String,System.String,System.String)">
+            <summary>
+            echartData接口历史数据
+            </summary>
+            <param name="DoneWorkName"></param>
+            <param name="StartTime"></param>
+            <param name="EndTime"></param>
+            <param name="State"></param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIOTDBDatas(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            智能查询接口
+            </summary>
+            <param name="DoneWorkName"></param>
+            <param name="StartTime"></param>
+            <param name="EndTime"></param>
+            <param name="State">实时值0，历史值1</param>
+            
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIOTDBData40000">
+            <summary>
+            获取IotDB区域节点数据40000条
+            </summary>
+            <returns></returns>
+            
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIOTDBDataNodes(System.String,System.String)">
+            <summary>
+            获取IotDB节点数据(多个节点请用”，“”隔开，如：“root.KNS.AA5.5DVF060VAFSM5,root.KNS.AA5.5CFI001MOA1“)
+            </summary>
+            <param name="Nodes">root.KNS.AA5.5DVF060VAFSM5,root.KNS.AA5.5CFI001MOA1</param>
+            <param name="SYS"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIOTDBTimeDataNodes(System.String,System.DateTime,System.DateTime,System.Int32)">
+            <summary>
+            根据时间区间查询数据
+            </summary>
+            <param name="Node">点名(root.KNS.AA5.5DVD008ZVRP)</param>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <param name="limit">最大数量</param>       
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIOTDBSyetem(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            系统名查询+时间
+            </summary>
+            <param name="SystemName">名字（模糊查询）</param>
+            <param name="startTime">起始时间</param>
+            <param name="endTime">结束时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIOTDBSyetem1(System.String)">
+            <summary>
+            系统名查询（最新接口）
+            </summary>
+            <param name="SystemName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIOTDBPoint(System.String)">
+            <summary>
+            点名查询（最新接口）
+            </summary>
+            <param name="PointName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIotDBDataCleaning(System.String,System.String,System.String,System.String)">
+            <summary>
+            数据清洗接口
+            </summary>
+            <param name="System">系统</param>
+            <param name="DeviceName">设备名称</param>
+            <param name="StartTime">起始时间</param>
+            <param name="EndTime">结束时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIotDBData3K(System.String)">
+            <summary>
+            3K 数据接口
+            </summary>
+            <param name="node"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIotDBAfficiencyAnalysis">
+            <summary>
+            热力性能接口
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIotDBAfficiencyAnalysisEnergyAllocation">
+            <summary>
+            热力性能接口111
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.IsIotDB">
+            <summary>
+            check iotdb是否正常
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.IotDBDataController.GetIOTDGet(System.String,System.DateTime,System.DateTime,System.Int32)">
+            <summary>
+            根据时间区间查询数据
+            </summary>
+            <param name="Node">点名(root.KNS.AA5.5DVD008ZVRP)</param>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <param name="limit">最大数量</param>       
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.NewsController.GetPageList(YiSha.Model.Param.OrganizationManage.NewsListParam,YiSha.Util.Model.Pagination)">
+            <summary>
+            获取文章列表
+            </summary>
+            <param name="param"></param>
+            <param name="pagination"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.NewsController.GetPageContentList(YiSha.Model.Param.OrganizationManage.NewsListParam,YiSha.Util.Model.Pagination)">
+            <summary>
+            获取文章列表
+            </summary>
+            <param name="param"></param>
+            <param name="pagination"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.NewsController.GetForm(System.Int64)">
+            <summary>
+            获取文章内容
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.NewsController.SaveForm(YiSha.Entity.OrganizationManage.NewsEntity)">
+            <summary>
+            保存文章
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YiSha.Admin.WebApi.Controllers.ThreeDController">
+            <summary>
+            三维接口
+            </summary>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.GetIOTDBThreeKNSAnd3K(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            二层左边数据列表 NEW
+            </summary>
+            <param name="SystemName"></param>
+            <param name="DataType"></param>
+            <param name="StartTime"></param>
+            <param name="EndTime"></param>
+            <param name="Model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.GetIOTDBThreeKNSAnd3K1(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            二层左边数据列表
+            </summary>
+            <param name="SystemName">系统名字</param>
+            <param name="DataType">数据类型（0 实时 1历史）</param>
+            <param name="StartTime">开始时间</param>
+            <param name="EndTime">结束时间</param>
+            <returns></returns>
+        </member>
+        <member name="P:YiSha.Admin.WebApi.Controllers.ThreeDController.DeviceMatchResult.DeviceCode">
+            <summary>
+            设备编号 5ABP020SN
+            </summary>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.ExtractDeviceCode(System.String)">
+            <summary>
+            从路径中提取设备编号：5ABP020SN
+            </summary>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.GetIOTDBThreeKNSSyetem(System.String)">
+            <summary>
+            KNS原始数据
+            </summary>
+            <param name="SystemName">系统名</param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.GetIOTDBThreeSyetem(System.String)">
+            <summary>
+            3k
+            </summary>
+            <param name="SystemName">系统名</param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.GetIOTDBThreeQXSyetem(System.String)">
+            <summary>
+            数据清洗后传到iotdb
+            </summary>
+            <param name="SystemName">系统名</param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.GetIOTDBThreeEBSyetem(System.String)">
+            <summary>
+            EBsilon
+            </summary>
+            <param name="SystemName">系统名</param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.GetEbsilon(System.String,System.String,System.String,System.String)">
+            <summary>
+            EBsilon 实时值，历史值接口
+            </summary>
+            <param name="PointName">点名</param>
+            <param name="DataType">0;实时值,1：历史值</param>
+            <param name="StartTime">开始时间</param>
+            <param name="EndTime">结束时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.GetIOTDBThreeDataSyetem(System.String)">
+            <summary>
+            三维传到iotdb
+            </summary>
+            <param name="SystemName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.AlertBJ(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+             报警自己添加接口
+            </summary>
+            <param name="Param_Key"></param>
+            <param name="Param_Value1"></param>
+            <param name="Param_Value2"></param>
+            <param name="Source_SYS"></param>
+            <param name="AlarmLayer"></param>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.AlertBJNum(System.String,System.String)">
+            <summary>
+            警报数
+            </summary>
+            <param name="AlarmLayer">层级</param>
+            <param name="SYS">系统名</param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.KNSAndFSSSinglePoint(System.String)">
+            <summary>
+            点名
+            </summary>
+            <param name="PointName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.RightView(System.String,System.String,System.String,System.String)">
+            <summary>
+            状态对比分析（右边界面）NEW
+            </summary>
+            <param name="PointName">点名（用逗号分隔）</param>
+            <param name="DataType">数据类型（0 实时数据 1历史数据）</param>
+            <param name="StartTime">开始时间</param>
+            <param name="EndTime">结束时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.RightView1(System.String,System.String,System.String,System.String)">
+            <summary>
+            状态对比分析（右边界面）
+            </summary>
+            <param name="PointName">点名（用逗号分隔）</param>
+            <param name="DataType">数据类型（0 实时数据 1历史数据）</param>
+            <param name="StartTime">开始时间</param>
+            <param name="EndTime">结束时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.sysloglogin">
+            <summary>
+            登录日志
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.ThreeRightView(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+             三层右边View
+            </summary>
+            <param name="PointNameA"></param>
+            <param name="PointNameB"></param>
+            <param name="DataType"></param>
+            <param name="StartTimeA"></param>
+            <param name="StartTimeB"></param>
+            <param name="StateA"></param>
+            <param name="StateB"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.ShadowCloudData(System.String,System.String,System.String,System.String)">
+            <summary>
+             影子云接口
+            </summary>
+            <param name="Source">来源(0:KNS;1:3K）</param>
+            <param name="PointName">点名（5ABP027SN）</param>
+            <param name="StartTime">开始时间（2026-04-01 15:20:52）</param>
+            <param name="EndTime">结束时间（2026-04-30 15:20:52）</param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.ThreeSmallWindow(System.String,System.String)">
+            <summary>
+            三层小窗口
+            </summary>
+            <param name="PointName">点名（多个点名用逗号分隔）</param>
+            <param name="Time">时间（2026-05-11 08:11:47）</param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.ShadowCloudData2(System.String,System.String,System.String)">
+            <summary>
+            第一层点数据
+            </summary>
+            <param name="PointName">点名</param>
+            <param name="Time">时间（2026-05-11 08:11:47）</param>
+            <param name="differencePercent">量程(默认5)</param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.FeatureQuantityData(System.String,System.String,System.String)">
+            <summary>
+            特征量数据
+            </summary>
+            <param name="FeatureQuantityName">特征量点名</param>
+            <param name="Time">时间（2026-05-11 08:11:47）</param>
+            <param name="Limit">数量（默认 1）</param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.SYSNewAtlers(System.String)">
+            <summary>
+            各个系统的报警数量，以及24小时之前新增的报警数
+            </summary>
+            <param name="SYSName">（ABP，AHP）</param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.GetThresholdValue(System.String)">
+            <summary>
+            获取量程
+            </summary>
+            <param name="Name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.UserController.Login(System.String,System.String)">
+            <summary>
+            用户登录
+            </summary>
+            <param name="userName"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.UserController.LoginOff(System.String)">
+            <summary>
+            用户退出登录
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YiSha.Admin.WebApi.Controllers.AuthorizeFilterAttribute">
+            <summary>
+            验证token和记录日志
+            </summary>
+        </member>
+        <member name="F:YiSha.Admin.WebApi.Controllers.AuthorizeFilterAttribute.IgnoreToken">
+            <summary>
+            忽略token的方法
+            </summary>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.AuthorizeFilterAttribute.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
+            <summary>
+            异步接口日志
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

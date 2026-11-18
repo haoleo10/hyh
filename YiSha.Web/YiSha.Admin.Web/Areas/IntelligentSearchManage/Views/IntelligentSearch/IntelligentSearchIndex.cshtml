@@ -1,0 +1,270 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+@using YiSha.Util
+
+<div id="searchDiv" class="container-div">
+@*     <div class="col-sm-12 search-collapse">
+        <div class="select-list">
+            <ul>
+                <li>设备名称：<input id="keyWorkName" col="KeyWorkName" type="text" /></li>
+                <li>
+                    特征量阈值：<input id="minValue" col="MinValue" type="text" /> — <input id="maxValue" col="MaxValue" type="text" />
+                </li>
+                <li>
+                    <a id="btnSearch" class="btn btn-primary btn-sm" onclick="searchGrid()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                </li>
+            </ul>
+        </div>
+    </div> *@
+@*     <div>
+        <div class="btn-group-sm toolbar" id="toolbar1">
+        </div>
+        <div class="col-sm-12 select-table table-bordered">
+            <table id="gridTable1" data-mobile-responsive="true"></table>
+        </div>
+    </div> *@
+
+    <div id="searchDiv" class="col-sm-12 search-collapse">
+        <div class="select-list">
+            <ul id="ulCondition3">
+                <!-- 操作按钮区域 -->
+                
+            </ul>
+
+            <ul id="ulCondition">        
+                <li>
+                    <select col="State" onchange="handleSelectChange(event)">
+                        <option value="0" selected>实时数据库</option>
+                        <option value="1">历史数据库</option>
+                        <option value="2">3K</option>
+                    </select>
+                </li>
+                <!-- 原始查询条件 -->              
+                <li class="condition-item">
+                    <input id="doneWorkName123" col="DoneWorkName123" style="display:none" type="text">
+                    点名：<input id="doneWorkName" col="DoneWorkName" type="text">&nbsp;&nbsp;
+                    <span id="timeRange">
+                        时间区间：<input id="startTime" col="StartTime" type="datetime-local"> —
+                        <input id="endTime" col="EndTime" type="datetime-local">
+                    </span>
+                    值区间：<input id="valueMin" col="ValueMin" type="number"> —
+                    <input id="valueMax" col="ValueMax" type="number">
+                </li>
+@*                 <li class="condition-item">               
+                  
+                </li> *@
+            </ul>
+            <ul id="ulCondition2">
+                <!-- 操作按钮区域 -->
+                <li>
+                    <a id="btnSearch" class="btn btn-primary btn-sm" onclick="searchGrid1()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                    <a class="btn btn-success btn-sm btn-add" onclick="addCondition()"><i class="fa fa-plus"></i>添加条件</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="btn-group-sm toolbar" id="toolbar2">
+        </div>
+        <div class="col-sm-12 select-table table-bordered">
+            <table id="gridTable2" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+       
+        initGrid();
+        $("#roleStatus").ysRadioBox({ data:{"0": "正常", "1": "异常"}});
+    });
+     function handleSelectChange(event) {
+            var selectedValue = event.target.value;
+            var timeRangeElement = document.getElementById('timeRange');
+
+            if (selectedValue === "0") {
+                // 实时数据库，隐藏时间区间
+                timeRangeElement.style.display = 'none';
+            } else if (selectedValue === "1") {
+                // 历史数据库，显示时间区间
+                timeRangeElement.style.display = 'inline';
+            }
+     }
+
+    function initGrid() {
+        document.getElementById('timeRange').style.display = 'none';
+        // var queryUrl = '@Url.Content("~/IntelligentSearchManage/IntelligentSearch/GetPageListJson")';
+        // $('#gridTable1').ysTable({
+        //     url: queryUrl,
+        //     toolbar: '#toolbar1',
+        //     pageSize: 3,
+        //     showColumns: false,                  // 是否显示所有的列（选择显示的列）
+        //     showRefresh: false,                  // 是否显示刷新按钮
+        //     showToggle: false,                   // 是否显示详细视图和列表视图的切换按钮
+        //     columns: [
+        //         { checkbox: true, visible: true },
+        //         { field: 'Id', title: 'Id', visible: false },
+        //         { field: 'Device', title: '主要设备' },
+        //         { field: 'CharacteristicValue', title: '特征量数值' },
+        //         { field: 'Remark', title: '备注' },
+        //     ],
+        //     queryParams: function (params) {
+        //         var pagination = $('#gridTable').ysTable('getPagination', params);
+        //         var queryString = $('#searchDiv').getWebControls(pagination);
+        //         return queryString;
+        //     }
+        // });
+
+        $('#gridTable2').ysTable({
+            url:'@Url.Content("~/IntelligentSearchManage/IntelligentSearch/GetPageListJsons")',
+            toolbar: '#toolbar2',
+            pageSize: 5,
+            showColumns: false,                  // 是否显示所有的列（选择显示的列）
+            showRefresh: false,                  // 是否显示刷新按钮
+            showToggle: false,
+            columns: [
+                { checkbox: true, visible: true },
+                { field: 'Id', title: '时间', visible: true,
+                    formatter: function (value, row, index) {
+                        if(value=='0')
+                        {
+                            return value;
+                        }
+                        else{
+                        const beijingTime = new Date(value + 8 * 3600 * 1000);
+                        return beijingTime.toISOString().replace('T', ' ').slice(0, 19);
+                        }
+                    }
+                },
+                { field: 'Column_name', title: '名称' },
+                { field: 'Data_type', title: '类型' },
+                { field: 'DataValue', title: '值' },
+                {title: '趋势',align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                          actions.push('<a class="btn btn-success btn-xs" href="#" onclick="TrendChart(\'' + row.Column_name + '\')"><i class="fa fa-search"></i>查看趋势</a>');
+                        return actions.join('');
+                    }
+                },
+            ],
+            queryParams: function (params) {
+                var pagination = $('#gridTable2').ysTable('getPagination', params);
+                var queryString = $('#searchDiv').getWebControls(pagination);
+                return queryString;
+            }
+        });
+    }
+
+    function addCondition() {
+            // 创建新的条件项
+            const newCondition = document.createElement('li');
+            newCondition.className  = 'condition-item';
+            newCondition.innerHTML  = `
+                点名：<input col="DoneWorkName" type="text">&nbsp;&nbsp;
+                    时间区间：<input col="StartTime" type="datetime-local"> —
+                    <input col="EndTime" type="datetime-local">
+                    值区间：<input col="ValueMin" type="number"> —
+                    <input col="ValueMax" type="number">
+            `;
+            document.getElementById('ulCondition').appendChild(newCondition);
+    }
+
+    function reseteee() {
+         // 获取所有条件项
+             const conditions = document.querySelectorAll('.condition-item');
+             let searchParams = [];
+             // 收集所有条件参数
+        conditions.forEach((condition,  index) => {
+            const doneWorkName = condition.querySelector('[col="DoneWorkName"]').value;
+            const startTime = condition.querySelector('[col="StartTime"]').value;
+            const endTime = condition.querySelector('[col="EndTime"]').value;
+            const valueMin = condition.querySelector('[col="ValueMin"]').value;
+            const valueMax = condition.querySelector('[col="ValueMax"]').value;
+
+            if (doneWorkName || startTime || endTime || valueMin || valueMax) {
+                searchParams.push({
+                    condition: index + 1,
+                    doneWorkName,
+                    startTime,
+                    endTime,
+                    valueMin,
+                    valueMax
+                });
+            }
+    });   
+    return searchParams;
+
+    }
+
+    function searchGrid() {
+        $('#gridTable1').ysTable('search');
+        resetToolbarStatus();
+    }
+
+    function searchGrid1() {     
+         const conditions = document.querySelectorAll('.condition-item');
+        let searchParams = [];
+
+        conditions.forEach((condition, index) => {
+            const doneWorkName = condition.querySelector('[col="DoneWorkName"]').value;
+            const startTime = condition.querySelector('[col="StartTime"]').value;
+            const endTime = condition.querySelector('[col="EndTime"]').value;
+            const valueMin = condition.querySelector('[col="ValueMin"]').value;
+            const valueMax = condition.querySelector('[col="ValueMax"]').value;
+
+            if (doneWorkName || startTime || endTime || valueMin || valueMax) {
+                searchParams.push({
+                    condition: index + 1,
+                    doneWorkName,
+                    startTime,
+                    endTime,
+                    valueMin,
+                    valueMax
+                });
+            }
+        });
+        const params = new URLSearchParams();
+
+        // 关键：使用索引方式传递数组参数
+        searchParams.forEach((condition, index) => {
+            params.append(`[${index}].condition`, condition.condition);
+            params.append(`[${index}].doneWorkName`, condition.doneWorkName);
+            params.append(`[${index}].startTime`, condition.startTime);
+            params.append(`[${index}].endTime`, condition.endTime);
+            params.append(`[${index}].valueMin`, condition.valueMin);
+            params.append(`[${index}].valueMax`, condition.valueMax);
+        });
+
+        const queryUrl233 = `${params.toString()}`;
+        $('#doneWorkName123').val(queryUrl233);
+
+
+         var queryUrl23 = 'http://'+ '@GlobalContext.SystemConfig.WebApiIP' + ':' +  '@GlobalContext.SystemConfig.WebApiPort' + '/IotDBData/GetIOTDBDatas?Dode=' + ($('#DoneWorkName').val() == '' ? ' ' : $('#DoneWorkName').val()) +
+                '&StartTime=' + ($('#startTime').val() == '' ? '0001/1/1 0:30:00' : $('#startTime').val()) +
+                '&EndTime=' + ($('#endTime').val() == '' ? '0001/1/1 0:30:00' : $('#endTime').val()) +
+                '&ROWNUM=50';
+        console.log(queryUrl23);
+        $('#gridTable2').ysTable('search',queryUrl23);
+        resetToolbarStatus();
+    }
+
+    
+    function TrendChart(Device) {
+        ys.openDialog({
+            title: '趋势图',
+            content: '@Url.Content("~/IntelligentSearchManage/IntelligentSearch/IntelligentSearchEchartForm?Device=")' + Device,
+            width: '1000px',
+            height: '600px',
+            btn: [],
+            callback: function (index, layero) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                iframeWin.saveForm(index);
+            }
+        });
+    }
+
+</script>
+

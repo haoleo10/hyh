@@ -1,0 +1,937 @@
+﻿@using YiSha.Web.Code
+@{
+    ViewData["Title"] = "ToParamCommentIndex";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+ 
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    /* 面包屑 */
+    .breadcrumb {
+        font-size: 13px;
+        color: #999;
+        margin-bottom: 16px;
+    }
+
+        .breadcrumb a {
+            color: #1890ff;
+            text-decoration: none;
+        }
+
+        .breadcrumb span {
+            margin: 0 8px;
+        }
+
+    /* 帖子主体 */
+    .post-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .post-header {
+        padding: 20px 24px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .post-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 12px;
+        line-height: 1.4;
+    }
+
+    .post-meta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-size: 13px;
+        color: #999;
+    }
+
+        .post-meta .author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #333;
+        }
+
+        .post-meta .avatar-sm {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .post-meta .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #e6f7ff;
+            color: #1890ff;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+    .post-body {
+        padding: 24px;
+        font-size: 15px;
+        color: #333;
+        line-height: 1.8;
+        word-wrap: break-word;
+    }
+
+        .post-body img {
+            max-width: 100%;
+            border-radius: 6px;
+            margin: 12px 0;
+        }
+
+    .post-footer {
+        padding: 16px 24px;
+        background: #fafafa;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .post-actions {
+        display: flex;
+        gap: 24px;
+    }
+
+    .post-action-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #666;
+        cursor: pointer;
+        font-size: 14px;
+        background: none;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        transition: all 0.2s;
+    }
+
+        .post-action-btn:hover {
+            background: #f0f0f0;
+            color: #1890ff;
+        }
+
+        .post-action-btn.collected {
+            color: #faad14;
+        }
+
+    .post-share-info {
+        font-size: 12px;
+        color: #999;
+    }
+
+    /* 评论区 */
+    .comments-section {
+        margin-top: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        padding: 20px 24px;
+    }
+
+    .comments-header {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+        .comments-header span {
+            color: #999;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+    /* 评论输入 */
+    .comment-input-box {
+        margin-bottom: 24px;
+    }
+
+        .comment-input-box textarea {
+            width: 100%;
+            min-height: 100px;
+            border: 1px solid #e5e5e5;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 14px;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+            .comment-input-box textarea:focus {
+                border-color: #1890ff;
+            }
+
+    .comment-input-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 12px;
+    }
+
+    .btn-primary {
+        background: #1890ff;
+        color: #fff;
+        border: none;
+        padding: 8px 24px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background 0.2s;
+    }
+
+        .btn-primary:hover {
+            background: #40a9ff;
+        }
+
+    /* 评论列表 */
+    .comment-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .comment-item {
+        display: flex;
+        gap: 12px;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 600;
+        flex-shrink: 0;
+    }
+
+    .comment-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .comment-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 6px;
+    }
+
+    .username {
+        font-weight: 600;
+        color: #1a1a1a;
+        font-size: 14px;
+    }
+
+    .user-level {
+        font-size: 11px;
+        padding: 1px 5px;
+        background: linear-gradient(135deg, #ffa500, #ff6b00);
+        color: #fff;
+        border-radius: 2px;
+    }
+
+    .comment-time {
+        font-size: 12px;
+        color: #999;
+    }
+
+    .comment-floor {
+        font-size: 12px;
+        color: #999;
+        margin-left: auto;
+    }
+
+    .comment-text {
+        color: #333;
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 10px;
+        word-wrap: break-word;
+    }
+
+    .comment-actions {
+        display: flex;
+        gap: 16px;
+    }
+
+    .action-btn {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: #999;
+        cursor: pointer;
+        font-size: 13px;
+        background: none;
+        border: none;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: all 0.2s;
+    }
+
+        .action-btn:hover {
+            color: #1890ff;
+            background: #f0f5ff;
+        }
+
+        .action-btn.liked {
+            color: #ff4d4f;
+        }
+
+    /* 回复输入框 */
+    .reply-input-box {
+        margin-top: 12px;
+        padding: 12px;
+        background: #fafafa;
+        border-radius: 6px;
+        display: none;
+    }
+
+        .reply-input-box.active {
+            display: block;
+        }
+
+        .reply-input-box textarea {
+            width: 100%;
+            min-height: 60px;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 13px;
+            outline: none;
+            resize: vertical;
+        }
+
+            .reply-input-box textarea:focus {
+                border-color: #1890ff;
+            }
+
+    .reply-form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+    .btn-cancel {
+        background: #fff;
+        color: #666;
+        border: 1px solid #d9d9d9;
+        padding: 6px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: all 0.2s;
+    }
+
+        .btn-cancel:hover {
+            color: #1890ff;
+            border-color: #1890ff;
+        }
+
+    .btn-submit {
+        background: #1890ff;
+        color: #fff;
+        border: none;
+        padding: 6px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: background 0.2s;
+    }
+
+        .btn-submit:hover {
+            background: #40a9ff;
+        }
+
+    /* 嵌套回复 */
+    .comment-replies {
+        margin-top: 12px;
+        margin-left: 52px;
+        padding-left: 16px;
+        border-left: 2px solid #e5e5e5;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .reply-item {
+        display: flex;
+        gap: 10px;
+    }
+
+        .reply-item .avatar {
+            width: 32px;
+            height: 32px;
+            font-size: 13px;
+        }
+
+        .reply-item .comment-meta {
+            margin-bottom: 4px;
+        }
+
+    .reply-text {
+        font-size: 13px;
+        color: #333;
+        margin-bottom: 6px;
+        word-wrap: break-word;
+    }
+
+    .reply-to {
+        color: #1890ff;
+        margin-right: 4px;
+    }
+
+    .status-badge {
+        display: inline-block;
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 3px;
+        margin-left: 8px;
+    }
+
+    .status-normal {
+        background: #e6f7ff;
+        color: #1890ff;
+    }
+
+    .status-deleted {
+        background: #f5f5f5;
+        color: #999;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+        font-size: 14px;
+    }
+
+    .load-more {
+        text-align: center;
+        padding: 20px;
+    }
+
+        .load-more button {
+            background: #fff;
+            color: #666;
+            border: 1px solid #d9d9d9;
+            padding: 10px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+            .load-more button:hover {
+                color: #1890ff;
+                border-color: #1890ff;
+            }
+</style>
+<body>
+    <div class="container">
+        <!-- 面包屑 -->
+        <div class="breadcrumb" style="display:none;">
+            <a href="#">贴吧</a>
+            <span>›</span>
+            <a href="#">技术交流</a>
+            <span>›</span>
+            <span>帖子详情</span>
+        </div>
+
+        <!-- 帖子主体 -->
+        <div class="post-card">
+            <div class="post-header">
+                <h1 class="post-title" id="postTitle">加载中...</h1>
+                <div class="post-meta">
+                    <div class="author">
+                        <div class="avatar-sm" id="postAuthorAvatar">作</div>
+                        <span id="postAuthor">作者</span>
+                    </div>
+                    <span id="postTime">--</span>
+                  @*   <span class="tag" id="postSystem">系统</span> *@
+                  @*   <span id="postViews">0 阅读</span> *@
+                </div>
+            </div>
+            <div class="post-body" id="postBody">加载中...</div>
+            <div class="post-body" id="postBody1"></div>
+            <div class="post-footer">
+                <div class="post-actions">
+                  @*   <button class="post-action-btn" id="likePostBtn" onclick="likePost()">
+                        <span>👍</span>
+                        <span id="postLikes">0</span>
+                    </button> *@
+                   @*  <button class="post-action-btn" id="collectBtn" onclick="collectPost()">
+                        <span>⭐</span>
+                        <span>收藏</span>
+                    </button> *@
+                    <button class="post-action-btn" onclick="sharePost()">
+                        <span>🔗</span>
+                        <span>分享</span>
+                    </button>
+                </div>
+                <div class="post-share-info">
+                    +
+                    <span id="postCreateTime"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 评论区 -->
+        <div class="comments-section">
+            <div class="comments-header">
+                回复 <span id="commentCount">(0)</span>
+            </div>
+
+            <!-- 评论输入 -->
+            <div class="comment-input-box">
+                <textarea id="commentInput" placeholder="发表你的看法..."></textarea>
+                <div class="comment-input-actions">
+                    <span></span>
+                    <button class="btn-primary" onclick="submitComment()">发表评论</button>
+                </div>
+            </div>
+
+            <!-- 评论列表 -->
+            <div class="comment-list" id="commentList"></div>
+
+            <div class="load-more" id="loadMore" style="display: none;">
+                <button onclick="loadMoreComments()">加载更多</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script type="text/javascript">
+
+     var id = ys.request("id");
+    // ========== 帖子数据 (param_tieba) ==========
+    const post = {
+        Id: 1,
+        Param_Key: '3k',           // 参数
+        Param_Value: '配置值',       // 值
+        Source_SYS: '技术交流',       // 所属系统
+        Content: '这是一个技术帖子的正文内容。今天分享一个实用的开发经验，希望能帮助到大家。\n\n代码示例：\n```javascript\nconst example = "Hello World";\nconsole.log(example);\n```\n\n大家有什么问题可以在评论区讨论！',  // 内容
+        Remark: '精华帖',             // 备注
+        Name: '技术大佬分享',          // 名字（标题）
+        Param_Value1: 'kns',         // 参数2
+        BaseCreateTime: '2026-06-22 14:30:00',
+        BaseCreatorId: 10001,
+        creator: {
+            username: '技术大佬',
+            level: 8
+        },
+        views: 1234,
+        likes: 56
+    };
+
+    // ========== 评论数据 (param_comment) ==========
+    let comments = [];
+
+    let currentUserId = 99999;
+    let currentUsername = '当前用户';
+    let postLiked = false;
+    let postCollected = false;
+
+    // ========== 帖子相关函数 ==========
+    function renderPost() {
+
+
+        var queryUrl='@Url.Content("~/ThreeDimensions‌Manage/ParamComment/GetTieBaController")' + '?id='+ id;
+        $.ajax({
+            url: queryUrl,
+            type: 'GET',
+            success: function (res) {
+                document.getElementById('postTitle').textContent = res.Name || '无标题';
+                document.getElementById('postAuthor').textContent = res.BaseCreateName;
+                document.getElementById('postAuthorAvatar').textContent = post.creator.username.charAt(0).toUpperCase();
+                // document.getElementById('postSystem').textContent = post.Source_SYS || '技术交流';
+                document.getElementById('postTime').textContent = formatTime(res.BaseCreateTime);
+                document.getElementById('postCreateTime').textContent = res.BaseCreateTime;
+                // document.getElementById('postViews').textContent = post.views + ' 阅读';
+                //document.getElementById('postLikes').textContent = post.likes;
+                const body = document.getElementById('postBody');
+                body.innerHTML = (res.Content || '暂无内容').replace(/\n/g, '<br>');
+
+                 var div = document.getElementById('postBody1');
+                // 清空原内容，追加图片
+                div.innerHTML = '';
+                var img = document.createElement('img');
+                img.src = res.ImageFile;
+                img.style.maxWidth = '100%';  // 自适应宽度
+                img.style.display = 'block';
+                div.appendChild(img);
+           },
+            error: function () {
+                console.error('数据加载失败');
+            }
+        });
+
+
+
+
+        // 处理内容，支持换行
+
+    }
+
+    // function likePost() {
+    //     const btn = document.getElementById('likePostBtn');
+    //     if (postLiked) {
+    //         post.likes--;
+    //         btn.classList.remove('liked');
+    //         postLiked = false;
+    //     } else {
+    //         post.likes++;
+    //         btn.classList.add('liked');
+    //         postLiked = true;
+    //     }
+    //     document.getElementById('postLikes').textContent = post.likes;
+    // }
+
+    function collectPost() {
+        const btn = document.getElementById('collectBtn');
+        if (postCollected) {
+            btn.classList.remove('collected');
+            btn.querySelector('span:last-child').textContent = '收藏';
+            postCollected = false;
+        } else {
+            btn.classList.add('collected');
+            btn.querySelector('span:last-child').textContent = '已收藏';
+            postCollected = true;
+        }
+    }
+
+    function sharePost() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            alert('链接已复制到剪贴板');
+        });
+    }
+
+    // ========== 评论相关函数 ==========
+    function formatTime(dateStr) {
+        const date = new Date(dateStr);
+        const now = new Date();
+        const diff = now - date;
+
+        if (diff < 60000) return '刚刚';
+        if (diff < 3600000) return Math.floor(diff / 60000) + '分钟前';
+        if (diff < 86400000) return Math.floor(diff / 3600000) + '小时前';
+        if (diff < 604800000) return Math.floor(diff / 86400000) + '天前';
+        return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function getUsernameById(userId) {
+        for (let c of comments) {
+            if (c.User_id === userId) return '&#64;'+c.Username;
+            if (c.replies) {
+                for (let r of c.replies) {
+                    if (r.User_id === userId) return r.Username;
+                }
+            }
+        }
+        return '用户' + userId;
+    }
+
+    function renderComment(comment, isReply = false, floor) {
+        const hasReplies = comment.Replies && comment.Replies.length > 0;
+
+        return `
+            <div class="${isReply ? 'reply-item' : 'comment-item'}" data-id="${comment.Id}">
+                <div class="avatar">${comment.Username.charAt(0).toUpperCase()}</div>
+                <div class="comment-content">
+                    <div class="comment-meta">
+                        <span class="username">${comment.Username}</span>
+                        <span class="user-level">Lv.${comment.UserLevel || 1}</span>
+                        ${comment.Status !== 1 ? '<span class="status-badge status-deleted">已删除</span>' : ''}
+                        <span class="comment-time">${formatTime(comment.BaseCreateTime)}</span>
+                        ${!isReply ? `<span class="comment-floor">#${floor}楼</span>` : ''}
+                    </div>
+                    <div class="${isReply ? 'reply-text' : 'comment-text'}">
+                        ${comment.Reply_to_user_id ? `<span class="reply-to">${getUsernameById(comment.Reply_to_user_id)}</span>` : ''}
+                        ${comment.Content}
+                    </div>
+    
+    <div class="comment-actions">
+        ${!isReply ? `
+            <button class="action-btn reply-btn" data-id="${comment.Id}">
+                <span>💬</span>
+                <span>回复</span>
+            </button>
+        ` : ''}
+    </div>
+
+    
+   
+
+                    ${!isReply ? `
+                        <div class="reply-input-box" id="replyBox-${comment.Id}">
+                            <textarea placeholder="写下你的回复..."></textarea>
+                            <div class="reply-form-actions">
+                                <button class="btn-cancel" data-id="${comment.Id}">取消</button>
+                                <button class="btn-submit" data-id="${comment.Id}">发布</button>
+                            </div>
+                        </div>
+
+                        ${hasReplies ? `
+                            <div class="comment-replies">
+                                ${comment.Replies.map(reply => renderComment(reply, true)).join('')}
+                            </div>
+                        ` : ''}
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    }
+
+    function renderCommentList(Comments) {
+        const list = document.getElementById('commentList');
+        let floor = 1;
+        const total = Comments.reduce((sum, c) => sum + 1 + (c.replies?.length || 0), 0);
+        document.getElementById('commentCount').textContent = `(${total})`;
+         let html = '';
+         Comments.forEach(c => {
+             html += renderComment(c, false, floor++);
+         });
+        list.innerHTML = html || '<div class="empty-state">暂无评论，快来抢沙发吧</div>';
+    }
+
+    function showReplyInput(commentId) {
+        document.querySelectorAll('.reply-input-box').forEach(box => {
+            box.classList.remove('active');
+        });
+        document.getElementById(`replyBox-${commentId}`).classList.add('active');
+    }
+
+    function hideReplyInput(commentId) {
+        document.getElementById(`replyBox-${commentId}`).classList.remove('active');
+    }
+
+    function submitComment() {
+
+        const input = document.getElementById('commentInput');
+        const content = input.value.trim();
+
+        if (!content) {
+            alert('请输入评论内容');
+            return;
+        }
+        const newComment = {
+            Id: id,
+            User_id: currentUserId,
+            Username: currentUsername,
+            userLevel: 1,
+            Content: content,
+            BaseCreateTime: new Date().toISOString().replace('T', ' ').substring(0, 19),
+            Like_count: 0,
+            Status: 1,
+            Parent_id: 0,
+            Reply_to_user_id: null,
+            Replies: []
+        };
+
+        $.ajax({
+            url: '@Url.Content("~/ThreeDimensions‌Manage/ParamComment/SubmitReply")',
+            type: 'POST',
+            data:newComment,
+            success: function (res) {
+               console.log(res)
+            },
+            error: function () {
+                console.error('数据加载失败');
+            }
+        });
+
+        comments.unshift(newComment);
+        input.value = '';
+
+        setTimeout(()=>{
+             loca();
+        }, 1000);
+
+    }
+
+    function submitReply(parentId) {
+        const replyBox = document.getElementById(`replyBox-${parentId}`);
+        const textarea = replyBox.querySelector('textarea');
+        const content = textarea.value.trim();
+
+        if (!content) {
+            alert('请输入回复内容');
+            return;
+        }
+
+        const parentComment = comments.find(c => c.Id === parentId);
+        if (!parentComment) return;
+
+        const newReply = {
+            Id: id,
+            User_id: "",
+            username:"",
+            UserLevel: 1,
+            Content: content,
+            BaseCreateTime: new Date().toISOString().replace('T', ' ').substring(0, 19),
+            Like_count: 0,
+            Status: 1,
+            Parent_id: parentId,
+            Reply_to_user_id: parentComment.User_id,
+            Replies: []
+        };
+
+        if (!parentComment.replies) 
+        {
+            parentComment.replies = [];
+        }
+
+        $.ajax({
+            url: '@Url.Content("~/ThreeDimensions‌Manage/ParamComment/SubmitReply")',
+            type: 'POST',
+            data:newReply,
+            success: function (res) {
+               console.log(res)
+            },
+            error: function () {
+                console.error('数据加载失败');
+            }
+        });
+
+
+        textarea.value = '';
+        parentComment.replies.push(newReply);
+
+
+        //hideReplyInput(parentId);
+        renderCommentList();
+    }
+
+    function handleLike(commentId, type) {
+        function findAndUpdate(list) {
+            for (let c of list) {
+                if (c.Id === commentId) {
+                    if (c.liked) {
+                        c.Like_count--;
+                        c.liked = false;
+                    } else {
+                        c.Like_count++;
+                        c.liked = true;
+                    }
+                    return true;
+                }
+                if (c.replies && findAndUpdate(c.replies)) return true;
+            }
+            return false;
+        }
+
+        findAndUpdate(comments);
+        renderCommentList();
+    }
+
+    function loadMoreComments() {
+        alert('没有更多评论了');
+    }
+
+    function loca()
+    {
+        var queryUrl='@Url.Content("~/ThreeDimensions‌Manage/ParamComment/GetCommentJson")' + '?id='+ id;
+        $.ajax({
+            url: queryUrl,
+            type: 'GET',
+            dataType: 'text',
+            success: function (rawData) {
+                var fixedJson = rawData.replace(/:(\d{16,})/g, ':"$1"');            
+                var res = JSON.parse(fixedJson);
+                comments = res.Comments;
+                renderCommentList(res.Comments);
+
+            },
+            error: function () {
+                console.error('数据加载失败');
+            }
+        });
+
+    }
+    // ========== 初始化 ==========
+    document.addEventListener('DOMContentLoaded', () => {
+        renderPost();
+        loca();
+    });
+
+    const container = document.getElementById('commentList'); // 你的评论列表容器
+
+    container.addEventListener('click', function(e) {
+        // 点赞
+        const likeBtn = e.target.closest('.like-btn');
+        if (likeBtn) {
+            const id = likeBtn.dataset.id; // 精确字符串
+            handleLike(id, 'like');
+            return;
+        }
+
+        // 回复（显示回复框）
+        const replyBtn = e.target.closest('.reply-btn');
+        if (replyBtn) {
+            const id = replyBtn.dataset.id;
+            showReplyInput(id);
+            return;
+        }
+
+        // 取消
+        const cancelBtn = e.target.closest('.btn-cancel');
+        if (cancelBtn) {
+            const id = cancelBtn.dataset.id;
+            hideReplyInput(id);
+            return;
+        }
+
+        // 发布
+        const submitBtn = e.target.closest('.btn-submit');
+        if (submitBtn) {
+            const id = submitBtn.dataset.id;
+            submitReply(id);
+            return;
+        }
+    });
+
+</script>
+

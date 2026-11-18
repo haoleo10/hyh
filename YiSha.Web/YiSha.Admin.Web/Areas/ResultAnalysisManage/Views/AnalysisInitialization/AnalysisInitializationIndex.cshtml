@@ -1,0 +1,256 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<div class="container-div">
+    <div class="row">
+        <div id="searchDiv" class="col-sm-12 search-collapse">
+            <div class="select-list">
+                <ul>
+                    <li>
+                        主要设备：<input id="device" col="Device" type="text" />
+                    </li>
+                    <li>
+                        <a id="btnSearch" class="btn btn-primary btn-sm" onclick="searchGrid()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                    </li>
+                </ul>
+                <ul style="float:right;">
+                    <li>
+                        零容忍：<input id="device11" col="Device11" type="text" />
+                    </li>
+                    <li>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="btn-group-sm hidden-xs" id="toolbar">
+            @*  <a id="btnAdd" class="btn btn-success" onclick="showSaveForm(true)"><i class="fa fa-plus"></i> 新增</a>
+            <a id="btnEdit" class="btn btn-primary disabled" onclick="showSaveForm(false)"><i class="fa fa-edit"></i> 修改</a>
+            <a id="btnDelete" class="btn btn-danger disabled" onclick="deleteForm()"><i class="fa fa-remove"></i> 删除</a>&nbsp;&nbsp;&nbsp;&nbsp; *@
+
+            <a id="btnAdd" class="btn btn-success" onclick="InitializationStarted()"><i class="fa fa-plus"></i> 开始初始化</a>
+            <a id="btncsh" class="btn btn-success" onclick="InitializationPause()"><i class="fa fa-plus"></i> 初始化暂停</a>
+            <a id="btnzz" class="btn btn-success" onclick="nitializationTermination()"><i class="fa fa-plus"></i> 初始化终止</a>
+            <a id="btnIc" class="btn btn-success" onclick="LoadingIC()"><i class="fa fa-plus"></i> 加载IC</a>
+            <a id="btnAdd" class="btn btn-success" onclick="showSaveForm(true)"><i class="fa fa-plus"></i> 数据同步</a>
+            @*  <a class="btn btn-success" onclick="TestCmd()"><i class="fa fa-plus"></i> 测试发送命令到3K</a>
+            <a class="btn btn-success" onclick="TestCmdData()"><i class="fa fa-plus"></i> 发送数据到到3K</a> *@
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="gridTable" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        initGrid();
+    });
+
+    function initGrid() {
+        var queryUrl = '@Url.Content("~/ResultAnalysisManage/AnalysisInitialization/GetPageListJson")';
+        $('#gridTable').ysTable({
+            url: queryUrl,
+            columns: [
+                { checkbox: true, visible: true },
+                { field: 'Id', title: 'Id', visible: false },
+                { field: 'Device', title: '主要设备' },
+                { field: 'Type', title: '类型' },
+
+                { field: 'State', title: '状态/开度' },
+                { field: 'IsConsistent', title: '是否一致' },
+
+                { field: 'Remark', title: '备注' },
+
+            ],
+            queryParams: function (params) {
+                var pagination = $('#gridTable').ysTable('getPagination', params);
+                var queryString = $('#searchDiv').getWebControls(pagination);
+                return queryString;
+            }
+        });
+    }
+
+    function searchGrid() {
+        $('#gridTable').ysTable('search');
+        resetToolbarStatus();
+    }
+
+    function showSaveForm(bAdd) {
+        var id = 0;
+        if (!bAdd) {
+            var selectedRow = $('#gridTable').bootstrapTable('getSelections');
+            if (!ys.checkRowEdit(selectedRow)) {
+                return;
+            }
+            else {
+                id = selectedRow[0].Id;
+            }
+        }
+        ys.openDialog({
+            title: id > 0 ? '编辑' : '数据同步',
+            content: '@Url.Content("~/ResultAnalysisManage/AnalysisInitialization/AnalysisInitializationForm")' + '?id=' + id,
+            width: '1000px',
+            height: '800px',
+            btn: [],
+            callback: function (index, layero) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                iframeWin.saveForm(index);
+            }
+        });
+    }
+
+    //开始初始化
+    function InitializationStarted() {
+         ys.ajax({
+                url: '@Url.Content("~/ResultAnalysisManage/AnalysisInitialization/InitializationStarted")',
+                type: 'get',
+                success: function (obj) {
+                    if (obj.Tag == 1) {
+                        ys.msgSuccess(obj.Message);
+                        searchGrid();
+                    }
+                    else {
+                        ys.msgError(obj.Message);
+                    }
+                }
+         });
+
+    }
+
+    //初始化暂停
+    function InitializationPause()
+    {
+
+         ys.ajax({
+                url: '@Url.Content("~/ResultAnalysisManage/AnalysisInitialization/InitializationPause")',
+                type: 'get',
+                success: function (obj) {
+                    if (obj.Tag == 1) {
+                        ys.msgSuccess(obj.Message);
+                        searchGrid();
+                    }
+                    else {
+                        ys.msgError(obj.Message);
+                    }
+                }
+         });
+
+    }
+
+    //初始化终止
+    function InitializationTermination()
+    {
+         ys.ajax({
+                url: '@Url.Content("~/ResultAnalysisManage/AnalysisInitialization/InitializationTermination")',
+                type: 'get',
+                success: function (obj) {
+                    if (obj.Tag == 1) {
+                        ys.msgSuccess(obj.Message);
+                        searchGrid();
+                    }
+                    else {
+                        ys.msgError(obj.Message);
+                    }
+                }
+         });
+
+    }
+
+
+    //加载IC
+    function LoadingIC()
+    {
+        ys.ajax({
+                url: '@Url.Content("~/ResultAnalysisManage/AnalysisInitialization/LoadingIC")',
+                type: 'get',
+                success: function (obj) {
+                    if (obj.Tag == 1) {
+                        ys.msgSuccess(obj.Message);
+                        searchGrid();
+                    }
+                    else {
+                        ys.msgError(obj.Message);
+                    }
+                }
+         });
+
+
+    }
+
+    //数据同步
+    function DataSynchronization()
+    {
+         ys.ajax({
+                url: '@Url.Content("~/ResultAnalysisManage/AnalysisInitialization/DataSynchronization")',
+                type: 'get',
+                success: function (obj) {
+                    if (obj.Tag == 1) {
+                        ys.msgSuccess(obj.Message);
+                        searchGrid();
+                    }
+                    else {
+                        ys.msgError(obj.Message);
+                    }
+                }
+         });
+
+    }
+
+    function deleteForm() {
+        var selectedRow = $('#gridTable').bootstrapTable('getSelections');
+        if (ys.checkRowDelete(selectedRow)) {
+            ys.confirm('确认要删除选中的' + selectedRow.length + '条数据吗？', function () {
+                var ids = ys.getIds(selectedRow);
+                ys.ajax({
+                    url: '@Url.Content("~/ResultAnalysisManage/AnalysisInitialization/DeleteFormJson")' + '?ids=' + ids,
+                    type: 'post',
+                    success: function (obj) {
+                        if (obj.Tag == 1) {
+                            ys.msgSuccess(obj.Message);
+                            searchGrid();
+                        }
+                        else {
+                            ys.msgError(obj.Message);
+                        }
+                    }
+                });
+            });
+        }
+    }
+
+    function TestCmd()
+    {
+        var cmd = $('#device11').val();
+        ys.ajax({
+            url: '@Url.Content("~/ResultAnalysisManage/AnalysisInitialization/TestCmd")' + '?cmd=' + cmd,
+            type: 'get',
+            success: function (obj) {
+                if (obj.Tag == 1) {
+                    ys.msgSuccess(obj.Message);
+                    searchGrid();
+                }
+                else {
+                    ys.msgError(obj.Message);
+                }
+            }
+        });
+    }
+
+    function TestCmdData(){
+         ys.ajax({
+                url: '@Url.Content("~/ResultAnalysisManage/AnalysisInitialization/TestCmdData")',
+                type: 'get',
+                success: function (obj) {
+                    if (obj.Tag == 1) {
+                        ys.msgSuccess(obj.Message);
+                        searchGrid();
+                    }
+                    else {
+                        ys.msgError(obj.Message);
+                    }
+                }
+         });
+    }
+
+</script>

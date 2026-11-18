@@ -1,0 +1,2840 @@
+﻿@{
+    Layout = "~/Views/Shared/_FormGray.cshtml";
+}
+
+<link href="~/lib/49/css/index.css" rel="stylesheet" />
+<script src="~/lib/49/js/fontscroll.js"></script>
+<script src="~/lib/report/echarts/echarts.min.js"></script>
+
+<div class="main">
+    <div class="header">
+        <div class="header-left fl" id="time"></div>
+        <div class="header-center fl">
+            <div class="header-title">
+                数据可视化展示
+            </div>
+            <div class="header-img"></div>
+        </div>
+        <div class="header-right fl"></div>
+        <div class="header-bottom fl"></div>
+    </div>
+
+    <div class="center">
+        <div class="center-left fl">
+            <div class="left-top">
+                <!--<h1 id="ceshi">数据可视化</h1>-->
+                <div class="title">同步状态</div>
+                <div class="left_top">
+                    <div class="left_top_main">
+                        <div class="left_main_circle">
+                            <p class="counter-value circle_num1">初始化</p>
+                            <span class="span_font">同步中<br /></span>
+                        </div>
+                        <div class="left_main_circle">
+                            <p class="counter-value circle_num2">CEX初始化</p>
+                            <span class="span_font">同步完成<br /></span>
+                        </div>
+                        <div class="left_main_circle" style="margin-top:1vw;">
+                            <p class="counter-value circle_num3">ABP初始化</p>
+                            <span class="span_font">同步完成<br /></span>
+                        </div>
+                        <div class="left_main_circle">
+                            <p class="counter-value circle_num4">AHP初始化</p>
+                            <span class="span_font">同步完成<br /></span>
+                        </div>
+                    </div>
+                </div>
+
+                @*  <div class="top-list">
+                <ul>
+                <li>初始化同步中</li>
+
+                <li>CEX初始化同步完成</li>
+
+
+                <li>ABP初始化同步完</li>
+
+                <li>初始化同步完成</li>
+
+                </ul>
+                </div> *@
+
+            </div>
+            <div class="left-cen">
+                <div class="title">热力性能参数展示</div>
+                <div class="echarts" id="echarts-bar-chart"></div>
+            </div>
+            @* <div class="left-bottom">
+            <div class="title">数据可视化测试6</div>
+            <div class="bottom-b">
+            <div id="chart3" class="allnav"></div>
+            </div>
+
+            </div> *@
+        </div>
+        <div class="center-cen fl">
+            <div class="cen-top">
+                <div class="title">流程图</div>
+                <div class="container111">
+                    <svg viewBox="0 0 1631.64 850.394" color-interpolation-filters="sRGB" style="max-width: 100%; max-height: 100%;"
+                         class="st40">
+                        <defs id="Markers">
+                            <g id="lend2">
+                                <path d="M 1 1 L 0 0 L 1 -1 L 1 1 " style="stroke:none" />
+                            </g>
+                            <marker id="mrkr2-11" class="st5" refX="-2.68" orient="auto" markerUnits="strokeWidth" overflow="visible">
+                                <use xlink:href="#lend2" transform="scale(-2.68,-2.68) " />
+                            </marker>
+                            <marker id="mrkr2-908" class="st34" refX="-4.36" orient="auto" markerUnits="strokeWidth" overflow="visible">
+                                <use xlink:href="#lend2" transform="scale(-4.36,-4.36) " />
+                            </marker>
+                        </defs>
+                        <g>
+
+                            <g id="shape43-1" transform="translate(1436.07,-606.898)">
+                                <title>电动机驱动涡轮机</title>
+                                <desc>发电机</desc>
+                                <path d="M0 824.88 A25.5118 25.5118 0 1 1 51.02 824.88 A25.5118 25.5118 0 1 1 -0 824.88 Z" class="st1" />
+                                <path d="M0 824.88 A25.5118 25.5118 0 1 1 51.02 824.88 A25.5118 25.5118 0 1 1 -0 824.88" class="st2" />
+                                <path d="M10.2 840.19 L40.82 835.09 L40.82 814.68 L10.2 809.57 L10.2 840.19" class="st2" />
+                                <text x="13.51" y="867.97" class="st3">发电机</text>
+                            </g>
+                            <g id="shape55-6" transform="translate(39.3638,-31.8165)">
+                                <title>主管道 R.55</title>
+                                <path d="M0 850.39 L-0 637.8 L144.8 637.8" class="st4" />
+                                <text x="22.8" y="630.47" class="st6">P-14</text>
+                            </g>
+                            <g id="shape66-13" transform="translate(755.754,422.079) rotate(-90)">
+                                <title>入口点.66</title>
+                                <path d="M34.02 841.89 L34.02 850.39" class="st7" />
+                                <path d="M0 841.89 L0 850.39" class="st7" />
+                                <path d="M-3.4 841.89 L37.42 841.89" class="st7" />
+                            </g>
+                            <g id="shape36-18" transform="translate(959.849,-392.598)">
+                                <title>冷凝器</title>
+                                <desc>凝汽器A</desc>
+                                <path d="M0 850.39 L89.29 850.39 L89.29 778.96 L0 778.96 L0 850.39 Z" class="st1" />
+                                <path d="M7.44 832.54 L81.85 832.54" class="st2" />
+                                <path d="M7.44 796.82 L81.85 796.82" class="st2" />
+                                <path d="M7.44 814.68 L81.85 814.68" class="st2" />
+                                <path d="M81.85 778.96 L81.85 850.39" class="st2" />
+                                <path d="M7.44 778.96 L7.44 850.39" class="st2" />
+                                <path d="M0 850.39 L89.29 850.39 L89.29 778.96 L0 778.96 L0 850.39" class="st2" />
+                                <text x="30.65" y="870.52" class="st3">凝汽器A</text>
+                            </g>
+                            <g id="shape39-27" transform="translate(1276.62,-396)">
+                                <title>冷凝器.39</title>
+                                <desc>凝汽器C</desc>
+                                <path d="M0 850.39 L80.79 850.39 L80.79 785.76 L0 785.76 L0 850.39 Z" class="st1" />
+                                <path d="M6.73 834.24 L74.06 834.24" class="st2" />
+                                <path d="M6.73 801.92 L74.06 801.92" class="st2" />
+                                <path d="M6.73 818.08 L74.06 818.08" class="st2" />
+                                <path d="M74.06 785.76 L74.06 850.39" class="st2" />
+                                <path d="M6.73 785.76 L6.73 850.39" class="st2" />
+                                <path d="M0 850.39 L80.79 850.39 L80.79 785.76 L0 785.76 L0 850.39" class="st2" />
+                                <text x="26.39" y="869.67" class="st3">凝汽器C</text>
+                            </g>
+                            <g id="shape40-36" transform="translate(1461.58,-436.819)">
+                                <title>直列泵.40</title>
+                                <desc>循环水泵</desc>
+                                <path d="M0 833.39 A17.0079 17.0079 0 1 1 34.02 833.39 A17.0079 17.0079 0 1 1 -0 833.39 Z" class="st1" />
+                                <path d="M0 833.39 A17.0079 17.0079 0 1 1 34.02 833.39 A17.0079 17.0079 0 1 1 -0 833.39" class="st2" />
+                                <path d="M0 833.39 L-8.5 833.39" class="st2" />
+                                <path d="M34.02 833.39 L42.52 833.39" class="st2" />
+                                <text x="1.01" y="865.85" class="st3">循环水泵</text>
+                            </g>
+                            <g id="group84-42" transform="translate(52.1197,-644.163)">
+                                <title>工作表.84</title>
+                                <g id="shape85-43" transform="translate(4.3162,-1.36471)">
+                                    <title>圆形.843</title>
+                                    <path d="M0 835.59 A12.7944 14.8076 0 0 1 25.59 835.59 A12.7944 14.8076 0 0 1 0 835.59 Z" class="st8" />
+                                </g>
+                                <g id="shape86-45" transform="translate(-4.39648E-014,-79.6247)">
+                                    <title>圆形.839</title>
+                                    <path d="M0 830.71 A17.0079 19.6839 0 0 1 34.02 830.71 A17.0079 19.6839 0 0 1 0 830.71 Z" class="st8" />
+                                </g>
+                                <g id="shape87-47" transform="translate(0.102767,-65.5308)">
+                                    <title>矩形.840</title>
+                                    <rect x="0" y="814.713" width="33.8102" height="35.6809" class="st9" />
+                                </g>
+                                <g id="shape88-49" transform="translate(0.102767,-58.0973)">
+                                    <title>工作表.88</title>
+                                    <path d="M0 842.66 L4.11 850.39 L29.8 850.39 L33.81 842.66 L0 842.66 Z" class="st9" />
+                                </g>
+                                <g id="shape89-51" transform="translate(4.3162,-16.1128)">
+                                    <title>矩形.842</title>
+                                    <rect x="0" y="808.112" width="25.5889" height="42.2818" class="st9" />
+                                </g>
+                                <g id="shape90-53" transform="translate(4.41896,-0.0564123)">
+                                    <title>工作表.90</title>
+                                    <path d="M0.11 844.71 L2.73 842.81 L5.24 845.59 L0 850.39 L0.11 844.71 Z" class="st10" />
+                                </g>
+                                <g id="shape91-55" transform="translate(30.0079,-1.0079) scale(-1,1)">
+                                    <title>工作表.91</title>
+                                    <path d="M0.1 845.04 L2.57 843.26 L4.93 845.87 L0 850.39 L0.1 845.04 Z" class="st10" />
+                                </g>
+                                <g id="shape92-57" transform="translate(0.102767,-16.1723)">
+                                    <title>工作表.92</title>
+                                    <path d="M0 765.35 L0 801.04 L4.07 808.39 L4.25 850.39" class="st11" />
+                                </g>
+                                <g id="shape93-60" transform="translate(29.8891,-16.1723)">
+                                    <title>工作表.93</title>
+                                    <path d="M4.02 765.59 L4.02 800.92 L0.02 808.17 L0.02 849.48 L0 850.39" class="st11" />
+                                </g>
+                                <g id="shape94-63" transform="translate(4.3162,0)">
+                                    <title>工作表.94</title>
+                                    <path d="M2.61 843.14 L0.11 844.92 L0 850.39 L4.93 845.85" class="st11" />
+                                </g>
+                                <g id="shape95-66" transform="translate(25.5766,-0.888966)">
+                                    <title>工作表.95</title>
+                                    <path d="M2.11 843.35 L4.45 845.16 L4.55 850.39 L0 846.23" class="st11" />
+                                </g>
+                            </g>
+                            <g id="group4-69" transform="translate(120.151,-593.076)">
+                                <title>工作表.4</title>
+                                <g id="shape63-70" transform="translate(4.3162,-1.36471)">
+                                    <title>圆形.843</title>
+                                    <path d="M0 835.59 A12.7944 14.8076 0 0 1 25.59 835.59 A12.7944 14.8076 0 0 1 0 835.59 Z" class="st8" />
+                                </g>
+                                <g id="shape64-72" transform="translate(-4.39648E-014,-79.6247)">
+                                    <title>圆形.839</title>
+                                    <path d="M0 830.71 A17.0079 19.6839 0 0 1 34.02 830.71 A17.0079 19.6839 0 0 1 0 830.71 Z" class="st8" />
+                                </g>
+                                <g id="shape71-74" transform="translate(0.102767,-65.5308)">
+                                    <title>矩形.840</title>
+                                    <rect x="0" y="814.713" width="33.8102" height="35.6809" class="st9" />
+                                </g>
+                                <g id="shape72-76" transform="translate(0.102767,-58.0973)">
+                                    <title>工作表.72</title>
+                                    <path d="M0 842.66 L4.11 850.39 L29.8 850.39 L33.81 842.66 L0 842.66 Z" class="st9" />
+                                </g>
+                                <g id="shape73-78" transform="translate(4.3162,-16.1128)">
+                                    <title>矩形.842</title>
+                                    <rect x="0" y="808.112" width="25.5889" height="42.2818" class="st9" />
+                                </g>
+                                <g id="shape74-80" transform="translate(4.41896,-0.0564123)">
+                                    <title>工作表.74</title>
+                                    <path d="M0.11 844.71 L2.73 842.81 L5.24 845.59 L0 850.39 L0.11 844.71 Z" class="st10" />
+                                </g>
+                                <g id="shape80-82" transform="translate(30.0079,-1.0079) scale(-1,1)">
+                                    <title>工作表.80</title>
+                                    <path d="M0.1 845.04 L2.57 843.26 L4.93 845.87 L0 850.39 L0.1 845.04 Z" class="st10" />
+                                </g>
+                                <g id="shape96-84" transform="translate(0.102767,-16.1723)">
+                                    <title>工作表.96</title>
+                                    <path d="M0 765.35 L0 801.04 L4.07 808.39 L4.25 850.39" class="st11" />
+                                </g>
+                                <g id="shape97-87" transform="translate(29.8891,-16.1723)">
+                                    <title>工作表.97</title>
+                                    <path d="M4.02 765.59 L4.02 800.92 L0.02 808.17 L0.02 849.48 L0 850.39" class="st11" />
+                                </g>
+                                <g id="shape98-90" transform="translate(4.3162,0)">
+                                    <title>工作表.98</title>
+                                    <path d="M2.61 843.14 L0.11 844.92 L0 850.39 L4.93 845.85" class="st11" />
+                                </g>
+                                <g id="shape99-93" transform="translate(25.5766,-0.888966)">
+                                    <title>工作表.99</title>
+                                    <path d="M2.11 843.35 L4.45 845.16 L4.55 850.39 L0 846.23" class="st11" />
+                                </g>
+                            </g>
+                            <g id="group100-96" transform="translate(188.183,-550.557)">
+                                <title>工作表.100</title>
+                                <g id="shape101-97" transform="translate(4.3162,-1.36471)">
+                                    <title>圆形.843</title>
+                                    <path d="M0 835.59 A12.7944 14.8076 0 0 1 25.59 835.59 A12.7944 14.8076 0 0 1 0 835.59 Z" class="st8" />
+                                </g>
+                                <g id="shape102-99" transform="translate(-4.39648E-014,-79.6247)">
+                                    <title>圆形.839</title>
+                                    <path d="M0 830.71 A17.0079 19.6839 0 0 1 34.02 830.71 A17.0079 19.6839 0 0 1 0 830.71 Z" class="st8" />
+                                </g>
+                                <g id="shape103-101" transform="translate(0.102767,-65.5308)">
+                                    <title>矩形.840</title>
+                                    <rect x="0" y="814.713" width="33.8102" height="35.6809" class="st9" />
+                                </g>
+                                <g id="shape104-103" transform="translate(0.102767,-58.0973)">
+                                    <title>工作表.104</title>
+                                    <path d="M0 842.66 L4.11 850.39 L29.8 850.39 L33.81 842.66 L0 842.66 Z" class="st9" />
+                                </g>
+                                <g id="shape105-105" transform="translate(4.3162,-16.1128)">
+                                    <title>矩形.842</title>
+                                    <rect x="0" y="808.112" width="25.5889" height="42.2818" class="st9" />
+                                </g>
+                                <g id="shape106-107" transform="translate(4.41896,-0.0564123)">
+                                    <title>工作表.106</title>
+                                    <path d="M0.11 844.71 L2.73 842.81 L5.24 845.59 L0 850.39 L0.11 844.71 Z" class="st10" />
+                                </g>
+                                <g id="shape107-109" transform="translate(30.0079,-1.0079) scale(-1,1)">
+                                    <title>工作表.107</title>
+                                    <path d="M0.1 845.04 L2.57 843.26 L4.93 845.87 L0 850.39 L0.1 845.04 Z" class="st10" />
+                                </g>
+                                <g id="shape108-111" transform="translate(0.102767,-16.1723)">
+                                    <title>工作表.108</title>
+                                    <path d="M0 765.35 L0 801.04 L4.07 808.39 L4.25 850.39" class="st11" />
+                                </g>
+                                <g id="shape109-114" transform="translate(29.8891,-16.1723)">
+                                    <title>工作表.109</title>
+                                    <path d="M4.02 765.59 L4.02 800.92 L0.02 808.17 L0.02 849.48 L0 850.39" class="st11" />
+                                </g>
+                                <g id="shape110-117" transform="translate(4.3162,0)">
+                                    <title>工作表.110</title>
+                                    <path d="M2.61 843.14 L0.11 844.92 L0 850.39 L4.93 845.85" class="st11" />
+                                </g>
+                                <g id="shape111-120" transform="translate(25.5766,-0.888966)">
+                                    <title>工作表.111</title>
+                                    <path d="M2.11 843.35 L4.45 845.16 L4.55 850.39 L0 846.23" class="st11" />
+                                </g>
+                            </g>
+                            <g id="shape57-123" transform="translate(354.009,-31.8165)">
+                                <title>主管道 R.57</title>
+                                <path d="M0 850.39 L0 637.8 L-59.76 637.8" class="st4" />
+                                <text x="22.8" y="630.47" class="st6">P-34</text>
+                            </g>
+                            <g id="group112-129" transform="translate(366.765,1513.07) rotate(180)">
+                                <title>工作表.112</title>
+                                <g id="shape113-130" transform="translate(17.0079,-11.811)">
+                                    <title>工作表.113</title>
+                                    <rect x="0" y="824.882" width="59.0551" height="25.5118" class="st12" />
+                                </g>
+                                <g id="shape114-132">
+                                    <title>工作表.114</title>
+                                    <path d="M16.69 845.67 L14.17 845.67 L14.17 850.39 L9.45 850.39 L9.45 845.67 L4.72 845.67 L4.72 833.86 L0 833.86
+							 L0 829.13 L4.72 829.13 L4.72 822.05 L0 822.05 L0 817.32 L4.72 817.32 L4.72 805.51 L9.45 805.51 L9.45
+							 800.79 L14.17 800.79 L14.17 805.51 L16.54 805.51 L16.69 845.67 Z" class="st13" />
+                                </g>
+                                <g id="shape115-134" transform="translate(11.9685,-30.7083)">
+                                    <title>工作表.115</title>
+                                    <path d="M0 831.5 L0 850.39 L4.62 850.39" class="st14" />
+                                </g>
+                                <g id="shape116-137" transform="translate(-838.583,850.394) rotate(-90)">
+                                    <title>工作表.116</title>
+                                    <path d="M0 850.39 L18.9 850.39" class="st14" />
+                                </g>
+                                <g id="shape117-140" transform="translate(11.6318,-18.8976) rotate(-0.0120753)">
+                                    <title>工作表.117</title>
+                                    <path d="M0 850.39 L4.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape118-143" transform="translate(7.3071,-24.8031) rotate(0.0148552)">
+                                    <title>工作表.118</title>
+                                    <path d="M0 850.39 L9.53 850.39" class="st14" />
+                                </g>
+                                <g id="shape119-146" transform="translate(16.8006,-37.7953)">
+                                    <title>工作表.119</title>
+                                    <path d="M0 850.39 L59.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape120-149" transform="translate(17.0079,-11.6878)">
+                                    <title>工作表.120</title>
+                                    <path d="M0 850.39 L58.92 850.39" class="st14" />
+                                </g>
+                                <g id="shape121-152" transform="translate(925.984,812.598) rotate(90)">
+                                    <title>工作表.121</title>
+                                    <path d="M0 850.39 A13.9246 16.7095 0 0 1 26.15 850.39" class="st15" />
+                                </g>
+                                <g id="shape122-155" transform="translate(16.8272,-30.7064)">
+                                    <title>工作表.122</title>
+                                    <path d="M0 850.39 L44.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape123-158" transform="translate(16.7717,-18.8976)">
+                                    <title>工作表.123</title>
+                                    <path d="M0 850.39 L44.78 850.39" class="st14" />
+                                </g>
+                                <g id="shape124-161" transform="translate(85.0394,1662.99) rotate(180)">
+                                    <title>工作表.124</title>
+                                    <path d="M9.45 850.39 L9.45 824.41 A12.9921 9.44882 -90 0 0 0 837.4 A12.9921 9.44882 -90 0 0 9.45 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape125-163" transform="translate(778.376,333.786) rotate(55.7331)">
+                                    <title>工作表.125</title>
+                                    <path d="M-0 850.39 A14.9925 10.444 48.94 0 1 16.75 850.39" class="st14" />
+                                </g>
+                                <g id="shape126-166" transform="translate(754.501,1351.2) rotate(128.067)">
+                                    <title>工作表.126</title>
+                                    <path d="M-0 850.39 A13.1228 10.03 120.88 0 1 15.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape127-169" transform="translate(68.5039,1670.08) rotate(180)">
+                                    <title>工作表.127</title>
+                                    <path d="M7.09 850.39 L7.09 838.58 A7.08661 5.90551 0 0 0 -0 844.49 A7.08661 5.90551 0 0 0 7.09 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape128-171" transform="translate(61.2992,-18.8976)">
+                                    <title>工作表.128</title>
+                                    <path d="M-0 850.39 A7.20472 5.90551 -180 0 0 7.2 844.49 A6.93478 5.90416 -180 0 0 0.27 838.58" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group129-174" transform="translate(366.765,1585.35) rotate(180)">
+                                <title>工作表.129</title>
+                                <g id="shape130-175" transform="translate(17.0079,-11.811)">
+                                    <title>工作表.130</title>
+                                    <rect x="0" y="824.882" width="59.0551" height="25.5118" class="st12" />
+                                </g>
+                                <g id="shape131-177">
+                                    <title>工作表.131</title>
+                                    <path d="M16.69 845.67 L14.17 845.67 L14.17 850.39 L9.45 850.39 L9.45 845.67 L4.72 845.67 L4.72 833.86 L0 833.86
+							 L0 829.13 L4.72 829.13 L4.72 822.05 L0 822.05 L0 817.32 L4.72 817.32 L4.72 805.51 L9.45 805.51 L9.45
+							 800.79 L14.17 800.79 L14.17 805.51 L16.54 805.51 L16.69 845.67 Z" class="st13" />
+                                </g>
+                                <g id="shape132-179" transform="translate(11.9685,-30.7083)">
+                                    <title>工作表.132</title>
+                                    <path d="M0 831.5 L0 850.39 L4.62 850.39" class="st14" />
+                                </g>
+                                <g id="shape133-182" transform="translate(-838.583,850.394) rotate(-90)">
+                                    <title>工作表.133</title>
+                                    <path d="M0 850.39 L18.9 850.39" class="st14" />
+                                </g>
+                                <g id="shape134-185" transform="translate(11.6318,-18.8976) rotate(-0.0120753)">
+                                    <title>工作表.134</title>
+                                    <path d="M0 850.39 L4.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape135-188" transform="translate(7.3071,-24.8031) rotate(0.0148552)">
+                                    <title>工作表.135</title>
+                                    <path d="M0 850.39 L9.53 850.39" class="st14" />
+                                </g>
+                                <g id="shape136-191" transform="translate(16.8006,-37.7953)">
+                                    <title>工作表.136</title>
+                                    <path d="M0 850.39 L59.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape137-194" transform="translate(17.0079,-11.6878)">
+                                    <title>工作表.137</title>
+                                    <path d="M0 850.39 L58.92 850.39" class="st14" />
+                                </g>
+                                <g id="shape138-197" transform="translate(925.984,812.598) rotate(90)">
+                                    <title>工作表.138</title>
+                                    <path d="M0 850.39 A13.9246 16.7095 0 0 1 26.15 850.39" class="st15" />
+                                </g>
+                                <g id="shape139-200" transform="translate(16.8272,-30.7064)">
+                                    <title>工作表.139</title>
+                                    <path d="M0 850.39 L44.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape140-203" transform="translate(16.7717,-18.8976)">
+                                    <title>工作表.140</title>
+                                    <path d="M0 850.39 L44.78 850.39" class="st14" />
+                                </g>
+                                <g id="shape141-206" transform="translate(85.0394,1662.99) rotate(180)">
+                                    <title>工作表.141</title>
+                                    <path d="M9.45 850.39 L9.45 824.41 A12.9921 9.44882 -90 0 0 0 837.4 A12.9921 9.44882 -90 0 0 9.45 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape142-208" transform="translate(778.376,333.786) rotate(55.7331)">
+                                    <title>工作表.142</title>
+                                    <path d="M-0 850.39 A14.9925 10.444 48.94 0 1 16.75 850.39" class="st14" />
+                                </g>
+                                <g id="shape143-211" transform="translate(754.501,1351.2) rotate(128.067)">
+                                    <title>工作表.143</title>
+                                    <path d="M-0 850.39 A13.1228 10.03 120.88 0 1 15.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape144-214" transform="translate(68.5039,1670.08) rotate(180)">
+                                    <title>工作表.144</title>
+                                    <path d="M7.09 850.39 L7.09 838.58 A7.08661 5.90551 0 0 0 -0 844.49 A7.08661 5.90551 0 0 0 7.09 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape145-216" transform="translate(61.2992,-18.8976)">
+                                    <title>工作表.145</title>
+                                    <path d="M-0 850.39 A7.20472 5.90551 -180 0 0 7.2 844.49 A6.93478 5.90416 -180 0 0 0.27 838.58" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group146-219" transform="translate(26.6079,-131.383)">
+                                <title>工作表.146</title>
+                                <g id="shape147-220" transform="translate(17.8583,-12.4016)">
+                                    <title>工作表.147</title>
+                                    <rect x="0" y="823.606" width="62.0079" height="26.7874" class="st12" />
+                                </g>
+                                <g id="shape148-222">
+                                    <title>工作表.148</title>
+                                    <path d="M17.53 845.43 L14.88 845.43 L14.88 850.39 L9.92 850.39 L9.92 845.43 L4.96 845.43 L4.96 833.03 L0 833.03
+							 L0 828.07 L4.96 828.07 L4.96 820.63 L0 820.63 L0 815.67 L4.96 815.67 L4.96 803.27 L9.92 803.27 L9.92
+							 798.31 L14.88 798.31 L14.88 803.27 L17.36 803.27 L17.53 845.43 Z" class="st13" />
+                                </g>
+                                <g id="shape149-224" transform="translate(12.5669,-32.2437)">
+                                    <title>工作表.149</title>
+                                    <path d="M0 830.55 L0 850.39 L4.85 850.39" class="st14" />
+                                </g>
+                                <g id="shape150-227" transform="translate(-837.992,850.394) rotate(-90)">
+                                    <title>工作表.150</title>
+                                    <path d="M0 850.39 L19.84 850.39" class="st14" />
+                                </g>
+                                <g id="shape151-230" transform="translate(12.2224,-19.8425) rotate(-0.0120753)">
+                                    <title>工作表.151</title>
+                                    <path d="M0 850.39 L5.07 850.39" class="st14" />
+                                </g>
+                                <g id="shape152-233" transform="translate(7.66143,-26.0433) rotate(0.0148552)">
+                                    <title>工作表.152</title>
+                                    <path d="M0 850.39 L10 850.39" class="st14" />
+                                </g>
+                                <g id="shape153-236" transform="translate(17.6407,-39.685)">
+                                    <title>工作表.153</title>
+                                    <path d="M0 850.39 L61.98 850.39" class="st14" />
+                                </g>
+                                <g id="shape154-239" transform="translate(17.8583,-12.2722)">
+                                    <title>工作表.154</title>
+                                    <path d="M0 850.39 L61.87 850.39" class="st14" />
+                                </g>
+                                <g id="shape155-242" transform="translate(929.764,810.709) rotate(90)">
+                                    <title>工作表.155</title>
+                                    <path d="M0 850.39 A14.6208 16.7095 0 0 1 27.45 850.39" class="st15" />
+                                </g>
+                                <g id="shape156-245" transform="translate(17.6686,-32.2417)">
+                                    <title>工作表.156</title>
+                                    <path d="M0 850.39 L47.07 850.39" class="st14" />
+                                </g>
+                                <g id="shape157-248" transform="translate(17.6102,-19.8425)">
+                                    <title>工作表.157</title>
+                                    <path d="M0 850.39 L47.02 850.39" class="st14" />
+                                </g>
+                                <g id="shape158-251" transform="translate(89.2913,1661.1) rotate(180)">
+                                    <title>工作表.158</title>
+                                    <path d="M9.92 850.39 L9.92 823.11 A13.6417 9.92126 -90 0 0 0 836.75 A13.6417 9.92126 -90 0 0 9.92 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape159-253" transform="translate(782.156,331.897) rotate(55.7331)">
+                                    <title>工作表.159</title>
+                                    <path d="M-0 850.39 A15.3376 10.7195 44.9 0 1 17.58 850.39" class="st14" />
+                                </g>
+                                <g id="shape160-256" transform="translate(758.751,1350.02) rotate(128.067)">
+                                    <title>工作表.160</title>
+                                    <path d="M-0 850.39 A13.318 10.3771 125.96 0 1 15.78 850.39" class="st14" />
+                                </g>
+                                <g id="shape161-259" transform="translate(71.9291,1668.54) rotate(180)">
+                                    <title>工作表.161</title>
+                                    <path d="M7.44 850.39 L7.44 837.99 A7.44094 6.20079 0 0 0 -0 844.19 A7.44094 6.20079 0 0 0 7.44 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape162-261" transform="translate(64.3642,-19.8425)">
+                                    <title>工作表.162</title>
+                                    <path d="M-0 850.39 A7.56496 6.20079 -180 0 0 7.56 844.19 A7.28152 6.19936 -180 0 0 0.28 837.99" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group163-264" transform="translate(26.6079,-57.3283)">
+                                <title>工作表.163</title>
+                                <g id="shape164-265" transform="translate(17.0079,-11.811)">
+                                    <title>工作表.164</title>
+                                    <rect x="0" y="824.882" width="59.0551" height="25.5118" class="st12" />
+                                </g>
+                                <g id="shape165-267">
+                                    <title>工作表.165</title>
+                                    <path d="M16.69 845.67 L14.17 845.67 L14.17 850.39 L9.45 850.39 L9.45 845.67 L4.72 845.67 L4.72 833.86 L0 833.86
+							 L0 829.13 L4.72 829.13 L4.72 822.05 L0 822.05 L0 817.32 L4.72 817.32 L4.72 805.51 L9.45 805.51 L9.45
+							 800.79 L14.17 800.79 L14.17 805.51 L16.54 805.51 L16.69 845.67 Z" class="st13" />
+                                </g>
+                                <g id="shape166-269" transform="translate(11.9685,-30.7083)">
+                                    <title>工作表.166</title>
+                                    <path d="M0 831.5 L0 850.39 L4.62 850.39" class="st14" />
+                                </g>
+                                <g id="shape167-272" transform="translate(-838.583,850.394) rotate(-90)">
+                                    <title>工作表.167</title>
+                                    <path d="M0 850.39 L18.9 850.39" class="st14" />
+                                </g>
+                                <g id="shape168-275" transform="translate(11.6318,-18.8976) rotate(-0.0120753)">
+                                    <title>工作表.168</title>
+                                    <path d="M0 850.39 L4.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape169-278" transform="translate(7.3071,-24.8031) rotate(0.0148552)">
+                                    <title>工作表.169</title>
+                                    <path d="M0 850.39 L9.53 850.39" class="st14" />
+                                </g>
+                                <g id="shape170-281" transform="translate(16.8006,-37.7953)">
+                                    <title>工作表.170</title>
+                                    <path d="M0 850.39 L59.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape171-284" transform="translate(17.0079,-11.6878)">
+                                    <title>工作表.171</title>
+                                    <path d="M0 850.39 L58.92 850.39" class="st14" />
+                                </g>
+                                <g id="shape172-287" transform="translate(925.984,812.598) rotate(90)">
+                                    <title>工作表.172</title>
+                                    <path d="M0 850.39 A13.9246 16.7095 0 0 1 26.15 850.39" class="st15" />
+                                </g>
+                                <g id="shape173-290" transform="translate(16.8272,-30.7064)">
+                                    <title>工作表.173</title>
+                                    <path d="M0 850.39 L44.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape174-293" transform="translate(16.7717,-18.8976)">
+                                    <title>工作表.174</title>
+                                    <path d="M0 850.39 L44.78 850.39" class="st14" />
+                                </g>
+                                <g id="shape175-296" transform="translate(85.0394,1662.99) rotate(180)">
+                                    <title>工作表.175</title>
+                                    <path d="M9.45 850.39 L9.45 824.41 A12.9921 9.44882 -90 0 0 0 837.4 A12.9921 9.44882 -90 0 0 9.45 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape176-298" transform="translate(778.376,333.786) rotate(55.7331)">
+                                    <title>工作表.176</title>
+                                    <path d="M-0 850.39 A14.9925 10.444 48.94 0 1 16.75 850.39" class="st14" />
+                                </g>
+                                <g id="shape177-301" transform="translate(754.501,1351.2) rotate(128.067)">
+                                    <title>工作表.177</title>
+                                    <path d="M-0 850.39 A13.1228 10.03 120.88 0 1 15.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape178-304" transform="translate(68.5039,1670.08) rotate(180)">
+                                    <title>工作表.178</title>
+                                    <path d="M7.09 850.39 L7.09 838.58 A7.08661 5.90551 0 0 0 -0 844.49 A7.08661 5.90551 0 0 0 7.09 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape179-306" transform="translate(61.2992,-18.8976)">
+                                    <title>工作表.179</title>
+                                    <path d="M0 850.39 A7.20472 5.90551 -180 0 0 7.2 844.49 A6.93478 5.90416 -180 0 0 0.27 838.58" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group180-309" transform="translate(392.773,-567.565)">
+                                <title>工作表.180</title>
+                                <g id="shape181-310" transform="translate(0,-32.9136)">
+                                    <title>椭圆</title>
+                                    <path d="M0 838.5 A29.4094 11.8889 0 1 1 58.82 838.5 A29.4094 11.8889 0 0 1 -0 838.5 Z" class="st13" />
+                                </g>
+                                <g id="shape182-312" transform="translate(850.394,805.591) rotate(90)">
+                                    <title>工作表.182</title>
+                                    <path d="M0 850.39 L32.91 850.39" class="st14" />
+                                </g>
+                                <g id="shape183-315" transform="translate(909.213,805.591) rotate(90)">
+                                    <title>工作表.183</title>
+                                    <path d="M0 850.39 L32.91 850.39" class="st14" />
+                                </g>
+                                <g id="shape184-318">
+                                    <title>椭圆.60</title>
+                                    <path d="M0 838.5 A29.4094 11.8889 0 1 1 58.82 838.5 A29.4094 11.8889 0 0 1 -0 838.5 Z" class="st13" />
+                                </g>
+                                <g id="shape185-320" transform="translate(0,-12.2644)">
+                                    <title>矩形.299</title>
+                                    <rect x="0" y="817.856" width="58.8189" height="32.5381" class="st16" />
+                                </g>
+                                <g id="shape186-322" transform="translate(850.394,805.591) rotate(90)">
+                                    <title>工作表.186</title>
+                                    <path d="M0 850.39 L32.91 850.39" class="st14" />
+                                </g>
+                                <g id="shape187-325" transform="translate(909.213,805.591) rotate(90)">
+                                    <title>工作表.187</title>
+                                    <path d="M0 850.39 L32.91 850.39" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group188-328" transform="translate(806.92,-519.732)">
+                                <title>工作表.188</title>
+                                <g id="shape189-329" transform="translate(850.394,829.134) rotate(90)">
+                                    <title>工作表.189</title>
+                                    <rect x="0" y="846.283" width="8.50394" height="4.11024" class="st17" />
+                                </g>
+                                <g id="shape190-331" transform="translate(4.25197,0)">
+                                    <title>矩形.180</title>
+                                    <rect x="0" y="816.378" width="76.5354" height="34.0157" class="st13" />
+                                </g>
+                                <g id="shape191-333" transform="translate(863.15,816.378) rotate(90)">
+                                    <title>工作表.191</title>
+                                    <path d="M0 850.39 L34.02 850.39" class="st14" />
+                                </g>
+                                <g id="shape192-336" transform="translate(4.25197,-17.0079)">
+                                    <title>工作表.192</title>
+                                    <path d="M0 850.39 L8.5 850.39" class="st14" />
+                                </g>
+                                <g id="shape193-339" transform="translate(-515.86,1475.27) rotate(-137.291)">
+                                    <title>工作表.193</title>
+                                    <path d="M0 850.39 L50.15 850.39" class="st14" />
+                                </g>
+                                <g id="shape194-342" transform="translate(922.677,816.378) rotate(90)">
+                                    <title>工作表.194</title>
+                                    <path d="M0 850.39 L34.02 850.39" class="st14" />
+                                </g>
+                                <g id="shape195-345" transform="translate(60.6074,-0.311539)">
+                                    <title>工作表.195</title>
+                                    <path d="M20.18 833.7 L11.68 833.7 L0 850.39" class="st14" />
+                                </g>
+                                <g id="shape196-348" transform="translate(-696.659,364.167) rotate(-56.5346)">
+                                    <title>工作表.196</title>
+                                    <path d="M0 850.39 L20.05 850.39" class="st14" />
+                                </g>
+                                <g id="shape197-351" transform="translate(5.66929,-34.5827)">
+                                    <title>工作表.197</title>
+                                    <rect x="0" y="846.709" width="5.66929" height="3.68504" class="st17" />
+                                </g>
+                                <g id="shape198-353" transform="translate(73.7008,-34.4409)">
+                                    <title>工作表.198</title>
+                                    <rect x="0" y="846.709" width="5.66929" height="3.68504" class="st17" />
+                                </g>
+                                <g id="shape199-355" transform="translate(931.181,829.134) rotate(90)">
+                                    <title>工作表.199</title>
+                                    <rect x="0" y="846.283" width="8.50394" height="4.11024" class="st17" />
+                                </g>
+                            </g>
+                            <g id="group200-357" transform="translate(806.92,-730.205)">
+                                <title>工作表.200</title>
+                                <g id="shape201-358" transform="translate(850.394,829.134) rotate(90)">
+                                    <title>工作表.201</title>
+                                    <rect x="0" y="846.283" width="8.50394" height="4.11024" class="st17" />
+                                </g>
+                                <g id="shape202-360" transform="translate(4.25197,0)">
+                                    <title>矩形.180</title>
+                                    <rect x="0" y="816.378" width="76.5354" height="34.0157" class="st13" />
+                                </g>
+                                <g id="shape203-362" transform="translate(863.15,816.378) rotate(90)">
+                                    <title>工作表.203</title>
+                                    <path d="M0 850.39 L34.02 850.39" class="st14" />
+                                </g>
+                                <g id="shape204-365" transform="translate(4.25197,-17.0079)">
+                                    <title>工作表.204</title>
+                                    <path d="M0 850.39 L8.5 850.39" class="st14" />
+                                </g>
+                                <g id="shape205-368" transform="translate(-515.86,1475.27) rotate(-137.291)">
+                                    <title>工作表.205</title>
+                                    <path d="M0 850.39 L50.15 850.39" class="st14" />
+                                </g>
+                                <g id="shape206-371" transform="translate(922.677,816.378) rotate(90)">
+                                    <title>工作表.206</title>
+                                    <path d="M0 850.39 L34.02 850.39" class="st14" />
+                                </g>
+                                <g id="shape207-374" transform="translate(60.6074,-0.311539)">
+                                    <title>工作表.207</title>
+                                    <path d="M20.18 833.7 L11.68 833.7 L0 850.39" class="st14" />
+                                </g>
+                                <g id="shape208-377" transform="translate(-696.659,364.167) rotate(-56.5346)">
+                                    <title>工作表.208</title>
+                                    <path d="M0 850.39 L20.05 850.39" class="st14" />
+                                </g>
+                                <g id="shape209-380" transform="translate(5.66929,-34.5827)">
+                                    <title>工作表.209</title>
+                                    <rect x="0" y="846.709" width="5.66929" height="3.68504" class="st17" />
+                                </g>
+                                <g id="shape210-382" transform="translate(73.7008,-34.4409)">
+                                    <title>工作表.210</title>
+                                    <rect x="0" y="846.709" width="5.66929" height="3.68504" class="st17" />
+                                </g>
+                                <g id="shape211-384" transform="translate(931.181,829.134) rotate(90)">
+                                    <title>工作表.211</title>
+                                    <rect x="0" y="846.283" width="8.50394" height="4.11024" class="st17" />
+                                </g>
+                            </g>
+                            <g id="shape212-386" transform="translate(40.7811,-29.6905)">
+                                <title>主管道.212</title>
+                                <path d="M0 850.39 L428.03 850.39 L428.03 756.92" class="st18" />
+                                <text x="450.83" y="843.07" class="st6">P-35</text>
+                            </g>
+                            <g id="shape56-390" transform="translate(246.293,-388.982)">
+                                <title>主管道.56</title>
+                                <path d="M-7.09 850.39 L-7.09 892.91" class="st18" />
+                                <text x="15.71" y="885.59" class="st6">P-36</text>
+                            </g>
+                            <g id="shape213-394" transform="translate(288.813,-242.998)">
+                                <title>接合点.213</title>
+                            </g>
+                            <g id="shape214-396" transform="translate(290.23,-237.328)">
+                                <title>主管道 R.214</title>
+                                <path d="M0 843.31 L-106.53 843.31" class="st4" />
+                                <text x="-87.75" y="835.99" class="st6">P-34</text>
+                            </g>
+                            <g id="shape215-402" transform="translate(56.7774,-727.534)">
+                                <title>主管道.215</title>
+                                <path d="M-4.55 850.39 L-9.62 850.39 L-9.62 1010.36" class="st19" />
+                                <text x="13.18" y="843.07" class="st6">P-37</text>
+                            </g>
+                            <g id="shape218-406" transform="translate(123.089,-676.448)">
+                                <title>主管道.218</title>
+                                <path d="M-2.83 850.39 L-11.34 850.39 L-11.34 976.28" class="st19" />
+                                <text x="11.46" y="843.07" class="st6">P-38</text>
+                            </g>
+                            <g id="shape219-410" transform="translate(191.069,-633.928)">
+                                <title>主管道.219</title>
+                                <path d="M-2.78 850.39 L-11.39 850.39 L-11.39 942.27" class="st19" />
+                                <text x="11.41" y="843.07" class="st6">P-39</text>
+                            </g>
+                            <g id="shape216-414" transform="translate(237.789,-387.565)">
+                                <title>接合点.216</title>
+                            </g>
+                            <g id="shape217-416" transform="translate(232.97,-381.895)">
+                                <title>主管道.217</title>
+                                <path d="M6.24 843.31 L7.94 843.31" class="st20" />
+                            </g>
+                            <g id="shape220-419" transform="translate(237.789,-345.045)">
+                                <title>接合点.220</title>
+                            </g>
+                            <g id="shape221-421" transform="translate(246.293,-346.462)">
+                                <title>主管道.221</title>
+                                <path d="M-7.09 850.39 L-7.09 901.42" class="st18" />
+                                <text x="15.71" y="894.1" class="st6">P-36</text>
+                            </g>
+                            <g id="shape222-425" transform="translate(237.789,-294.021)">
+                                <title>接合点.222</title>
+                            </g>
+                            <g id="shape223-427" transform="translate(239.206,-295.439)">
+                                <title>主管道.223</title>
+                                <path d="M0 850.39 L0 901.42 L51.02 901.42" class="st18" />
+                                <text x="22.8" y="894.1" class="st6">P-36</text>
+                            </g>
+                            <g id="group224-431" transform="translate(60.6236,-286.935)">
+                                <title>工作表.224</title>
+                                <g id="group225-432" transform="translate(2.6679,0)">
+                                    <title>工作表.225</title>
+                                    <g id="shape226-433" transform="translate(850.394,835.221) rotate(90)">
+                                        <title>三角形</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                    <g id="shape227-435" transform="translate(-830.355,852.279) rotate(-90.2)">
+                                        <title>三角形.109</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                </g>
+                                <g id="shape228-437" transform="translate(8.50394,-15.8885)">
+                                    <title>工作表.228</title>
+                                    <path d="M0.06 850.39 L8.4 850.39 A4.23092 4.23092 -180 1 0 0.06 850.39 Z" class="st22" />
+                                </g>
+                                <g id="shape229-439" transform="translate(863.066,834.505) rotate(90)">
+                                    <title>工作表.229</title>
+                                    <path d="M0 850.39 L7.72 850.39" class="st14" />
+                                </g>
+                                <g id="shape230-442" transform="translate(9.33766,-13.3395)">
+                                    <title>工作表.230</title>
+                                    <path d="M0 850.39 L6.67 850.39" class="st14" />
+                                </g>
+                                <g id="shape231-445" transform="translate(850.394,834.261) rotate(90)">
+                                    <title>工作表.231</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                                <g id="shape232-448" transform="translate(875.906,834.261) rotate(90)">
+                                    <title>工作表.232</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group233-451" transform="translate(124.403,-337.958)">
+                                <title>工作表.233</title>
+                                <g id="group234-452" transform="translate(2.6679,0)">
+                                    <title>工作表.234</title>
+                                    <g id="shape235-453" transform="translate(850.394,835.221) rotate(90)">
+                                        <title>三角形</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                    <g id="shape236-455" transform="translate(-830.355,852.279) rotate(-90.2)">
+                                        <title>三角形.109</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                </g>
+                                <g id="shape237-457" transform="translate(8.50394,-15.8885)">
+                                    <title>工作表.237</title>
+                                    <path d="M0.06 850.39 L8.4 850.39 A4.23092 4.23092 -180 1 0 0.06 850.39 Z" class="st22" />
+                                </g>
+                                <g id="shape238-459" transform="translate(863.066,834.505) rotate(90)">
+                                    <title>工作表.238</title>
+                                    <path d="M0 850.39 L7.72 850.39" class="st14" />
+                                </g>
+                                <g id="shape239-462" transform="translate(9.33766,-13.3395)">
+                                    <title>工作表.239</title>
+                                    <path d="M0 850.39 L6.67 850.39" class="st14" />
+                                </g>
+                                <g id="shape240-465" transform="translate(850.394,834.261) rotate(90)">
+                                    <title>工作表.240</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                                <g id="shape241-468" transform="translate(875.906,834.261) rotate(90)">
+                                    <title>工作表.241</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group242-471" transform="translate(188.183,-380.478)">
+                                <title>工作表.242</title>
+                                <g id="group243-472" transform="translate(2.6679,0)">
+                                    <title>工作表.243</title>
+                                    <g id="shape244-473" transform="translate(850.394,835.221) rotate(90)">
+                                        <title>三角形</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                    <g id="shape245-475" transform="translate(-830.355,852.279) rotate(-90.2)">
+                                        <title>三角形.109</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                </g>
+                                <g id="shape246-477" transform="translate(8.50394,-15.8885)">
+                                    <title>工作表.246</title>
+                                    <path d="M0.06 850.39 L8.4 850.39 A4.23092 4.23092 -180 1 0 0.06 850.39 Z" class="st22" />
+                                </g>
+                                <g id="shape247-479" transform="translate(863.066,834.505) rotate(90)">
+                                    <title>工作表.247</title>
+                                    <path d="M0 850.39 L7.72 850.39" class="st14" />
+                                </g>
+                                <g id="shape248-482" transform="translate(9.33766,-13.3395)">
+                                    <title>工作表.248</title>
+                                    <path d="M0 850.39 L6.67 850.39" class="st14" />
+                                </g>
+                                <g id="shape249-485" transform="translate(850.394,834.261) rotate(90)">
+                                    <title>工作表.249</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                                <g id="shape250-488" transform="translate(875.906,834.261) rotate(90)">
+                                    <title>工作表.250</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                            </g>
+                            <g id="shape251-491" transform="translate(47.1591,-567.565)">
+                                <title>副管道</title>
+                                <path d="M0 850.39 L15.44 850.39 L15.44 901.42" class="st15" />
+                                <text x="38.24" y="843.07" class="st6">P-40</text>
+                            </g>
+                            <g id="shape252-495" transform="translate(45.7417,-566.147)">
+                                <title>接合点.252</title>
+                            </g>
+                            <g id="shape253-497" transform="translate(47.1591,-567.565)">
+                                <title>主管道.253</title>
+                                <path d="M0 850.39 L-0 1122.52 L192.05 1122.52" class="st18" />
+                                <text x="22.8" y="1115.2" class="st6">P-37</text>
+                            </g>
+                            <g id="shape254-501" transform="translate(111.75,-550.557)">
+                                <title>副管道.254</title>
+                                <path d="M0 850.39 L0 856.24 L16.91 856.24 L16.91 875.91" class="st15" />
+                                <text x="22.8" y="848.92" class="st6">P-41</text>
+                            </g>
+                            <g id="shape255-505" transform="translate(110.333,-549.139)">
+                                <title>接合点.255</title>
+                            </g>
+                            <g id="shape256-507" transform="translate(111.75,-550.557)">
+                                <title>主管道.256</title>
+                                <path d="M0 850.39 L-0 1054.49 L127.46 1054.49" class="st18" />
+                                <text x="22.8" y="1047.17" class="st6">P-38</text>
+                            </g>
+                            <g id="shape259-511" transform="translate(179.679,-542.053)">
+                                <title>主管道.259</title>
+                                <path d="M0 850.39 L0 1003.46 L59.53 1003.46" class="st18" />
+                                <text x="22.8" y="996.14" class="st6">P-39</text>
+                            </g>
+                            <g id="group261-515" transform="translate(366.765,-508.037)">
+                                <title>工作表.261</title>
+                                <g id="shape262-516" transform="translate(21.4016,1679.39) rotate(180)">
+                                    <title>圆形.262</title>
+                                    <path d="M0 839.69 A10.7008 10.7008 0 0 1 21.4 839.69 A10.7008 10.7008 0 1 1 0 839.69 Z" class="st23" />
+                                </g>
+                                <g id="group265-518" transform="translate(18.1417,1687.32) rotate(180)">
+                                    <title>工作表.265</title>
+                                    <g id="shape266-519" transform="translate(8.50394,0)">
+                                        <title>工作表.266</title>
+                                        <path d="M7.37 847.56 A47.0399 54.2768 0 0 1 -0 844.72 L0 850.39 L7.37 847.56 Z" class="st24" />
+                                    </g>
+                                    <g id="shape267-521" transform="translate(-4.996E-016,-2.83465)">
+                                        <title>工作表.267</title>
+                                        <path d="M0 850.39 L8.5 850.39" class="st25" />
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="group263-524" transform="translate(366.765,-448.509)">
+                                <title>工作表.263</title>
+                                <g id="shape269-525" transform="translate(21.4016,1679.39) rotate(180)">
+                                    <title>圆形</title>
+                                    <path d="M0 839.69 A10.7008 10.7008 0 0 1 21.4 839.69 A10.7008 10.7008 0 1 1 0 839.69 Z" class="st26" />
+                                </g>
+                                <g id="group272-527" transform="translate(18.1417,1687.32) rotate(180)">
+                                    <title>工作表.272</title>
+                                    <g id="shape273-528" transform="translate(8.50394,0)">
+                                        <title>工作表.273</title>
+                                        <path d="M7.37 847.56 A47.0399 54.2768 0 0 1 -0 844.72 L0 850.39 L7.37 847.56 Z" class="st24" />
+                                    </g>
+                                    <g id="shape274-530" transform="translate(-4.996E-016,-2.83465)">
+                                        <title>工作表.274</title>
+                                        <path d="M0 850.39 L8.5 850.39" class="st25" />
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="shape264-533" transform="translate(451.592,-596.098)">
+                                <title>主管道.264</title>
+                                <path d="M0 850.39 L8.5 850.39 L8.5 927.75 L-63.43 927.75" class="st27" />
+                                <text x="31.3" y="843.07" class="st6">P-43</text>
+                            </g>
+                            <g id="shape268-537" transform="translate(451.592,-579.453)">
+                                <title>主管道.268</title>
+                                <path d="M0 850.39 L8.5 850.39 L8.5 970.64 L-63.43 970.64" class="st27" />
+                                <text x="31.3" y="843.07" class="st6">P-44</text>
+                            </g>
+                            <g id="shape271-541" transform="translate(61.1808,-515.124)">
+                                <title>接合点.271</title>
+                            </g>
+                            <g id="shape275-543" transform="translate(55.5115,-516.541)">
+                                <title>副管道.275</title>
+                                <path d="M7.09 850.39 L7.09 892.91" class="st15" />
+                                <text x="29.89" y="885.59" class="st6">P-40</text>
+                            </g>
+                            <g id="shape280-547" transform="translate(178.261,-540.635)">
+                                <title>接合点.280</title>
+                            </g>
+                            <g id="shape257-549" transform="translate(355.427,-510.553)">
+                                <title>副管道.257</title>
+                                <path d="M2.83 844.41 L2.83 842.21 L11.34 842.21" class="st15" />
+                                <text x="25.63" y="834.89" class="st6">P-48</text>
+                            </g>
+                            <g id="shape270-553" transform="translate(377.723,-460.756)">
+                                <title>副管道.270</title>
+                                <text x="29.89" y="835.99" class="st6">P-49</text>
+                            </g>
+                            <g id="shape279-555" transform="translate(351.175,-539.572)">
+                                <title>副管道.279</title>
+                                <path d="M7.09 856.42 L7.09 858.54" class="st15" />
+                            </g>
+                            <g id="shape285-558" transform="translate(358.261,-457.013)">
+                                <title>副管道.285</title>
+                                <path d="M0 850.39 L-0 867.4 L-85.04 867.4" class="st15" />
+                                <text x="22.8" y="860.08" class="st6">P-50</text>
+                            </g>
+                            <g id="shape277-562" transform="translate(230.702,-540.281)">
+                                <title>副管道.277</title>
+                                <path d="M0 857.13 L127.56 857.83" class="st15" />
+                                <text x="150.36" y="850.51" class="st6">P-53</text>
+                            </g>
+                            <g id="shape282-566" transform="translate(356.844,-530.005)">
+                                <title>接合点.282</title>
+                            </g>
+                            <g id="shape283-568" transform="translate(351.175,-531.423)">
+                                <title>副管道.283</title>
+                                <path d="M7.09 850.39 L7.09 865.28" class="st15" />
+                            </g>
+                            <g id="shape286-571" transform="translate(179.679,-544.887)">
+                                <title>副管道.286</title>
+                                <path d="M0 853.23 L51.02 853.23 L51.02 861.73" class="st15" />
+                                <text x="73.82" y="845.91" class="st6">P-54</text>
+                            </g>
+                            <g id="shape287-575" transform="translate(154.167,-452.761)">
+                                <title>副管道.287</title>
+                                <path d="M0 851.81 L22.68 851.81" class="st15" />
+                                <path d="M28.35 851.81 L119.06 851.81 L119.06 863.15" class="st15" />
+                                <text x="45.48" y="844.49" class="st6">P-55</text>
+                            </g>
+                            <g id="shape288-580" transform="translate(271.805,-438.588)">
+                                <title>接合点.288</title>
+                            </g>
+                            <g id="shape290-582" transform="translate(152.75,-449.927)">
+                                <title>接合点.290</title>
+                            </g>
+                            <g id="shape258-584" transform="translate(358.261,-499.533)">
+                                <title>副管道.258</title>
+                                <path d="M0 850.39 L0 858.9 L-107.72 858.9" class="st15" />
+                                <path d="M-113.39 858.9 L-175.75 858.9" class="st15" />
+                                <path d="M-181.42 858.9 L-226.77 858.9" class="st15" />
+                                <path d="M-232.44 858.9 L-243.68 858.9" class="st15" />
+                                <path d="M-249.35 858.9 L-295.66 858.9 L-295.66 875.91" class="st15" />
+                                <text x="22.8" y="851.58" class="st6">P-56</text>
+                            </g>
+                            <g id="shape281-592" transform="translate(356.844,-498.116)">
+                                <title>接合点.281</title>
+                            </g>
+                            <g id="shape291-594" transform="translate(61.1808,-472.604)">
+                                <title>接合点.291</title>
+                            </g>
+                            <g id="shape292-596" transform="translate(62.5981,-474.021)">
+                                <title>副管道.292</title>
+                                <path d="M0 850.39 L0 873.07 L46.32 873.07" class="st15" />
+                                <path d="M51.99 873.07 L91.57 873.07" class="st15" />
+                                <text x="22.8" y="865.75" class="st6">P-40</text>
+                            </g>
+                            <g id="shape295-601" transform="translate(128.655,-525.045)">
+                                <title>副管道.295</title>
+                                <path d="M0 850.39 L-0 875.91 L48.19 875.91" class="st15" />
+                                <path d="M53.86 875.91 L102.05 875.91" class="st15" />
+                                <text x="22.8" y="868.58" class="st6">P-57</text>
+                            </g>
+                            <g id="shape296-606" transform="translate(127.238,-523.628)">
+                                <title>接合点.296</title>
+                            </g>
+                            <g id="shape297-608" transform="translate(128.655,-525.045)">
+                                <title>副管道.297</title>
+                                <path d="M0 850.39 L0 916.23 L48.19 916.23" class="st15" />
+                                <path d="M53.86 916.23 L238.11 916.23" class="st15" />
+                                <text x="22.8" y="908.91" class="st6">P-41</text>
+                            </g>
+                            <g id="shape298-613" transform="translate(356.844,-515.124)">
+                                <title>接合点.298</title>
+                            </g>
+                            <g id="shape299-615" transform="translate(351.175,-516.541)">
+                                <title>副管道.299</title>
+                                <path d="M7.09 850.39 L7.09 867.4" class="st15" />
+                            </g>
+                            <g id="shape300-618" transform="translate(229.285,-498.116)">
+                                <title>接合点.300</title>
+                            </g>
+                            <g id="shape301-620" transform="translate(230.702,-499.533)">
+                                <title>副管道.301</title>
+                                <path d="M0 850.39 L29.06 850.39 L29.06 833.39 L127.56 833.39" class="st15" />
+                                <text x="51.86" y="843.07" class="st6">P-57</text>
+                            </g>
+                            <g id="shape289-624" transform="translate(383.392,-466.425)">
+                                <title>接合点.289</title>
+                            </g>
+                            <g id="shape293-626" transform="translate(384.809,-451.025)">
+                                <title>副管道.293</title>
+                                <path d="M0 844.41 L-23.71 844.41 L-23.71 842.21 L-18.04 842.21" class="st15" />
+                                <text x="-0.91" y="837.08" class="st6">P-49</text>
+                            </g>
+                            <g id="shape284-630" transform="translate(356.844,-455.596)">
+                                <title>接合点.284</title>
+                            </g>
+                            <g id="shape294-632" transform="translate(383.392,-455.596)">
+                                <title>接合点.294</title>
+                            </g>
+                            <g id="shape302-634" transform="translate(384.809,-449.927)">
+                                <title>副管道.302</title>
+                                <path d="M0 843.31 L-26.55 843.31" class="st15" />
+                                <text x="-3.75" y="835.99" class="st6">P-52</text>
+                            </g>
+                            <g id="shape276-638" transform="translate(230.702,-533.549)">
+                                <title>主管道.276</title>
+                                <path d="M0 850.39 L0 888.66 L17.01 888.66 L17.01 909.92 L123.57 909.92 L123.57 926.93 L127.56 926.93" class="st20" />
+                                <text x="22.8" y="881.34" class="st6">P-58</text>
+                            </g>
+                            <g id="shape306-642" transform="translate(229.285,-532.131)">
+                                <title>接合点.306</title>
+                            </g>
+                            <g id="shape307-644" transform="translate(223.616,-533.549)">
+                                <title>副管道.307</title>
+                                <path d="M7.09 850.39 L7.09 884.41" class="st15" />
+                                <text x="29.89" y="877.09" class="st6">P-54</text>
+                            </g>
+                            <g id="group278-648" transform="translate(517.644,-368.785)">
+                                <title>工作表.278</title>
+                                <g id="shape303-649" transform="translate(0,-41.0911)">
+                                    <title>椭圆</title>
+                                    <path d="M0 843.83 A56.3717 6.56076 0 0 1 112.74 843.83 A56.3717 6.56076 0 1 1 0 843.83 Z" class="st13" />
+                                </g>
+                                <g id="shape304-651" transform="translate(850.394,802.742) rotate(90)">
+                                    <title>工作表.304</title>
+                                    <path d="M0 850.39 L41.09 850.39" class="st14" />
+                                </g>
+                                <g id="shape305-654" transform="translate(963.137,802.742) rotate(90)">
+                                    <title>工作表.305</title>
+                                    <path d="M0 850.39 L41.09 850.39" class="st14" />
+                                </g>
+                                <g id="shape308-657">
+                                    <title>椭圆.60</title>
+                                    <path d="M0 843.83 A56.3717 6.56076 0 0 1 112.74 843.83 A56.3717 6.56076 0 1 1 0 843.83 Z" class="st13" />
+                                </g>
+                                <g id="shape309-659" transform="translate(-5.59552E-014,-6.56076)">
+                                    <title>矩形</title>
+                                    <rect x="0" y="808.957" width="112.743" height="41.4364" class="st16" />
+                                </g>
+                            </g>
+                            <g id="group21-661" transform="translate(523.946,-199.698)">
+                                <title>工作表.21</title>
+                                <g id="shape22-662" transform="translate(21.4016,1679.39) rotate(180)">
+                                    <title>圆形.262</title>
+                                    <path d="M0 839.69 A10.7008 10.7008 0 0 1 21.4 839.69 A10.7008 10.7008 0 1 1 0 839.69 Z" class="st23" />
+                                </g>
+                                <g id="group23-664" transform="translate(18.1417,1687.32) rotate(180)">
+                                    <title>工作表.23</title>
+                                    <g id="shape24-665" transform="translate(8.50394,0)">
+                                        <title>工作表.24</title>
+                                        <path d="M7.37 847.56 A47.0399 54.2768 0 0 1 -0 844.72 L0 850.39 L7.37 847.56 Z" class="st24" />
+                                    </g>
+                                    <g id="shape25-667" transform="translate(-4.996E-016,-2.83465)">
+                                        <title>工作表.25</title>
+                                        <path d="M0 850.39 L8.5 850.39" class="st25" />
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="group26-670" transform="translate(526.143,-154.982)">
+                                <title>工作表.26</title>
+                                <g id="shape27-671" transform="translate(21.4016,1679.39) rotate(180)">
+                                    <title>圆形.262</title>
+                                    <path d="M0 839.69 A10.7008 10.7008 0 0 1 21.4 839.69 A10.7008 10.7008 0 1 1 0 839.69 Z" class="st23" />
+                                </g>
+                                <g id="group28-673" transform="translate(18.1417,1687.32) rotate(180)">
+                                    <title>工作表.28</title>
+                                    <g id="shape29-674" transform="translate(8.50394,0)">
+                                        <title>工作表.29</title>
+                                        <path d="M7.37 847.56 A47.0399 54.2768 0 0 1 -0 844.72 L0 850.39 L7.37 847.56 Z" class="st24" />
+                                    </g>
+                                    <g id="shape30-676" transform="translate(-4.996E-016,-2.83465)">
+                                        <title>工作表.30</title>
+                                        <path d="M0 850.39 L8.5 850.39" class="st25" />
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="group31-679" transform="translate(526.143,-112.462)">
+                                <title>工作表.31</title>
+                                <g id="shape32-680" transform="translate(21.4016,1679.39) rotate(180)">
+                                    <title>圆形.262</title>
+                                    <path d="M0 839.69 A10.7008 10.7008 0 0 1 21.4 839.69 A10.7008 10.7008 0 1 1 0 839.69 Z" class="st23" />
+                                </g>
+                                <g id="group33-682" transform="translate(18.1417,1687.32) rotate(180)">
+                                    <title>工作表.33</title>
+                                    <g id="shape34-683" transform="translate(8.50394,0)">
+                                        <title>工作表.34</title>
+                                        <path d="M7.37 847.56 A47.0399 54.2768 0 0 1 -0 844.72 L0 850.39 L7.37 847.56 Z" class="st24" />
+                                    </g>
+                                    <g id="shape51-685" transform="translate(-4.996E-016,-2.83465)">
+                                        <title>工作表.51</title>
+                                        <path d="M0 850.39 L8.5 850.39" class="st25" />
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="shape260-688" transform="translate(461.726,-159.376)">
+                                <title>主管道.260</title>
+                                <path d="M7.09 850.39 L7.09 833.39" class="st20" />
+                            </g>
+                            <g id="shape310-691" transform="translate(468.813,-178.12)">
+                                <title>主管道.310</title>
+                                <path d="M0 852.13 L-0 862.83 L57.33 862.83" class="st18" />
+                                <text x="30.15" y="861.94" class="st6">P-60</text>
+                            </g>
+                            <g id="shape311-695" transform="translate(467.395,-174.966)">
+                                <title>接合点.311</title>
+                            </g>
+                            <g id="shape312-697" transform="translate(468.813,-176.383)">
+                                <title>主管道.312</title>
+                                <path d="M0 850.39 L-0 816.38 L55.13 816.38" class="st18" />
+                                <text x="22.8" y="809.06" class="st6">P-59</text>
+                            </g>
+                            <g id="shape313-701" transform="translate(461.726,-176.383)">
+                                <title>主管道.313</title>
+                                <path d="M7.09 850.39 L7.09 903.61" class="st18" />
+                                <text x="29.89" y="896.29" class="st6">P-61</text>
+                            </g>
+                            <g id="shape314-705" transform="translate(467.395,-121.746)">
+                                <title>接合点.314</title>
+                            </g>
+                            <g id="shape315-707" transform="translate(468.813,-116.076)">
+                                <title>主管道.315</title>
+                                <path d="M0 843.31 L57.33 843.31" class="st18" />
+                                <text x="80.13" y="835.99" class="st6">P-61</text>
+                            </g>
+                            <g id="shape37-711" transform="translate(545.348,-210.399)">
+                                <title>主管道.37</title>
+                                <path d="M0 850.39 L45.29 850.39 L45.29 701.16 L55.61 701.16 L55.61 691.21" class="st18" />
+                                <text x="68.09" y="843.07" class="st6">P-62</text>
+                            </g>
+                            <g id="shape52-715" transform="translate(547.545,-165.683)">
+                                <title>主管道.52</title>
+                                <path d="M0 850.39 L62.39 850.39 L62.39 645.79" class="st18" />
+                                <text x="85.19" y="843.07" class="st6">P-63</text>
+                            </g>
+                            <g id="shape53-719" transform="translate(547.545,-123.163)">
+                                <title>主管道.53</title>
+                                <path d="M0 850.39 L78.52 850.39 L78.52 618.09 L68.38 618.09 L68.38 602.6" class="st18" />
+                                <text x="101.32" y="843.07" class="st6">P-64</text>
+                            </g>
+                            <g id="group321-723" transform="translate(485.82,-113.021)">
+                                <title>工作表.321</title>
+                                <g id="group322-724" transform="translate(2.6679,0)">
+                                    <title>工作表.322</title>
+                                    <g id="shape323-725" transform="translate(850.394,835.221) rotate(90)">
+                                        <title>三角形</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                    <g id="shape324-727" transform="translate(-830.355,852.279) rotate(-90.2)">
+                                        <title>三角形.109</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                </g>
+                                <g id="shape325-729" transform="translate(8.50394,-15.8885)">
+                                    <title>工作表.325</title>
+                                    <path d="M0.06 850.39 L8.4 850.39 A4.23092 4.23092 -180 1 0 0.06 850.39 Z" class="st22" />
+                                </g>
+                                <g id="shape326-731" transform="translate(863.066,834.505) rotate(90)">
+                                    <title>工作表.326</title>
+                                    <path d="M0 850.39 L7.72 850.39" class="st14" />
+                                </g>
+                                <g id="shape327-734" transform="translate(9.33766,-13.3395)">
+                                    <title>工作表.327</title>
+                                    <path d="M0 850.39 L6.67 850.39" class="st14" />
+                                </g>
+                                <g id="shape328-737" transform="translate(850.394,834.261) rotate(90)">
+                                    <title>工作表.328</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                                <g id="shape329-740" transform="translate(875.906,834.261) rotate(90)">
+                                    <title>工作表.329</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group330-743" transform="translate(481.569,-157.458)">
+                                <title>工作表.330</title>
+                                <g id="group331-744" transform="translate(2.6679,0)">
+                                    <title>工作表.331</title>
+                                    <g id="shape332-745" transform="translate(850.394,835.221) rotate(90)">
+                                        <title>三角形</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                    <g id="shape333-747" transform="translate(-830.355,852.279) rotate(-90.2)">
+                                        <title>三角形.109</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                </g>
+                                <g id="shape334-749" transform="translate(8.50394,-15.8885)">
+                                    <title>工作表.334</title>
+                                    <path d="M0.06 850.39 L8.4 850.39 A4.23092 4.23092 -180 1 0 0.06 850.39 Z" class="st22" />
+                                </g>
+                                <g id="shape335-751" transform="translate(863.066,834.505) rotate(90)">
+                                    <title>工作表.335</title>
+                                    <path d="M0 850.39 L7.72 850.39" class="st14" />
+                                </g>
+                                <g id="shape336-754" transform="translate(9.33766,-13.3395)">
+                                    <title>工作表.336</title>
+                                    <path d="M0 850.39 L6.67 850.39" class="st14" />
+                                </g>
+                                <g id="shape337-757" transform="translate(850.394,834.261) rotate(90)">
+                                    <title>工作表.337</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                                <g id="shape338-760" transform="translate(875.906,834.261) rotate(90)">
+                                    <title>工作表.338</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group339-763" transform="translate(481.569,-199.978)">
+                                <title>工作表.339</title>
+                                <g id="group340-764" transform="translate(2.6679,0)">
+                                    <title>工作表.340</title>
+                                    <g id="shape341-765" transform="translate(850.394,835.221) rotate(90)">
+                                        <title>三角形</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                    <g id="shape342-767" transform="translate(-830.355,852.279) rotate(-90.2)">
+                                        <title>三角形.109</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                </g>
+                                <g id="shape343-769" transform="translate(8.50394,-15.8885)">
+                                    <title>工作表.343</title>
+                                    <path d="M0.06 850.39 L8.4 850.39 A4.23092 4.23092 -180 1 0 0.06 850.39 Z" class="st22" />
+                                </g>
+                                <g id="shape344-771" transform="translate(863.066,834.505) rotate(90)">
+                                    <title>工作表.344</title>
+                                    <path d="M0 850.39 L7.72 850.39" class="st14" />
+                                </g>
+                                <g id="shape345-774" transform="translate(9.33766,-13.3395)">
+                                    <title>工作表.345</title>
+                                    <path d="M0 850.39 L6.67 850.39" class="st14" />
+                                </g>
+                                <g id="shape346-777" transform="translate(850.394,834.261) rotate(90)">
+                                    <title>工作表.346</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                                <g id="shape347-780" transform="translate(875.906,834.261) rotate(90)">
+                                    <title>工作表.347</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group79-783" transform="translate(553.852,-201.895)">
+                                <title>工作表.79</title>
+                                <g id="group316-784" transform="translate(2.6679,0)">
+                                    <title>工作表.316</title>
+                                    <g id="shape317-785" transform="translate(850.394,835.221) rotate(90)">
+                                        <title>三角形</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                    <g id="shape318-787" transform="translate(-830.355,852.279) rotate(-90.2)">
+                                        <title>三角形.109</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                </g>
+                                <g id="shape319-789" transform="translate(8.50394,-15.8885)">
+                                    <title>工作表.319</title>
+                                    <path d="M0.06 850.39 L8.4 850.39 A4.23092 4.23092 -180 1 0 0.06 850.39 Z" class="st22" />
+                                </g>
+                                <g id="shape320-791" transform="translate(863.066,834.505) rotate(90)">
+                                    <title>工作表.320</title>
+                                    <path d="M0 850.39 L7.72 850.39" class="st14" />
+                                </g>
+                                <g id="shape348-794" transform="translate(9.33766,-13.3395)">
+                                    <title>工作表.348</title>
+                                    <path d="M0 850.39 L6.67 850.39" class="st14" />
+                                </g>
+                                <g id="shape349-797" transform="translate(850.394,834.261) rotate(90)">
+                                    <title>工作表.349</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                                <g id="shape350-800" transform="translate(875.906,834.261) rotate(90)">
+                                    <title>工作表.350</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group351-803" transform="translate(553.852,-157.458)">
+                                <title>工作表.351</title>
+                                <g id="group352-804" transform="translate(2.6679,0)">
+                                    <title>工作表.352</title>
+                                    <g id="shape353-805" transform="translate(850.394,835.221) rotate(90)">
+                                        <title>三角形</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                    <g id="shape354-807" transform="translate(-830.355,852.279) rotate(-90.2)">
+                                        <title>三角形.109</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                </g>
+                                <g id="shape355-809" transform="translate(8.50394,-15.8885)">
+                                    <title>工作表.355</title>
+                                    <path d="M0.06 850.39 L8.4 850.39 A4.23092 4.23092 -180 1 0 0.06 850.39 Z" class="st22" />
+                                </g>
+                                <g id="shape356-811" transform="translate(863.066,834.505) rotate(90)">
+                                    <title>工作表.356</title>
+                                    <path d="M0 850.39 L7.72 850.39" class="st14" />
+                                </g>
+                                <g id="shape357-814" transform="translate(9.33766,-13.3395)">
+                                    <title>工作表.357</title>
+                                    <path d="M0 850.39 L6.67 850.39" class="st14" />
+                                </g>
+                                <g id="shape358-817" transform="translate(850.394,834.261) rotate(90)">
+                                    <title>工作表.358</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                                <g id="shape359-820" transform="translate(875.906,834.261) rotate(90)">
+                                    <title>工作表.359</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group360-823" transform="translate(553.852,-116.856)">
+                                <title>工作表.360</title>
+                                <g id="group361-824" transform="translate(2.6679,0)">
+                                    <title>工作表.361</title>
+                                    <g id="shape362-825" transform="translate(850.394,835.221) rotate(90)">
+                                        <title>三角形</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                    <g id="shape363-827" transform="translate(-830.355,852.279) rotate(-90.2)">
+                                        <title>三角形.109</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                </g>
+                                <g id="shape364-829" transform="translate(8.50394,-15.8885)">
+                                    <title>工作表.364</title>
+                                    <path d="M0.06 850.39 L8.4 850.39 A4.23092 4.23092 -180 1 0 0.06 850.39 Z" class="st22" />
+                                </g>
+                                <g id="shape365-831" transform="translate(863.066,834.505) rotate(90)">
+                                    <title>工作表.365</title>
+                                    <path d="M0 850.39 L7.72 850.39" class="st14" />
+                                </g>
+                                <g id="shape366-834" transform="translate(9.33766,-13.3395)">
+                                    <title>工作表.366</title>
+                                    <path d="M0 850.39 L6.67 850.39" class="st14" />
+                                </g>
+                                <g id="shape367-837" transform="translate(850.394,834.261) rotate(90)">
+                                    <title>工作表.367</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                                <g id="shape368-840" transform="translate(875.906,834.261) rotate(90)">
+                                    <title>工作表.368</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                            </g>
+                            <g id="shape5-843" transform="translate(69.1276,-763.155)">
+                                <title>主管道.5</title>
+                                <path d="M0 850.39 L0 819.56 L499.54 819.56" class="st28" />
+                                <text x="22.8" y="812.24" class="st6">P-65</text>
+                            </g>
+                            <g id="shape6-847" transform="translate(137.159,-712.069)">
+                                <title>主管道.6</title>
+                                <path d="M0 850.39 L0 819.5 L431.51 819.5" class="st28" />
+                                <text x="22.8" y="812.18" class="st6">P-66</text>
+                            </g>
+                            <g id="shape7-851" transform="translate(205.191,-669.549)">
+                                <title>主管道.7</title>
+                                <path d="M0 850.39 L0 819.5 L363.48 819.5" class="st28" />
+                                <text x="22.8" y="812.18" class="st6">P-67</text>
+                            </g>
+                            <g id="shape2-855" transform="translate(568.668,-776.976)">
+                                <title>主管道</title>
+                                <path d="M0 850.39 L157.32 850.39 L157.32 981.78" class="st28" />
+                                <text x="180.12" y="843.07" class="st6">P-69</text>
+                            </g>
+                            <g id="shape3-859" transform="translate(561.581,-793.984)">
+                                <title>主管道.3</title>
+                                <path d="M7.09 850.39 L7.09 867.4" class="st29" />
+                            </g>
+                            <g id="shape8-862" transform="translate(567.25,-792.567)">
+                                <title>接合点</title>
+                            </g>
+                            <g id="shape9-864" transform="translate(567.25,-741.543)">
+                                <title>接合点.9</title>
+                            </g>
+                            <g id="shape10-866" transform="translate(561.581,-742.961)">
+                                <title>主管道.10</title>
+                                <path d="M7.09 850.39 L7.09 892.91" class="st29" />
+                                <text x="29.89" y="885.59" class="st6">P-70</text>
+                            </g>
+                            <g id="shape13-870" transform="translate(567.25,-699.024)">
+                                <title>接合点.13</title>
+                            </g>
+                            <g id="shape14-872" transform="translate(561.581,-693.354)">
+                                <title>主管道.14</title>
+                            </g>
+                            <g id="shape12-873" transform="translate(567.25,-775.559)">
+                                <title>接合点.12</title>
+                            </g>
+                            <g id="shape15-875" transform="translate(561.581,-776.976)">
+                                <title>主管道.15</title>
+                                <path d="M7.09 850.39 L7.09 884.41" class="st29" />
+                                <text x="38.39" y="877.09" class="st6">P-70</text>
+                            </g>
+                            <g id="shape16-879" transform="translate(670.715,-675.992)">
+                                <title>主管道.16</title>
+                                <path d="M0 850.39 L0 783.43 L52.44 783.43" class="st28" />
+                                <path d="M58.11 783.43 L69.45 783.43" class="st28" />
+                                <path d="M75.12 783.43 L136.2 783.43" class="st28" />
+                                <text x="22.8" y="776.1" class="st6">P-71</text>
+                            </g>
+                            <g id="group565-885" transform="translate(670.715,-626.74)">
+                                <title>开放/闭合条.565</title>
+                                <g id="shape566-886">
+                                    <title>工作表.566</title>
+                                    <path d="M0 850.39 L765.35 850.39 L765.35 836.22 L0 836.22 L0 850.39 Z" class="st30" />
+                                    <path d="M0 850.39 L765.35 850.39 L765.35 836.22 L0 836.22" class="st31" />
+                                </g>
+                                <g id="shape567-889">
+                                    <title>工作表.567</title>
+                                    <path d="M0 850.39 L765.35 850.39 L0 850.39 ZM0 836.22 L765.35 836.22 L0 836.22 Z" class="st30" />
+                                    <path d="M0 850.39 L765.35 850.39" class="st15" />
+                                    <path d="" class="st15" />
+                                    <path d="M0 836.22 L765.35 836.22" class="st15" />
+                                    <path d="" class="st15" />
+                                    <path d="M0 850.39 L0 836.22" class="st15" />
+                                    <path d="M765.35 850.39 L765.35 836.22" class="st15" />
+                                </g>
+                                <g id="shape568-897" transform="translate(-0.36,-0.24)">
+                                    <title>工作表.568</title>
+                                    <rect x="0" y="836.7" width="0.48" height="13.6932" class="st32" />
+                                </g>
+                                <g id="shape569-899" transform="translate(765.354,-0.24)">
+                                    <title>工作表.569</title>
+                                    <rect x="0" y="836.7" width="0.24" height="13.6932" class="st32" />
+                                </g>
+                            </g>
+                            <g id="shape17-901" transform="translate(670.715,-606.898)">
+                                <title>压缩机/涡轮机</title>
+                                <desc>高压缸</desc>
+                                <path d="M0 795.12 L0 850.39 L55.28 833.81 L55.28 811.7 L0 795.12 Z" class="st1" />
+                                <path d="M0 795.12 L0 850.39 L55.28 833.81 L55.28 811.7 L0 795.12" class="st2" />
+                                <path d="M0 781.3 L0 791.85" class="st33" />
+                                <path d="M9.21 822.76 L42.79 822.76" class="st33" />
+                                <path d="M55.28 833.81 L55.28 860.94" class="st33" />
+                                <text x="15.64" y="868.51" class="st3">高压缸</text>
+                            </g>
+                            <g id="shape46-915" transform="translate(802.526,1038.61) rotate(180)">
+                                <title>压缩机/涡轮机.46</title>
+                                <path d="M0 790.87 L0 850.39 L59.53 832.54 L59.53 808.72 L0 790.87 Z" class="st1" />
+                                <path d="M0 790.87 L0 850.39 L59.53 832.54 L59.53 808.72 L0 790.87" class="st2" />
+                                <path d="M0 775.98 L0 787.6" class="st33" />
+                                <path d="M9.92 820.63 L46.34 820.63" class="st33" />
+                                <path d="M59.53 832.54 L59.53 862.01" class="st33" />
+                                <text x="-37.76" y="-864.24" transform="rotate(180)" class="st3">E-23</text>
+                            </g>
+                            <g id="shape19-928" transform="translate(670.715,-606.898)">
+                                <title>主管道.19</title>
+                                <path d="M0 850.39 L-2.13 850.39 L-2.13 918.43 L69.45 918.43" class="st28" />
+                                <path d="M75.12 918.43 L136.2 918.43" class="st28" />
+                                <text x="20.67" y="843.07" class="st6">P-72</text>
+                            </g>
+                            <g id="shape62-933" transform="translate(742.998,-677.055)">
+                                <title>主管道.62</title>
+                                <path d="M0 850.39 L0 746.69 L137.62 746.69 L137.62 759.12" class="st28" />
+                                <text x="22.8" y="739.37" class="st6">P-77</text>
+                            </g>
+                            <g id="group20-937" transform="translate(925.833,-599.702)">
+                                <title>工作表.20</title>
+                                <g id="shape1-938" transform="translate(144.567,1634.06) rotate(180)">
+                                    <title>压缩机/涡轮机.1</title>
+                                    <path d="M0 783.67 L0 850.39 L66.72 830.38 L66.72 803.69 L0 783.67 Z" class="st1" />
+                                    <path d="M0 783.67 L0 850.39 L66.72 830.38 L66.72 803.69 L0 783.67" class="st2" />
+                                    <path d="M0 766.99 L0 780.4" class="st33" />
+                                    <path d="M11.12 817.03 L52.33 817.03" class="st33" />
+                                    <path d="M66.72 830.38 L66.72 863.8" class="st33" />
+                                    <text x="-106.74" y="-830.99" transform="rotate(180)" class="st3">E-8</text>
+                                </g>
+                                <g id="shape18-951">
+                                    <title>压缩机/涡轮机.18</title>
+                                    <desc>低压缸</desc>
+                                    <path d="M0 783.67 L0 850.39 L66.72 830.38 L66.72 803.69 L0 783.67 Z" class="st1" />
+                                    <path d="M0 783.67 L0 850.39 L66.72 830.38 L66.72 803.69 L0 783.67" class="st2" />
+                                    <path d="M0 766.99 L0 780.4" class="st33" />
+                                    <path d="M11.12 817.03 L52.33 817.03" class="st33" />
+                                    <path d="M66.72 830.38 L66.72 863.8" class="st33" />
+                                    <text x="21.36" y="869.94" class="st3">低压缸</text>
+                                </g>
+                                <g id="shape48-964" transform="translate(65.1969,-40.4482)">
+                                    <title>主管道.48</title>
+                                    <path d="M1.53 857.48 L12.65 857.48" class="st20" />
+                                    <text x="36.95" y="850.16" class="st6">P-8</text>
+                                </g>
+                            </g>
+                            <g id="group35-968" transform="translate(1087.41,-603.627)">
+                                <title>工作表.35</title>
+                                <g id="shape45-969" transform="translate(136.063,1637.99) rotate(180)">
+                                    <title>压缩机/涡轮机.1</title>
+                                    <path d="M0 787.6 L0 850.39 L62.8 831.55 L62.8 806.43 L0 787.6 Z" class="st1" />
+                                    <path d="M0 787.6 L0 850.39 L62.8 831.55 L62.8 806.43 L0 787.6" class="st2" />
+                                    <path d="M0 771.9 L0 784.33" class="st33" />
+                                    <path d="M10.47 818.99 L49.06 818.99" class="st33" />
+                                    <path d="M62.8 831.55 L62.8 862.82" class="st33" />
+                                    <text x="-104.81" y="-830.99" transform="rotate(180)" class="st3">E-43</text>
+                                </g>
+                                <g id="shape47-982">
+                                    <title>压缩机/涡轮机.18</title>
+                                    <path d="M0 787.6 L0 850.39 L62.8 831.55 L62.8 806.43 L0 787.6 Z" class="st1" />
+                                    <path d="M0 787.6 L0 850.39 L62.8 831.55 L62.8 806.43 L0 787.6" class="st2" />
+                                    <path d="M0 771.9 L0 784.33" class="st33" />
+                                    <path d="M10.47 818.99 L49.06 818.99" class="st33" />
+                                    <path d="M62.8 831.55 L62.8 862.82" class="st33" />
+                                    <text x="23.4" y="869.45" class="st3">E-42</text>
+                                </g>
+                                <g id="shape49-995" transform="translate(60.9449,-38.4858)">
+                                    <title>主管道.48</title>
+                                    <path d="M1.85 857.48 L12.32 857.48" class="st20" />
+                                    <text x="35.12" y="850.16" class="st6">P-75</text>
+                                </g>
+                            </g>
+                            <g id="group50-999" transform="translate(1244.02,-602.646)">
+                                <title>工作表.50</title>
+                                <g id="shape54-1000" transform="translate(128.976,1641.26) rotate(180)">
+                                    <title>压缩机/涡轮机.1</title>
+                                    <path d="M0 790.87 L0 850.39 L59.53 832.54 L59.53 808.72 L0 790.87 Z" class="st1" />
+                                    <path d="M0 790.87 L0 850.39 L59.53 832.54 L59.53 808.72 L0 790.87" class="st2" />
+                                    <path d="M0 775.98 L0 787.6" class="st33" />
+                                    <path d="M9.92 820.63 L46.34 820.63" class="st33" />
+                                    <path d="M59.53 832.54 L59.53 862.01" class="st33" />
+                                    <text x="-101.54" y="-830.99" transform="rotate(180)" class="st3">E-44</text>
+                                </g>
+                                <g id="shape58-1013">
+                                    <title>压缩机/涡轮机.18</title>
+                                    <path d="M0 790.87 L0 850.39 L59.53 832.54 L59.53 808.72 L0 790.87 Z" class="st1" />
+                                    <path d="M0 790.87 L0 850.39 L59.53 832.54 L59.53 808.72 L0 790.87" class="st2" />
+                                    <path d="M0 775.98 L0 787.6" class="st33" />
+                                    <path d="M9.92 820.63 L46.34 820.63" class="st33" />
+                                    <path d="M59.53 832.54 L59.53 862.01" class="st33" />
+                                    <text x="21.76" y="869.04" class="st3">E-45</text>
+                                </g>
+                                <g id="shape59-1026" transform="translate(57.4016,-36.8504)">
+                                    <title>主管道.48</title>
+                                    <path d="M2.13 857.48 L12.05 857.48" class="st20" />
+                                    <text x="34.85" y="850.16" class="st6">P-76</text>
+                                </g>
+                            </g>
+                            <g id="shape67-1030" transform="translate(742.998,-619.654)">
+                                <title>主管道.67</title>
+                                <path d="M0 850.39 L-0 968.98 L148.82 968.98 L148.82 933.31 L144.71 933.31" class="st28" />
+                                <text x="22.8" y="961.65" class="st6">P-78</text>
+                            </g>
+                            <g id="shape68-1034" transform="translate(568.668,-742.961)">
+                                <title>主管道.68</title>
+                                <path d="M0 850.39 L39.33 850.39 L39.33 1020.47 L97.09 1020.47" class="st28" />
+                                <path d="M102.76 1020.47 L157.32 1020.47 L157.32 973.7" class="st28" />
+                                <text x="62.13" y="843.07" class="st6">P-79</text>
+                            </g>
+                            <g id="shape69-1039" transform="translate(802.526,-580.677)">
+                                <title>主管道.69</title>
+                                <path d="M0 843.31 L0 844.02 L122.42 844.02" class="st28" />
+                                <path d="M128.09 844.02 L265.04 844.02" class="st28" />
+                                <path d="M270.71 844.02 L283.3 844.02" class="st28" />
+                                <path d="M288.96 844.02 L418.11 844.02" class="st28" />
+                                <path d="M423.78 844.02 L441.33 844.02" class="st28" />
+                                <path d="M447 844.02 L501.02 844.02 L501.02 843.31" class="st28" />
+                                <text x="22.8" y="836.69" class="st6">P-80</text>
+                            </g>
+                            <g id="shape70-1048" transform="translate(802.526,-662.173)">
+                                <title>主管道.70</title>
+                                <path d="M0 850.39 L0 824.41 L510.94 824.41 L510.94 835.51" class="st28" />
+                                <text x="22.8" y="817.09" class="st6">P-81</text>
+                            </g>
+                            <g id="shape38-1052" transform="translate(1121.42,-394.299)">
+                                <title>冷凝器.38</title>
+                                <desc>凝汽器B</desc>
+                                <path d="M0 850.39 L85.04 850.39 L85.04 782.36 L0 782.36 L0 850.39 Z" class="st1" />
+                                <path d="M7.09 833.39 L77.95 833.39" class="st2" />
+                                <path d="M7.09 799.37 L77.95 799.37" class="st2" />
+                                <path d="M7.09 816.38 L77.95 816.38" class="st2" />
+                                <path d="M77.95 782.36 L77.95 850.39" class="st2" />
+                                <path d="M7.09 782.36 L7.09 850.39" class="st2" />
+                                <path d="M0 850.39 L85.04 850.39 L85.04 782.36 L0 782.36 L0 850.39" class="st2" />
+                                <text x="28.52" y="870.1" class="st3">凝汽器B</text>
+                            </g>
+                            <g id="group60-1061" transform="translate(942.841,1446.09) rotate(180)">
+                                <title>工作表.60</title>
+                                <g id="shape61-1062" transform="translate(17.0079,-11.811)">
+                                    <title>工作表.61</title>
+                                    <rect x="0" y="824.882" width="59.0551" height="25.5118" class="st12" />
+                                </g>
+                                <g id="shape75-1064">
+                                    <title>工作表.75</title>
+                                    <path d="M16.69 845.67 L14.17 845.67 L14.17 850.39 L9.45 850.39 L9.45 845.67 L4.72 845.67 L4.72 833.86 L0 833.86
+							 L0 829.13 L4.72 829.13 L4.72 822.05 L0 822.05 L0 817.32 L4.72 817.32 L4.72 805.51 L9.45 805.51 L9.45
+							 800.79 L14.17 800.79 L14.17 805.51 L16.54 805.51 L16.69 845.67 Z" class="st13" />
+                                </g>
+                                <g id="shape76-1066" transform="translate(11.9685,-30.7083)">
+                                    <title>工作表.76</title>
+                                    <path d="M0 831.5 L0 850.39 L4.62 850.39" class="st14" />
+                                </g>
+                                <g id="shape77-1069" transform="translate(-838.583,850.394) rotate(-90)">
+                                    <title>工作表.77</title>
+                                    <path d="M0 850.39 L18.9 850.39" class="st14" />
+                                </g>
+                                <g id="shape78-1072" transform="translate(11.6318,-18.8976) rotate(-0.0120753)">
+                                    <title>工作表.78</title>
+                                    <path d="M0 850.39 L4.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape81-1075" transform="translate(7.3071,-24.8031) rotate(0.0148552)">
+                                    <title>工作表.81</title>
+                                    <path d="M0 850.39 L9.53 850.39" class="st14" />
+                                </g>
+                                <g id="shape82-1078" transform="translate(16.8006,-37.7953)">
+                                    <title>工作表.82</title>
+                                    <path d="M0 850.39 L59.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape83-1081" transform="translate(17.0079,-11.6878)">
+                                    <title>工作表.83</title>
+                                    <path d="M0 850.39 L58.92 850.39" class="st14" />
+                                </g>
+                                <g id="shape369-1084" transform="translate(925.984,812.598) rotate(90)">
+                                    <title>工作表.369</title>
+                                    <path d="M0 850.39 A13.9246 16.7095 0 0 1 26.15 850.39" class="st15" />
+                                </g>
+                                <g id="shape370-1087" transform="translate(16.8272,-30.7064)">
+                                    <title>工作表.370</title>
+                                    <path d="M0 850.39 L44.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape371-1090" transform="translate(16.7717,-18.8976)">
+                                    <title>工作表.371</title>
+                                    <path d="M0 850.39 L44.78 850.39" class="st14" />
+                                </g>
+                                <g id="shape372-1093" transform="translate(85.0394,1662.99) rotate(180)">
+                                    <title>工作表.372</title>
+                                    <path d="M9.45 850.39 L9.45 824.41 A12.9921 9.44882 -90 0 0 0 837.4 A12.9921 9.44882 -90 0 0 9.45 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape373-1095" transform="translate(778.376,333.786) rotate(55.7331)">
+                                    <title>工作表.373</title>
+                                    <path d="M-0 850.39 A14.9925 10.444 48.94 0 1 16.75 850.39" class="st14" />
+                                </g>
+                                <g id="shape374-1098" transform="translate(754.501,1351.2) rotate(128.067)">
+                                    <title>工作表.374</title>
+                                    <path d="M-0 850.39 A13.1228 10.03 120.88 0 1 15.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape375-1101" transform="translate(68.5039,1670.08) rotate(180)">
+                                    <title>工作表.375</title>
+                                    <path d="M7.09 850.39 L7.09 838.58 A7.08661 5.90551 0 0 0 -0 844.49 A7.08661 5.90551 0 0 0 7.09 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape376-1103" transform="translate(61.2992,-18.8976)">
+                                    <title>工作表.376</title>
+                                    <path d="M-0 850.39 A7.20472 5.90551 -180 0 0 7.2 844.49 A6.93478 5.90416 -180 0 0 0.27 838.58" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group377-1106" transform="translate(942.841,1515.54) rotate(180)">
+                                <title>工作表.377</title>
+                                <g id="shape378-1107" transform="translate(17.0079,-11.811)">
+                                    <title>工作表.378</title>
+                                    <rect x="0" y="824.882" width="59.0551" height="25.5118" class="st12" />
+                                </g>
+                                <g id="shape379-1109">
+                                    <title>工作表.379</title>
+                                    <path d="M16.69 845.67 L14.17 845.67 L14.17 850.39 L9.45 850.39 L9.45 845.67 L4.72 845.67 L4.72 833.86 L0 833.86
+							 L0 829.13 L4.72 829.13 L4.72 822.05 L0 822.05 L0 817.32 L4.72 817.32 L4.72 805.51 L9.45 805.51 L9.45
+							 800.79 L14.17 800.79 L14.17 805.51 L16.54 805.51 L16.69 845.67 Z" class="st13" />
+                                </g>
+                                <g id="shape380-1111" transform="translate(11.9685,-30.7083)">
+                                    <title>工作表.380</title>
+                                    <path d="M0 831.5 L0 850.39 L4.62 850.39" class="st14" />
+                                </g>
+                                <g id="shape381-1114" transform="translate(-838.583,850.394) rotate(-90)">
+                                    <title>工作表.381</title>
+                                    <path d="M0 850.39 L18.9 850.39" class="st14" />
+                                </g>
+                                <g id="shape382-1117" transform="translate(11.6318,-18.8976) rotate(-0.0120753)">
+                                    <title>工作表.382</title>
+                                    <path d="M0 850.39 L4.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape383-1120" transform="translate(7.3071,-24.8031) rotate(0.0148552)">
+                                    <title>工作表.383</title>
+                                    <path d="M0 850.39 L9.53 850.39" class="st14" />
+                                </g>
+                                <g id="shape384-1123" transform="translate(16.8006,-37.7953)">
+                                    <title>工作表.384</title>
+                                    <path d="M0 850.39 L59.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape385-1126" transform="translate(17.0079,-11.6878)">
+                                    <title>工作表.385</title>
+                                    <path d="M0 850.39 L58.92 850.39" class="st14" />
+                                </g>
+                                <g id="shape386-1129" transform="translate(925.984,812.598) rotate(90)">
+                                    <title>工作表.386</title>
+                                    <path d="M0 850.39 A13.9246 16.7095 0 0 1 26.15 850.39" class="st15" />
+                                </g>
+                                <g id="shape387-1132" transform="translate(16.8272,-30.7064)">
+                                    <title>工作表.387</title>
+                                    <path d="M0 850.39 L44.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape388-1135" transform="translate(16.7717,-18.8976)">
+                                    <title>工作表.388</title>
+                                    <path d="M0 850.39 L44.78 850.39" class="st14" />
+                                </g>
+                                <g id="shape389-1138" transform="translate(85.0394,1662.99) rotate(180)">
+                                    <title>工作表.389</title>
+                                    <path d="M9.45 850.39 L9.45 824.41 A12.9921 9.44882 -90 0 0 0 837.4 A12.9921 9.44882 -90 0 0 9.45 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape390-1140" transform="translate(778.376,333.786) rotate(55.7331)">
+                                    <title>工作表.390</title>
+                                    <path d="M-0 850.39 A14.9925 10.444 48.94 0 1 16.75 850.39" class="st14" />
+                                </g>
+                                <g id="shape391-1143" transform="translate(754.501,1351.2) rotate(128.067)">
+                                    <title>工作表.391</title>
+                                    <path d="M-0 850.39 A13.1228 10.03 120.88 0 1 15.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape392-1146" transform="translate(68.5039,1670.08) rotate(180)">
+                                    <title>工作表.392</title>
+                                    <path d="M7.09 850.39 L7.09 838.58 A7.08661 5.90551 0 0 0 -0 844.49 A7.08661 5.90551 0 0 0 7.09 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape393-1148" transform="translate(61.2992,-18.8976)">
+                                    <title>工作表.393</title>
+                                    <path d="M-0 850.39 A7.20472 5.90551 -180 0 0 7.2 844.49 A6.93478 5.90416 -180 0 0 0.27 838.58" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group394-1151" transform="translate(942.841,1370.98) rotate(180)">
+                                <title>工作表.394</title>
+                                <g id="shape395-1152" transform="translate(17.0079,-11.811)">
+                                    <title>工作表.395</title>
+                                    <rect x="0" y="824.882" width="59.0551" height="25.5118" class="st12" />
+                                </g>
+                                <g id="shape396-1154">
+                                    <title>工作表.396</title>
+                                    <path d="M16.69 845.67 L14.17 845.67 L14.17 850.39 L9.45 850.39 L9.45 845.67 L4.72 845.67 L4.72 833.86 L0 833.86
+							 L0 829.13 L4.72 829.13 L4.72 822.05 L0 822.05 L0 817.32 L4.72 817.32 L4.72 805.51 L9.45 805.51 L9.45
+							 800.79 L14.17 800.79 L14.17 805.51 L16.54 805.51 L16.69 845.67 Z" class="st13" />
+                                </g>
+                                <g id="shape397-1156" transform="translate(11.9685,-30.7083)">
+                                    <title>工作表.397</title>
+                                    <path d="M0 831.5 L0 850.39 L4.62 850.39" class="st14" />
+                                </g>
+                                <g id="shape398-1159" transform="translate(-838.583,850.394) rotate(-90)">
+                                    <title>工作表.398</title>
+                                    <path d="M0 850.39 L18.9 850.39" class="st14" />
+                                </g>
+                                <g id="shape399-1162" transform="translate(11.6318,-18.8976) rotate(-0.0120753)">
+                                    <title>工作表.399</title>
+                                    <path d="M0 850.39 L4.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape400-1165" transform="translate(7.3071,-24.8031) rotate(0.0148552)">
+                                    <title>工作表.400</title>
+                                    <path d="M0 850.39 L9.53 850.39" class="st14" />
+                                </g>
+                                <g id="shape401-1168" transform="translate(16.8006,-37.7953)">
+                                    <title>工作表.401</title>
+                                    <path d="M0 850.39 L59.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape402-1171" transform="translate(17.0079,-11.6878)">
+                                    <title>工作表.402</title>
+                                    <path d="M0 850.39 L58.92 850.39" class="st14" />
+                                </g>
+                                <g id="shape403-1174" transform="translate(925.984,812.598) rotate(90)">
+                                    <title>工作表.403</title>
+                                    <path d="M0 850.39 A13.9246 16.7095 0 0 1 26.15 850.39" class="st15" />
+                                </g>
+                                <g id="shape404-1177" transform="translate(16.8272,-30.7064)">
+                                    <title>工作表.404</title>
+                                    <path d="M0 850.39 L44.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape405-1180" transform="translate(16.7717,-18.8976)">
+                                    <title>工作表.405</title>
+                                    <path d="M0 850.39 L44.78 850.39" class="st14" />
+                                </g>
+                                <g id="shape406-1183" transform="translate(85.0394,1662.99) rotate(180)">
+                                    <title>工作表.406</title>
+                                    <path d="M9.45 850.39 L9.45 824.41 A12.9921 9.44882 -90 0 0 0 837.4 A12.9921 9.44882 -90 0 0 9.45 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape407-1185" transform="translate(778.376,333.786) rotate(55.7331)">
+                                    <title>工作表.407</title>
+                                    <path d="M-0 850.39 A14.9925 10.444 48.94 0 1 16.75 850.39" class="st14" />
+                                </g>
+                                <g id="shape408-1188" transform="translate(754.501,1351.2) rotate(128.067)">
+                                    <title>工作表.408</title>
+                                    <path d="M-0 850.39 A13.1228 10.03 120.88 0 1 15.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape409-1191" transform="translate(68.5039,1670.08) rotate(180)">
+                                    <title>工作表.409</title>
+                                    <path d="M7.09 850.39 L7.09 838.58 A7.08661 5.90551 0 0 0 -0 844.49 A7.08661 5.90551 0 0 0 7.09 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape410-1193" transform="translate(61.2992,-18.8976)">
+                                    <title>工作表.410</title>
+                                    <path d="M-0 850.39 A7.20472 5.90551 -180 0 0 7.2 844.49 A6.93478 5.90416 -180 0 0 0.27 838.58" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group411-1196" transform="translate(815.282,1389.4) rotate(180)">
+                                <title>工作表.411</title>
+                                <g id="shape412-1197" transform="translate(17.0079,-11.811)">
+                                    <title>工作表.412</title>
+                                    <rect x="0" y="824.882" width="59.0551" height="25.5118" class="st12" />
+                                </g>
+                                <g id="shape413-1199">
+                                    <title>工作表.413</title>
+                                    <path d="M16.69 845.67 L14.17 845.67 L14.17 850.39 L9.45 850.39 L9.45 845.67 L4.72 845.67 L4.72 833.86 L0 833.86
+							 L0 829.13 L4.72 829.13 L4.72 822.05 L0 822.05 L0 817.32 L4.72 817.32 L4.72 805.51 L9.45 805.51 L9.45
+							 800.79 L14.17 800.79 L14.17 805.51 L16.54 805.51 L16.69 845.67 Z" class="st13" />
+                                </g>
+                                <g id="shape414-1201" transform="translate(11.9685,-30.7083)">
+                                    <title>工作表.414</title>
+                                    <path d="M0 831.5 L0 850.39 L4.62 850.39" class="st14" />
+                                </g>
+                                <g id="shape415-1204" transform="translate(-838.583,850.394) rotate(-90)">
+                                    <title>工作表.415</title>
+                                    <path d="M0 850.39 L18.9 850.39" class="st14" />
+                                </g>
+                                <g id="shape416-1207" transform="translate(11.6318,-18.8976) rotate(-0.0120753)">
+                                    <title>工作表.416</title>
+                                    <path d="M0 850.39 L4.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape417-1210" transform="translate(7.3071,-24.8031) rotate(0.0148552)">
+                                    <title>工作表.417</title>
+                                    <path d="M0 850.39 L9.53 850.39" class="st14" />
+                                </g>
+                                <g id="shape418-1213" transform="translate(16.8006,-37.7953)">
+                                    <title>工作表.418</title>
+                                    <path d="M0 850.39 L59.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape419-1216" transform="translate(17.0079,-11.6878)">
+                                    <title>工作表.419</title>
+                                    <path d="M0 850.39 L58.92 850.39" class="st14" />
+                                </g>
+                                <g id="shape420-1219" transform="translate(925.984,812.598) rotate(90)">
+                                    <title>工作表.420</title>
+                                    <path d="M0 850.39 A13.9246 16.7095 0 0 1 26.15 850.39" class="st15" />
+                                </g>
+                                <g id="shape421-1222" transform="translate(16.8272,-30.7064)">
+                                    <title>工作表.421</title>
+                                    <path d="M0 850.39 L44.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape422-1225" transform="translate(16.7717,-18.8976)">
+                                    <title>工作表.422</title>
+                                    <path d="M0 850.39 L44.78 850.39" class="st14" />
+                                </g>
+                                <g id="shape423-1228" transform="translate(85.0394,1662.99) rotate(180)">
+                                    <title>工作表.423</title>
+                                    <path d="M9.45 850.39 L9.45 824.41 A12.9921 9.44882 -90 0 0 0 837.4 A12.9921 9.44882 -90 0 0 9.45 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape424-1230" transform="translate(778.376,333.786) rotate(55.7331)">
+                                    <title>工作表.424</title>
+                                    <path d="M-0 850.39 A14.9925 10.444 48.94 0 1 16.75 850.39" class="st14" />
+                                </g>
+                                <g id="shape425-1233" transform="translate(754.501,1351.2) rotate(128.067)">
+                                    <title>工作表.425</title>
+                                    <path d="M-0 850.39 A13.1228 10.03 120.88 0 1 15.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape426-1236" transform="translate(68.5039,1670.08) rotate(180)">
+                                    <title>工作表.426</title>
+                                    <path d="M7.09 850.39 L7.09 838.58 A7.08661 5.90551 0 0 0 -0 844.49 A7.08661 5.90551 0 0 0 7.09 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape427-1238" transform="translate(61.2992,-18.8976)">
+                                    <title>工作表.427</title>
+                                    <path d="M-0 850.39 A7.20472 5.90551 -180 0 0 7.2 844.49 A6.93478 5.90416 -180 0 0 0.27 838.58" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group428-1241" transform="translate(815.282,1481.53) rotate(180)">
+                                <title>工作表.428</title>
+                                <g id="shape429-1242" transform="translate(17.0079,-11.811)">
+                                    <title>工作表.429</title>
+                                    <rect x="0" y="824.882" width="59.0551" height="25.5118" class="st12" />
+                                </g>
+                                <g id="shape430-1244">
+                                    <title>工作表.430</title>
+                                    <path d="M16.69 845.67 L14.17 845.67 L14.17 850.39 L9.45 850.39 L9.45 845.67 L4.72 845.67 L4.72 833.86 L0 833.86
+							 L0 829.13 L4.72 829.13 L4.72 822.05 L0 822.05 L0 817.32 L4.72 817.32 L4.72 805.51 L9.45 805.51 L9.45
+							 800.79 L14.17 800.79 L14.17 805.51 L16.54 805.51 L16.69 845.67 Z" class="st13" />
+                                </g>
+                                <g id="shape431-1246" transform="translate(11.9685,-30.7083)">
+                                    <title>工作表.431</title>
+                                    <path d="M0 831.5 L0 850.39 L4.62 850.39" class="st14" />
+                                </g>
+                                <g id="shape432-1249" transform="translate(-838.583,850.394) rotate(-90)">
+                                    <title>工作表.432</title>
+                                    <path d="M0 850.39 L18.9 850.39" class="st14" />
+                                </g>
+                                <g id="shape433-1252" transform="translate(11.6318,-18.8976) rotate(-0.0120753)">
+                                    <title>工作表.433</title>
+                                    <path d="M0 850.39 L4.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape434-1255" transform="translate(7.3071,-24.8031) rotate(0.0148552)">
+                                    <title>工作表.434</title>
+                                    <path d="M0 850.39 L9.53 850.39" class="st14" />
+                                </g>
+                                <g id="shape435-1258" transform="translate(16.8006,-37.7953)">
+                                    <title>工作表.435</title>
+                                    <path d="M0 850.39 L59.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape436-1261" transform="translate(17.0079,-11.6878)">
+                                    <title>工作表.436</title>
+                                    <path d="M0 850.39 L58.92 850.39" class="st14" />
+                                </g>
+                                <g id="shape437-1264" transform="translate(925.984,812.598) rotate(90)">
+                                    <title>工作表.437</title>
+                                    <path d="M0 850.39 A13.9246 16.7095 0 0 1 26.15 850.39" class="st15" />
+                                </g>
+                                <g id="shape438-1267" transform="translate(16.8272,-30.7064)">
+                                    <title>工作表.438</title>
+                                    <path d="M0 850.39 L44.83 850.39" class="st14" />
+                                </g>
+                                <g id="shape439-1270" transform="translate(16.7717,-18.8976)">
+                                    <title>工作表.439</title>
+                                    <path d="M0 850.39 L44.78 850.39" class="st14" />
+                                </g>
+                                <g id="shape440-1273" transform="translate(85.0394,1662.99) rotate(180)">
+                                    <title>工作表.440</title>
+                                    <path d="M9.45 850.39 L9.45 824.41 A12.9921 9.44882 -90 0 0 0 837.4 A12.9921 9.44882 -90 0 0 9.45 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape441-1275" transform="translate(778.376,333.786) rotate(55.7331)">
+                                    <title>工作表.441</title>
+                                    <path d="M-0 850.39 A14.9925 10.444 48.94 0 1 16.75 850.39" class="st14" />
+                                </g>
+                                <g id="shape442-1278" transform="translate(754.501,1351.2) rotate(128.067)">
+                                    <title>工作表.442</title>
+                                    <path d="M-0 850.39 A13.1228 10.03 120.88 0 1 15.03 850.39" class="st14" />
+                                </g>
+                                <g id="shape443-1281" transform="translate(68.5039,1670.08) rotate(180)">
+                                    <title>工作表.443</title>
+                                    <path d="M7.09 850.39 L7.09 838.58 A7.08661 5.90551 0 0 0 -0 844.49 A7.08661 5.90551 0 0 0 7.09 850.39 Z"
+                                          class="st12" />
+                                </g>
+                                <g id="shape444-1283" transform="translate(61.2992,-18.8976)">
+                                    <title>工作表.444</title>
+                                    <path d="M-0 850.39 A7.20472 5.90551 -180 0 0 7.2 844.49 A6.93478 5.90416 -180 0 0 0.27 838.58" class="st14" />
+                                </g>
+                            </g>
+                            <g id="group447-1286" transform="translate(1134.04,-292.252)">
+                                <title>工作表.447</title>
+                                <g id="shape448-1287" transform="translate(21.4016,1679.39) rotate(180)">
+                                    <title>圆形.262</title>
+                                    <path d="M0 839.69 A10.7008 10.7008 0 0 1 21.4 839.69 A10.7008 10.7008 0 1 1 0 839.69 Z" class="st23" />
+                                </g>
+                                <g id="group449-1289" transform="translate(18.1417,1687.32) rotate(180)">
+                                    <title>工作表.449</title>
+                                    <g id="shape450-1290" transform="translate(8.50394,0)">
+                                        <title>工作表.450</title>
+                                        <path d="M7.37 847.56 A47.0399 54.2768 0 0 1 -0 844.72 L0 850.39 L7.37 847.56 Z" class="st24" />
+                                    </g>
+                                    <g id="shape451-1292" transform="translate(-4.996E-016,-2.83465)">
+                                        <title>工作表.451</title>
+                                        <path d="M0 850.39 L8.5 850.39" class="st25" />
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="group42-1295" transform="translate(1134.04,-258.236)">
+                                <title>工作表.42</title>
+                                <g id="shape445-1296" transform="translate(21.4016,1679.39) rotate(180)">
+                                    <title>圆形.262</title>
+                                    <path d="M0 839.69 A10.7008 10.7008 0 0 1 21.4 839.69 A10.7008 10.7008 0 1 1 0 839.69 Z" class="st23" />
+                                </g>
+                                <g id="group446-1298" transform="translate(18.1417,1687.32) rotate(180)">
+                                    <title>工作表.446</title>
+                                    <g id="shape452-1299" transform="translate(8.50394,0)">
+                                        <title>工作表.452</title>
+                                        <path d="M7.37 847.56 A47.0399 54.2768 0 0 1 -0 844.72 L0 850.39 L7.37 847.56 Z" class="st24" />
+                                    </g>
+                                    <g id="shape453-1301" transform="translate(-4.996E-016,-2.83465)">
+                                        <title>工作表.453</title>
+                                        <path d="M0 850.39 L8.5 850.39" class="st25" />
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="group454-1304" transform="translate(1134.04,-224.22)">
+                                <title>工作表.454</title>
+                                <g id="shape455-1305" transform="translate(21.4016,1679.39) rotate(180)">
+                                    <title>圆形.262</title>
+                                    <path d="M0 839.69 A10.7008 10.7008 0 0 1 21.4 839.69 A10.7008 10.7008 0 1 1 0 839.69 Z" class="st23" />
+                                </g>
+                                <g id="group456-1307" transform="translate(18.1417,1687.32) rotate(180)">
+                                    <title>工作表.456</title>
+                                    <g id="shape457-1308" transform="translate(8.50394,0)">
+                                        <title>工作表.457</title>
+                                        <path d="M7.37 847.56 A47.0399 54.2768 0 0 1 -0 844.72 L0 850.39 L7.37 847.56 Z" class="st24" />
+                                    </g>
+                                    <g id="shape458-1310" transform="translate(-4.996E-016,-2.83465)">
+                                        <title>工作表.458</title>
+                                        <path d="M0 850.39 L8.5 850.39" class="st25" />
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="shape459-1313" transform="translate(1155.44,-302.953)">
+                                <title>主管道.459</title>
+                                <path d="M0 850.39 L90.71 850.39" class="st18" />
+                                <path d="M96.38 850.39 L102.05 850.39 L102.05 818.57" class="st18" />
+                                <text x="113.51" y="843.07" class="st6">P-82</text>
+                            </g>
+                            <g id="shape460-1318" transform="translate(1004.49,-387.213)">
+                                <title>主管道.460</title>
+                                <path d="M0 845.01 L0 885.83 L312.52 885.83 L312.52 841.61" class="st19" />
+                                <text x="267.29" y="878.51" class="st6">P-83</text>
+                            </g>
+                            <g id="shape461-1322" transform="translate(1163.94,-394.299)">
+                                <title>主管道.461</title>
+                                <path d="M0 850.39 L0 892.91 L93.54 892.91 L93.54 909.92" class="st18" />
+                                <text x="22.8" y="885.59" class="st6">P-84</text>
+                            </g>
+                            <g id="shape462-1326" transform="translate(1256.07,-333.354)">
+                                <title>接合点.462</title>
+                            </g>
+                            <g id="shape463-1328" transform="translate(1155.44,-261.85)">
+                                <title>主管道.463</title>
+                                <path d="M0 843.31 L102.05 843.31" class="st18" />
+                                <text x="124.85" y="835.99" class="st6">P-85</text>
+                            </g>
+                            <g id="shape464-1332" transform="translate(1155.44,-234.921)">
+                                <title>主管道.464</title>
+                                <path d="M0 850.39 L102.05 850.39 L102.05 816.38" class="st18" />
+                                <text x="124.85" y="843.07" class="st6">P-86</text>
+                            </g>
+                            <g id="shape465-1336" transform="translate(1256.07,-267.52)">
+                                <title>接合点.465</title>
+                            </g>
+                            <g id="shape466-1338" transform="translate(1250.4,-268.937)">
+                                <title>主管道.466</title>
+                                <path d="M7.09 850.39 L-1.42 850.39 L-1.42 784.56 L7.09 784.56" class="st18" />
+                                <text x="21.38" y="843.07" class="st6">P-85</text>
+                            </g>
+                            <g id="shape467-1342" transform="translate(938.117,-284.811)">
+                                <title>主管道.467</title>
+                                <path d="M0 851.46 L0 863.5 L21.73 863.5" class="st18" />
+                                <text x="22.8" y="856.18" class="st6">P-87</text>
+                            </g>
+                            <g id="shape470-1346" transform="translate(1061.9,-294.768)">
+                                <title>主管道.470</title>
+                                <path d="M0 844.41 L0 842.21 L72.14 842.21" class="st18" />
+                                <text x="22.8" y="834.89" class="st6">P-87</text>
+                            </g>
+                            <g id="shape471-1350" transform="translate(1061.9,-268.937)">
+                                <title>主管道.471</title>
+                                <path d="M0 850.39 L0 884.41 L72.14 884.41" class="st18" />
+                                <text x="22.8" y="877.09" class="st6">P-90</text>
+                            </g>
+                            <g id="shape473-1354" transform="translate(1061.9,-274.925)">
+                                <title>主管道.473</title>
+                                <path d="M0 856.38 L-76.54 858.58" class="st18" />
+                                <text x="-53.74" y="851.26" class="st6">P-89</text>
+                            </g>
+                            <g id="shape474-1358" transform="translate(933.392,-212.173)">
+                                <title>主管道.474</title>
+                                <path d="M0 857.48 L26.46 857.48" class="st18" />
+                                <text x="49.26" y="850.16" class="st6">P-91</text>
+                            </g>
+                            <g id="shape477-1362" transform="translate(931.502,-135.638)">
+                                <title>主管道.477</title>
+                                <path d="M0 850.39 L0 858.9 L19.84 858.9 L19.84 780.94 L28.35 780.94" class="st18" />
+                                <text x="22.8" y="851.58" class="st6">P-92</text>
+                            </g>
+                            <g id="shape478-1366" transform="translate(958.431,-203.669)">
+                                <title>接合点.478</title>
+                            </g>
+                            <g id="shape479-1368" transform="translate(952.762,-205.087)">
+                                <title>主管道.479</title>
+                                <path d="M7.09 850.39 L7.09 783.78" class="st18" />
+                                <text x="29.89" y="776.46" class="st6">P-91</text>
+                            </g>
+                            <g id="shape475-1372" transform="translate(805.833,-169.654)">
+                                <title>主管道.475</title>
+                                <path d="M0 850.39 L26.46 850.39 L26.46 829.84" class="st18" />
+                                <text x="49.26" y="843.07" class="st6">P-93</text>
+                            </g>
+                            <g id="shape476-1376" transform="translate(805.361,-261.78)">
+                                <title>主管道.476</title>
+                                <path d="M0 850.39 L0 856.06 L26.93 856.06 L26.93 782.36 L123.31 782.36" class="st18" />
+                                <text x="22.8" y="848.74" class="st6">P-94</text>
+                            </g>
+                            <g id="shape480-1380" transform="translate(832.29,-190.205)">
+                                <title>主管道.480</title>
+                                <path d="M0 850.39 L0 774.57 L96.38 774.57 L96.38 785.91" class="st18" />
+                                <text x="22.8" y="767.25" class="st6">P-95</text>
+                            </g>
+                            <g id="shape481-1384" transform="translate(830.872,-188.787)">
+                                <title>接合点.481</title>
+                            </g>
+                            <g id="shape484-1386" transform="translate(574.016,-422.998)">
+                                <title>主管道.484</title>
+                                <path d="M0 850.39 L-0 828.07 L156.23 828.07" class="st18" />
+                                <text x="22.8" y="820.75" class="st6">P-98</text>
+                            </g>
+                            <g id="shape485-1390" transform="translate(730.243,-445.323)">
+                                <title>主管道.485</title>
+                                <path d="M0 850.39 L8.5 850.39 L8.5 1067.95 L72.28 1067.95 L72.28 1076.46" class="st18" />
+                                <text x="31.3" y="843.07" class="st6">P-99</text>
+                            </g>
+                            <g id="shape486-1394" transform="translate(728.825,-443.906)">
+                                <title>接合点.486</title>
+                            </g>
+                            <g id="shape487-1396" transform="translate(730.243,-445.323)">
+                                <title>主管道.487</title>
+                                <path d="M0 850.39 L73.7 850.39 L73.7 984.33" class="st18" />
+                                <text x="96.5" y="843.07" class="st6">P-98</text>
+                            </g>
+                            <g id="shape482-1400" transform="translate(832.29,-194.811)">
+                                <title>主管道.482</title>
+                                <path d="M0 855 L101.1 855 L101.1 859.96" class="st18" />
+                                <text x="122.4" y="847.68" class="st6">P-100</text>
+                            </g>
+                            <g id="shape491-1404" transform="translate(1315.6,-520.441)">
+                                <title>接合点.491</title>
+                            </g>
+                            <g id="shape492-1406" transform="translate(1309.93,-514.772)">
+                                <title>主管道.492</title>
+                                <text x="28.39" y="835.99" class="st6">P-103</text>
+                            </g>
+                            <g id="shape501-1408" transform="translate(1246.69,-603.445)">
+                                <title>主管道.501</title>
+                                <path d="M0 850.39 L0 931.98 L70.33 931.98" class="st35" />
+                                <text x="21.3" y="924.66" class="st6">P-106</text>
+                            </g>
+                            <g id="shape503-1412" transform="translate(1309.93,-521.858)">
+                                <title>主管道.503</title>
+                                <path d="M7.09 850.39 L7.09 911.62" class="st35" />
+                                <text x="28.39" y="904.3" class="st6">P-107</text>
+                            </g>
+                            <g id="shape490-1416" transform="translate(1317.01,-521.858)">
+                                <title>主管道.490</title>
+                                <path d="M0 850.39 L55.98 850.39 L55.98 769.61" class="st35" />
+                                <text x="77.28" y="843.07" class="st6">P-108</text>
+                            </g>
+                            <g id="shape488-1420" transform="translate(1088.66,-606.898)">
+                                <title>主管道.488</title>
+                                <path d="M0 850.39 L0 936.23 L70.33 936.23" class="st35" />
+                                <text x="21.3" y="928.91" class="st6">P-110</text>
+                            </g>
+                            <g id="shape489-1424" transform="translate(1154.38,-521.059)">
+                                <title>主管道.489</title>
+                                <path d="M4.61 850.39 L9.57 850.39 L9.57 909.12" class="st35" />
+                                <text x="30.87" y="843.07" class="st6">P-111</text>
+                            </g>
+                            <g id="shape493-1428" transform="translate(1158.98,-521.059)">
+                                <title>主管道.493</title>
+                                <path d="M0 850.39 L64.49 850.39 L64.49 765.35" class="st35" />
+                                <text x="85.79" y="843.07" class="st6">P-109</text>
+                            </g>
+                            <g id="shape494-1432" transform="translate(927.784,-600.287)">
+                                <title>主管道.494</title>
+                                <path d="M0 850.39 L0 924.12 L76.88 924.12" class="st35" />
+                                <text x="21.3" y="916.8" class="st6">P-114</text>
+                            </g>
+                            <g id="shape495-1436" transform="translate(1011.75,-526.561)">
+                                <title>主管道.495</title>
+                                <path d="M-7.09 850.39 L-7.09 911.62" class="st35" />
+                                <text x="14.21" y="904.3" class="st6">P-113</text>
+                            </g>
+                            <g id="shape496-1440" transform="translate(1004.66,-526.561)">
+                                <title>主管道.496</title>
+                                <path d="M0 850.39 L65.74 850.39 L65.74 777.25" class="st35" />
+                                <text x="87.04" y="843.07" class="st6">P-112</text>
+                            </g>
+                            <g id="shape497-1444" transform="translate(1003.25,-525.143)">
+                                <title>接合点.497</title>
+                            </g>
+                            <g id="shape11-1446" transform="translate(1049.14,-446.74)">
+                                <title>主管道.11</title>
+                                <path d="M0 843.31 L72.28 843.31" class="st36" />
+                                <text x="93.58" y="835.99" class="st6">P-115</text>
+                            </g>
+                            <g id="shape44-1450" transform="translate(1049.14,-403.795)">
+                                <title>主管道.44</title>
+                                <path d="M0 843.73 L8.5 843.73 L8.5 842.88 L72.28 842.88" class="st36" />
+                                <text x="29.8" y="836.41" class="st6">P-116</text>
+                            </g>
+                            <g id="shape498-1454" transform="translate(1206.46,-446.74)">
+                                <title>主管道.498</title>
+                                <path d="M0 843.31 L76.89 843.31" class="st36" />
+                                <text x="98.19" y="835.99" class="st6">P-117</text>
+                            </g>
+                            <g id="shape499-1458" transform="translate(1206.46,-404.22)">
+                                <title>主管道.499</title>
+                                <path d="M0 843.31 L76.89 843.31" class="st36" />
+                                <text x="98.19" y="835.99" class="st6">P-118</text>
+                            </g>
+                            <g id="shape500-1462" transform="translate(1357.41,-446.74)">
+                                <title>主管道.500</title>
+                                <path d="M0 843.31 L33.31 843.31" class="st36" />
+                                <path d="M38.98 843.31 L95.67 843.31" class="st36" />
+                                <text x="54.61" y="835.99" class="st6">P-119</text>
+                            </g>
+                            <g id="shape502-1467" transform="translate(1357.41,-411.307)">
+                                <title>主管道.502</title>
+                                <path d="M0 850.39 L30.83 850.39 L30.83 833.57 L33.31 833.57" class="st36" />
+                                <path d="M38.98 833.57 L220.39 833.57" class="st36" />
+                                <text x="52.13" y="843.07" class="st6">P-120</text>
+                            </g>
+                            <g id="shape483-1472" transform="translate(1504.1,-450.992)">
+                                <title>主管道.483</title>
+                                <path d="M0 847.56 L23.39 847.56 L23.39 822.05 L76.54 822.05 L76.54 839.06" class="st36" />
+                                <text x="44.69" y="840.24" class="st6">P-121</text>
+                            </g>
+                            <g id="shape41-1476" transform="translate(2405.52,388.063) rotate(90)">
+                                <title>入口点.41</title>
+                                <path d="M34.02 841.89 L34.02 850.39" class="st7" />
+                                <path d="M0 841.89 L0 850.39" class="st7" />
+                                <path d="M-3.4 841.89 L37.42 841.89" class="st7" />
+                            </g>
+                            <g id="shape504-1481" transform="translate(1061.9,-261.85)">
+                                <title>主管道.504</title>
+                                <path d="M0 843.31 L72.14 843.31" class="st18" />
+                                <text x="94.94" y="835.99" class="st6">P-89</text>
+                            </g>
+                            <g id="shape65-1485" transform="translate(1060.48,-267.52)">
+                                <title>接合点.65</title>
+                            </g>
+                            <g id="shape468-1487" transform="translate(983.943,-270.992)">
+                                <title>接合点.468</title>
+                            </g>
+                            <g id="shape472-1489" transform="translate(978.274,-265.323)">
+                                <title>主管道.472</title>
+                                <text x="29.89" y="835.99" class="st6">P-87</text>
+                            </g>
+                            <g id="shape469-1491" transform="translate(958.431,-270.283)">
+                                <title>接合点.469</title>
+                            </g>
+                            <g id="shape505-1493" transform="translate(959.849,-276.307)">
+                                <title>主管道.505</title>
+                                <path d="M0 855 L0 859.96 L25.51 859.96" class="st18" />
+                                <text x="22.8" y="852.64" class="st6">P-87</text>
+                            </g>
+                            <g id="shape506-1497" transform="translate(983.943,-265.323)">
+                                <title>接合点.506</title>
+                            </g>
+                            <g id="shape507-1499" transform="translate(1054.81,-300.756)">
+                                <title>主管道.507</title>
+                                <path d="M7.09 850.39 L7.09 883.63" class="st18" />
+                                <text x="28.39" y="876.31" class="st6">P-122</text>
+                            </g>
+                            <g id="shape508-1503" transform="translate(1060.48,-299.339)">
+                                <title>接合点.508</title>
+                            </g>
+                            <g id="group509-1505" transform="translate(993.865,-258.236)">
+                                <title>工作表.509</title>
+                                <g id="group510-1506" transform="translate(2.6679,0)">
+                                    <title>工作表.510</title>
+                                    <g id="shape511-1507" transform="translate(850.394,835.221) rotate(90)">
+                                        <title>三角形</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                    <g id="shape512-1509" transform="translate(-830.355,852.279) rotate(-90.2)">
+                                        <title>三角形.109</title>
+                                        <path d="M15.09 850.39 L7 840.39 L-1.08 850.39 L15.09 850.39 Z" class="st21" />
+                                    </g>
+                                </g>
+                                <g id="shape513-1511" transform="translate(8.50394,-15.8885)">
+                                    <title>工作表.513</title>
+                                    <path d="M0.06 850.39 L8.4 850.39 A4.23092 4.23092 -180 1 0 0.06 850.39 Z" class="st22" />
+                                </g>
+                                <g id="shape514-1513" transform="translate(863.066,834.505) rotate(90)">
+                                    <title>工作表.514</title>
+                                    <path d="M0 850.39 L7.72 850.39" class="st14" />
+                                </g>
+                                <g id="shape515-1516" transform="translate(9.33766,-13.3395)">
+                                    <title>工作表.515</title>
+                                    <path d="M0 850.39 L6.67 850.39" class="st14" />
+                                </g>
+                                <g id="shape516-1519" transform="translate(850.394,834.261) rotate(90)">
+                                    <title>工作表.516</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                                <g id="shape517-1522" transform="translate(875.906,834.261) rotate(90)">
+                                    <title>工作表.517</title>
+                                    <path d="M0 850.39 L16.01 850.39" class="st14" />
+                                </g>
+                            </g>
+                            <g id="shape530-1525" transform="translate(1563.63,-436.819)">
+                                <title>水面</title>
+                                <path d="M0 841.89 L34.02 841.89" class="st15" />
+                                <path d="M3.4 844.72 L30.61 844.72" class="st15" />
+                                <path d="M6.8 847.56 L27.21 847.56" class="st15" />
+                                <path d="M11.91 850.39 L22.11 850.39" class="st15" />
+                            </g>
+                            <g id="shape531-1531" transform="translate(1019.38,-464.031)">
+                                <title>副管道.531</title>
+                                <path d="M0 850.39 L0 826.58 L141.73 826.58" class="st37" />
+                                <path d="M147.4 826.58 L161.57 826.58" class="st37" />
+                                <text x="21.3" y="819.26" class="st6">P-123</text>
+                            </g>
+                            <g id="shape532-1536" transform="translate(1173.86,-487.843)">
+                                <title>副管道.532</title>
+                                <path d="M7.09 850.39 L7.09 875.91" class="st37" />
+                                <text x="28.39" y="868.58" class="st6">P-124</text>
+                            </g>
+                            <g id="shape533-1540" transform="translate(1179.53,-486.425)">
+                                <title>接合点.533</title>
+                            </g>
+                            <g id="shape534-1542" transform="translate(1180.95,-480.756)">
+                                <title>副管道.534</title>
+                                <path d="M0 843.31 L133.23 843.31" class="st37" />
+                                <path d="M138.9 843.31 L153.07 843.31" class="st37" />
+                                <text x="154.53" y="835.99" class="st6">P-123</text>
+                            </g>
+                            <g id="shape535-1547" transform="translate(1326.94,-487.843)">
+                                <title>副管道.535</title>
+                                <path d="M7.09 850.39 L7.09 877.61" class="st37" />
+                                <text x="28.39" y="870.28" class="st6">P-125</text>
+                            </g>
+                            <g id="shape536-1551" transform="translate(1332.6,-486.425)">
+                                <title>接合点.536</title>
+                            </g>
+                            <g id="shape537-1553" transform="translate(1334.02,-480.756)">
+                                <title>副管道.537</title>
+                                <path d="M0 843.31 L59.53 843.31" class="st37" />
+                                <text x="7.13" y="835.99" class="st6">P-123</text>
+                            </g>
+                            <g id="shape538-1557" transform="translate(1393.55,-487.843)">
+                                <title>副管道.538</title>
+                                <path d="M0 850.39 L0 994.96 L51.02 994.96" class="st37" />
+                                <text x="21.3" y="987.64" class="st6">P-126</text>
+                            </g>
+                            <g id="shape539-1561" transform="translate(1392.13,-486.425)">
+                                <title>接合点.539</title>
+                            </g>
+                            <g id="shape540-1563" transform="translate(1446.24,-343.276)">
+                                <title>副管道.540</title>
+                                <path d="M-1.67 850.39 L-12.51 850.39 L-12.51 909.99" class="st37" />
+                                <text x="8.79" y="843.07" class="st6">P-127</text>
+                            </g>
+                            <g id="shape541-1567" transform="translate(1443.16,-341.858)">
+                                <title>接合点.541</title>
+                            </g>
+                            <g id="shape542-1569" transform="translate(1444.57,-336.189)">
+                                <title>副管道.542</title>
+                                <path d="M0 843.31 L34.02 843.31" class="st37" />
+                                <text x="55.32" y="835.99" class="st6">P-126</text>
+                            </g>
+                            <g id="shape543-1573" transform="translate(1472.6,-343.276)">
+                                <title>副管道.543</title>
+                                <path d="M5.99 850.39 L8.19 850.39 L8.19 909.92" class="st37" />
+                                <text x="29.48" y="843.07" class="st6">P-128</text>
+                            </g>
+                            <g id="shape544-1577" transform="translate(1477.17,-341.858)">
+                                <title>接合点.544</title>
+                            </g>
+                            <g id="shape545-1579" transform="translate(1478.59,-336.189)">
+                                <title>副管道.545</title>
+                                <path d="M0 843.31 L51.02 843.31" class="st37" />
+                                <text x="72.32" y="835.99" class="st6">P-126</text>
+                            </g>
+                            <g id="shape546-1583" transform="translate(1537.87,-343.345)">
+                                <title>副管道.546</title>
+                                <path d="M-5.92 850.39 L-8.26 850.39 L-8.26 909.99" class="st37" />
+                                <text x="13.04" y="843.07" class="st6">P-129</text>
+                            </g>
+                            <g id="group547-1587" transform="translate(1491.24,1417.04) rotate(180)">
+                                <title>工作表.547</title>
+                                <g id="shape550-1588" transform="translate(850.394,829.385) rotate(90)">
+                                    <title>圆形.277</title>
+                                    <path d="M0 839.94 A10.5044 10.4541 0 0 1 21.01 839.94 A10.5044 10.4541 0 0 1 0 839.94 Z" class="st38" />
+                                </g>
+                                <g id="group553-1590" transform="translate(856.851,829.694) rotate(90)">
+                                    <title>工作表.553</title>
+                                    <g id="shape554-1591" transform="translate(-841.186,850.394) rotate(-90)">
+                                        <title>三角形.12</title>
+                                        <path d="M9.61 850.39 L4.46 841.19 L-0.69 850.39 L9.61 850.39 Z" class="st24" />
+                                    </g>
+                                    <g id="shape555-1593" transform="translate(9.20773,-3.91243)">
+                                        <title>矩形.524</title>
+                                        <rect x="0" y="849.302" width="2.3677" height="1.09184" class="st24" />
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="group548-1595" transform="translate(1444.18,1417.11) rotate(180)">
+                                <title>工作表.548</title>
+                                <g id="shape549-1596" transform="translate(850.394,829.385) rotate(90)">
+                                    <title>圆形.277</title>
+                                    <path d="M0 839.94 A10.5044 10.4541 0 0 1 21.01 839.94 A10.5044 10.4541 0 0 1 0 839.94 Z" class="st38" />
+                                </g>
+                                <g id="group551-1598" transform="translate(856.851,829.694) rotate(90)">
+                                    <title>工作表.551</title>
+                                    <g id="shape552-1599" transform="translate(-841.186,850.394) rotate(-90)">
+                                        <title>三角形.12</title>
+                                        <path d="M9.61 850.39 L4.46 841.19 L-0.69 850.39 L9.61 850.39 Z" class="st24" />
+                                    </g>
+                                    <g id="shape556-1601" transform="translate(9.20773,-3.91243)">
+                                        <title>矩形.524</title>
+                                        <rect x="0" y="849.302" width="2.3677" height="1.09184" class="st24" />
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="group557-1603" transform="translate(1540.07,1417.04) rotate(180)">
+                                <title>工作表.557</title>
+                                <g id="shape558-1604" transform="translate(850.394,829.385) rotate(90)">
+                                    <title>圆形.277</title>
+                                    <path d="M0 839.94 A10.5044 10.4541 0 0 1 21.01 839.94 A10.5044 10.4541 0 0 1 0 839.94 Z" class="st38" />
+                                </g>
+                                <g id="group559-1606" transform="translate(856.851,829.694) rotate(90)">
+                                    <title>工作表.559</title>
+                                    <g id="shape560-1607" transform="translate(-841.186,850.394) rotate(-90)">
+                                        <title>三角形.12</title>
+                                        <path d="M9.61 850.39 L4.46 841.19 L-0.69 850.39 L9.61 850.39 Z" class="st24" />
+                                    </g>
+                                    <g id="shape561-1609" transform="translate(9.20773,-3.91243)">
+                                        <title>矩形.524</title>
+                                        <rect x="0" y="849.302" width="2.3677" height="1.09184" class="st24" />
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="group518-1611" transform="translate(1589.14,-207.213)">
+                                <title>接口点 1</title>
+                                <g id="shape518-1612">
+                                    <path d="M8.5 841.89 L8.5 867.4" class="st15" />
+                                </g>
+                                <g id="shape519-1615">
+                                    <title>工作表.519</title>
+                                    <path d="M8.5 850.39 L8.5 833.39 L0 841.89 L8.5 850.39 Z" class="st24" />
+                                </g>
+                                <g id="shape520-1617" transform="translate(8.50394,0)">
+                                    <title>工作表.520</title>
+                                    <path d="M0 850.39 L8.5 841.89 L0 833.39 L0 850.39 Z" class="st39" />
+                                </g>
+                            </g>
+                            <g id="shape521-1619" transform="translate(1597.64,-197.291)">
+                                <title>副管道.521</title>
+                                <path d="M0 857.48 L-68.03 857.48" class="st37" />
+                                <text x="-46.73" y="850.16" class="st6">P-130</text>
+                            </g>
+                            <g id="shape522-1623" transform="translate(1486.77,-262.739)">
+                                <title>副管道.522</title>
+                                <path d="M-5.99 850.39 L-8.19 922.93" class="st37" />
+                                <text x="13.11" y="915.61" class="st6">P-131</text>
+                            </g>
+                            <g id="shape525-1627" transform="translate(1477.17,-188.787)">
+                                <title>接合点.525</title>
+                            </g>
+                            <g id="shape526-1629" transform="translate(1478.59,-190.205)">
+                                <title>副管道.526</title>
+                                <path d="M0 850.39 L-44.86 850.39 L-44.86 777.93" class="st37" />
+                                <text x="-23.56" y="843.07" class="st6">P-130</text>
+                            </g>
+                            <g id="shape523-1633" transform="translate(1522.53,-262.739)">
+                                <title>副管道.523</title>
+                                <path d="M7.09 850.39 L7.09 922.93" class="st37" />
+                                <text x="28.39" y="915.61" class="st6">P-132</text>
+                            </g>
+                            <g id="shape524-1637" transform="translate(1528.2,-188.787)">
+                                <title>接合点.524</title>
+                            </g>
+                            <g id="shape527-1639" transform="translate(1529.61,-183.118)">
+                                <title>副管道.527</title>
+                                <path d="M0 843.31 L-51.02 843.31" class="st37" />
+                                <text x="-29.72" y="835.99" class="st6">P-130</text>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+
+
+            </div>
+            @* <div class="cen-bottom">
+            <div class="title">数据可视化测试1</div>
+            <div class="bottom-b">
+            <div id="chart4" class="allnav"></div>
+            </div>
+
+            </div> *@
+        </div>
+        <div class="center-right fr">
+            <div class="right-top">
+                <div class="title">报警展示</div>
+                <div class="echart wenzi">
+                    <div class="gun">
+                        <span>设备名称</span>
+                        <span>特征量名称</span>
+                        <span>特征量数值</span>
+                    </div>
+                    <div id="FontScroll" class="myscroll">
+                        <ul>
+                            <li>
+                                <div class="fontInner clearfix">
+                                    <span>
+                                        <b>F001RE</b>
+                                    </span>
+                                    <span>GR522</span>
+                                    <span>2GR522</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix">
+                                    <span>
+                                        <b>F001RE</b>
+                                    </span>
+                                    <span>GR522</span>
+                                    <span>2GR522</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix">
+                                    <span>
+                                        <b>F001RE</b>
+                                    </span>
+                                    <span>GR522</span>
+                                    <span>2GR522</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix">
+                                    <span>
+                                        <b>F001RE</b>
+                                    </span>
+                                    <span>GR522</span>
+                                    <span>2GR522</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix">
+                                    <span>
+                                        <b>F001RE</b>
+                                    </span>
+                                    <span>GR522</span>
+                                    <span>2GR522</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix">
+                                    <span>
+                                        <b>F001RE</b>
+                                    </span>
+                                    <span>GR522</span>
+                                    <span>2GR522</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix">
+                                    <span>
+                                        <b>F001RE</b>
+                                    </span>
+                                    <span>GR522</span>
+                                    <span>2GR522</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix">
+                                    <span>
+                                        <b>F001RE</b>
+                                    </span>
+                                    <span>GR522</span>
+                                    <span>2GR522</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix">
+                                    <span>
+                                        <b>F001RE</b>
+                                    </span>
+                                    <span>GR522</span>
+                                    <span>2GR522</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="fontInner clearfix">
+                                    <span>
+                                        <b>F001RE</b>
+                                    </span>
+                                    <span>GR522</span>
+                                    <span>2GR522</span>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="right-cen">
+                <div class="title">连接状态</div>
+                <div class="totalbox">
+                    <div class="row" style="padding: 0 2vw">
+                        <div class="col-4">
+                            <div class="column">
+                                <p>IoTDB数据库</p>
+                                <div class="purple"><span class="bold-1">未连接</span></div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="column">
+                                <p>模拟机状态</p>
+                                <div class="grn"><span class="bold-2">未连接</span></div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="column">
+                                <p>孪生机状态</p>
+                                <div class="bule"><span class="bold-3">未连接</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    $(function () {
+    
+        $('.myscroll').myScroll({
+            speed: 60, //数值越大，速度越慢
+            rowHeight: 38 //li的高度
+        });
+        $(document).ready(function () {
+            var whei = $(window).width()
+            $("html").css({ fontSize: whei / 22 });
+            $(window).resize(function () {
+                var whei = $(window).width();
+                $("html").css({ fontSize: whei / 22 })
+            });
+        });
+        var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
+        var baroption = {
+            grid: {
+                top: '10%',
+                bottom: '5%',
+                left: '1%',
+                containLabel: true
+            },
+
+            xAxis: {
+                type: 'category',
+                data: ['一回路耗热量', '抽气做功耗热量', '冷源损失', '发电机热量', '机械损失份额', '给水吸收热量'],
+                axisLine: {
+                    lineStyle: {
+                        color: '#FFF',
+                        width: 1,//这里是为了突出显示加上的
+                    }
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: '#FFF',
+                        fontSize: 10,
+                    },
+                    interval: 0,
+                    rotate: "30"
+                },
+            },
+            yAxis: {
+                type: 'value',
+                axisLine: {
+                    lineStyle: {
+                        color: '#FFF',
+                        width: 1,//这里是为了突出显示加上的
+                    }
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: '#FFFF',
+                        fontSize: 10,
+                    }
+                },
+            },
+            series: [
+                {
+                    data: [120, 200, 150, 80, 70, 250],
+                    barWidth: 25, // 设置柱子宽度为 20 像素
+                    type: 'bar',
+                    // 以下为是否显示，显示位置和显示格式的设置
+                    label: {
+                        show: true,
+                        fontSize: 10,
+                        position: 'top',
+                        color: '#FFF',
+                        formatter: function (params) {
+                            if (params.value > 0) {
+                                return params.value
+                            } else {
+                                return ''
+                            }
+                        }
+                    },
+                    itemStyle: {
+                        color: '#4ADEFE', // 设置柱子颜色
+                        with: 20
+                    }
+
+                }
+            ]
+        };
+
+        barChart.setOption(baroption);
+
+        var html = $(".wrap ul").html()
+        $(".wrap ul").append(html)
+        var ls = $(".wrap li").length / 2 + 1
+        i = 0
+        ref = setInterval(function () {
+            i++
+            if (i == ls) {
+                i = 1
+                $(".wrap ul").css({
+                    marginTop: 0
+                })
+                $(".wrap ul").animate({
+                    marginTop: -'.52' * i + 'rem'
+                }, 1000)
+            }
+            $(".wrap ul").animate({
+                marginTop: -'.52' * i + 'rem'
+            }, 1000)
+
+        }, 2400);
+           // connectStatus();
+    });
+
+
+    //顶部时间
+    function getTime() {
+        var myDate = new Date();
+        var myYear = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
+        var myMonth = myDate.getMonth() + 1; //获取当前月份(0-11,0代表1月)
+        var myToday = myDate.getDate(); //获取当前日(1-31)
+        var myDay = myDate.getDay(); //获取当前星期X(0-6,0代表星期天)
+        var myHour = myDate.getHours(); //获取当前小时数(0-23)
+        var myMinute = myDate.getMinutes(); //获取当前分钟数(0-59)
+        var mySecond = myDate.getSeconds(); //获取当前秒数(0-59)
+        var week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+        var nowTime;
+
+        nowTime = myYear + '-' + fillZero(myMonth) + '-' + fillZero(myToday) + '&nbsp;&nbsp;' + fillZero(myHour) + ':' + fillZero(myMinute) + ':' + fillZero(mySecond) + '&nbsp;&nbsp;' + week[myDay] + '&nbsp;&nbsp;';
+        //console.log(nowTime);
+        $('#time').html(nowTime);
+    };
+    function fillZero(str) {
+        var realNum;
+        if (str < 10) {
+            realNum = '0' + str;
+        } else {
+            realNum = str;
+        }
+        return realNum;
+    }
+   // setInterval(getTime, 1000);
+
+
+    // 连接状态
+    function connectStatus() {
+        // 连接状态
+        var status = true;
+        setInterval(function () {
+             $.ajax({
+               // url: "http://"+'@GlobalContext.SystemConfig.WebApiIP' + ":" + '@GlobalContext.SystemConfig.WebApiPort'+"/IotDBData/IsIotDB",    //调用的地址GetIotDBIS
+                url: "@Url.Content("~/Home/GetIotDBIS")",    //调用的地址GetIotDBIS
+                async: true,					//是否启动异步
+                success: function (data) {		//成功后执行 （data：用于后台返回值的接收 名字随意取）
+                   if(data.IsIotDB == "true")
+                   {                   
+                       $('.bold-1').text('已连接');
+                   }
+                   else
+                   {                                       
+                       $('.bold-1').text('未连接');
+                   }
+
+                   if(data.IsSimulator  == "true")
+                   {                   
+                       $('.bold-2').text('已连接');
+                   }
+                   else
+                   {
+                       $('.bold-2').text('未连接');
+                   }
+                   if(data.IsTwin  == "true")
+                   {
+                       $('.bold-3').text('已连接'); 
+                   }
+                   else
+                   {
+                        $('.bold-3').text('未连接');                  
+                   }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) { 
+                    //失败后执行                  
+                    console.log(XMLHttpRequest.status);
+                    console.log(XMLHttpRequest.readyState);
+                    console.log(textStatus);
+                }
+
+             });
+        }, 10000);
+    }
+
+</script>

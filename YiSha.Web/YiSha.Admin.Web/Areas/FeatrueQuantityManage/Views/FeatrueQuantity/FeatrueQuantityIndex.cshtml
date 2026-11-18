@@ -1,0 +1,247 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<div class="container-div">
+    <div class="row">
+        <div id="searchDiv" class="col-sm-12 search-collapse">
+            <div class="select-list">
+                <ul>
+                    <li>
+                        关键字：<input id="keyWord" col="KeyWord" type="text" />
+                    </li>
+                    <li>
+                        <span id="feattrueQuantitySysType" col="FeattrueQuantitySysType"></span>
+                    </li>
+                    <li>
+                        <a id="btnSearch" class="btn btn-primary btn-sm" onclick="searchGrid()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-12 search-collapse center">
+            <a class="btn btn-warning" style="pointer-events: none;"><span id="SynPolicySteadyCondtion"> 工况稳定性：0/1</span></a>
+            <a class="btn btn-warning" style="pointer-events: none;"> <span id="SynPolicyLogicSynEd"> 逻辑同步完成：0/1</span></a>
+            <a class="btn btn-warning" style="pointer-events: none;"> <span id="SynPolicyLSEDelay"> 逻辑同步完成延时中：0/1</span></a>
+            <a class="btn btn-warning" style="pointer-events: none;"> <span id="SynPolicyMaxDelt"> 参数最大差：0%</span></a>
+            <a class="btn btn-warning" style="pointer-events: none;"><span id="HYH3IMPORT"> 特征量导入中：0/1</span></a>
+        </div>
+
+        <div class="btn-group-sm hidden-xs" id="toolbar">
+            <a class="btn btn-success" onclick="StartCompute()"><i class="fa fa-plus"></i> 开始反算</a>
+            <a class="btn btn-success" onclick="StopCompute()"><i class="fa fa-plus"></i> 停止反算</a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="gridTable" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>  
+
+<script type="text/javascript">
+    $(function () {
+        getState();
+        initGrid();
+
+        $("#feattrueQuantitySysType").ysComboBox({
+            data: top.getDataDict("FeattrueQuantitySysType"),
+            key: "DictValue",
+            value: "DictValue",
+        });
+
+    });
+     setInterval(getState, 2000);
+    function initGrid() {
+        var queryUrl = '@Url.Content("~/FeatrueQuantityManage/FeatrueQuantity/GetPageListJson")';
+        $('#gridTable').ysTable({
+            url: queryUrl,
+            columns: [
+                { checkbox: true, visible: true },
+                { field: 'Id', title: 'Id', visible: false },
+                { field: 'Device', title: '设备名称',sortable: true },
+                { field: 'Type', title: '设备类型', sortable: true },
+                { field: 'CalculatedValue', title: '计算值'},
+                { field: 'ProtNameIotDB', title: 'IotDB别名'},
+                { field: 'ReferenceValue', title: '参考值'},
+                {
+                    title: '趋势',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                          actions.push('<a class="btn btn-success btn-xs" href="#" onclick="TrendChart(\'' + row.ProtNameIotDB + '\')"><i class="fa fa-search"></i>查看趋势</a>');
+                        return actions.join('');
+                    }
+                },
+                { field: 'Remark', title: '备注' },
+            ],
+            queryParams: function (params) {
+                var pagination = $('#gridTable').ysTable('getPagination', params);
+                var queryString = $('#searchDiv').getWebControls(pagination);
+                return queryString;
+            }
+        });
+    }
+
+    function searchGrid() {
+        $('#gridTable').ysTable('search');
+        resetToolbarStatus();
+    }
+
+    function showSaveForm(bAdd) {
+        var id = 0;
+        if (!bAdd) {
+            var selectedRow = $('#gridTable').bootstrapTable('getSelections');
+            if (!ys.checkRowEdit(selectedRow)) {
+                return;
+            }
+            else {
+                id = selectedRow[0].Id;
+            }
+        }
+        ys.openDialog({
+            title: id > 0 ? '编辑' : '添加',
+            content: '@Url.Content("~/FeatrueQuantityManage/FeatrueQuantity/FeatrueQuantityForm")' + '?id=' + id,
+            width: '768px',
+            height: '550px',
+            callback: function (index, layero) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                iframeWin.saveForm(index);
+            }
+        });
+    }
+
+    function deleteForm() {
+        var selectedRow = $('#gridTable').bootstrapTable('getSelections');
+        if (ys.checkRowDelete(selectedRow)) {
+            ys.confirm('确认要删除选中的' + selectedRow.length + '条数据吗？', function () {
+                var ids = ys.getIds(selectedRow);
+                ys.ajax({
+                    url: '@Url.Content("~/FeatrueQuantityManage/FeatrueQuantity/DeleteFormJson")' + '?ids=' + ids,
+                    type: 'post',
+                    success: function (obj) {
+                        if (obj.Tag == 1) {
+                            ys.msgSuccess(obj.Message);
+                            searchGrid();
+                        }
+                        else {
+                            ys.msgError(obj.Message);
+                        }
+                    }
+                });
+            });
+        }
+    }
+
+    function onEditableSave(field, row, oldValue, $el) {
+        alert("字段名：" + field + "，当前值：" + row[field] + "，旧值：" + oldValue);
+    }
+
+    async function getState() {
+        $.ajax({
+            url: '@Url.Content("~/FeatrueQuantityManage/FeatrueQuantity/GetState")',
+            type: 'get',
+            success: function (obj) {
+                if(obj!=null)
+                {
+                   if(parseFloat(obj.Data.SynPolicySteadyCondtionState)>=1)
+                   {
+                       $('#SynPolicySteadyCondtion').text('工况稳定性：1/1');
+                   }
+                   else
+                   {
+                    $('#SynPolicySteadyCondtion').text('工况稳定性：0/1');
+                   }
+
+                   if(parseFloat(obj.Data.SynPolicyLogicSynEdState)>=1){
+                       $('#SynPolicyLogicSynEd').text('逻辑同步完成：1/1');
+                   }
+                   else
+                   {
+                       $('#SynPolicyLogicSynEd').text('逻辑同步完成：0/1');
+                   }
+
+                   if(parseFloat(obj.Data.SynPolicyLSEDelayState)>=1)
+                   {
+                       $('#SynPolicyLSEDelay').text('逻辑同步完成延时中：1/1');
+                   }
+                   else
+                   {
+                       $('#SynPolicyLSEDelay').text('逻辑同步完成延时中：0/1');
+                   }
+
+                   if(parseFloat(obj.Data.SynPolicyMaxDeltState)>=1)
+                   {
+                       $('#SynPolicyMaxDelt').text('参数最大差：100%');
+                   }
+                   else
+                   {
+                       $('#SynPolicyMaxDelt').text('参数最大差：0%');
+                   }
+
+                   if(parseFloat(obj.Data.HYH3IMPORTState)>=1)
+                   {
+                       $('#HYH3IMPORT').text('特征量导入中：1/1');
+                   }
+                   else
+                   {
+                       $('#HYH3IMPORT').text('特征量导入中：0/1');
+                   }
+                }
+                else
+                {
+                    console.log("找不到对应的ODG点")
+                }
+
+            }
+        });
+    }
+
+    function TrendChart(Device) {
+        ys.openDialog({
+            title: '特征量趋势图',
+            content: '@Url.Content("~/FeatrueQuantityManage/FeatrueQuantity/FeatrueQuantityTrendChart?Device=")' + Device,
+            width: '1000px',
+            height: '600px',
+            btn: [],
+            callback: function (index, layero) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                iframeWin.saveForm(index);
+            }
+        });
+    }
+
+
+    //开始计算
+    function StartCompute(){
+         ys.ajax({
+                url: '@Url.Content("~/FeatrueQuantityManage/FeatrueQuantity/StartCompute")',
+                type: 'get',
+                success: function (obj) {
+                    if (obj.Tag == 1) {
+                        ys.msgSuccess(obj.Message);
+                        searchGrid();
+                    }
+                    else {
+                        ys.msgError(obj.Message);
+                    }
+                }
+         });
+    }
+
+     //结束计算
+    function StopCompute(){
+         ys.ajax({
+                url: '@Url.Content("~/FeatrueQuantityManage/FeatrueQuantity/StopCompute")',
+                type: 'get',
+                success: function (obj) {
+                    if (obj.Tag == 1) {
+                        ys.msgSuccess(obj.Message);
+                        searchGrid();
+                    }
+                    else {
+                        ys.msgError(obj.Message);
+                    }
+                }
+         });
+    }
+
+
+</script>

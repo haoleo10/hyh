@@ -1,0 +1,468 @@
+﻿@using YiSha.Util
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment HostingEnvironment
+@{
+    ViewData["Title"] = "ThreeRightView";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+
+<body>
+    <!-- 表单配置区 --> 
+    <div class="config-list" id="configList">
+        <!-- 配置项将通过 JavaScript 动态生成 -->
+    </div>
+
+    <script>
+
+        var StateA = ys.request("StateA");
+        var StateB = ys.request("StateB");
+        var PointNameA = ys.request("PointNameA");
+        var PointNameB = ys.request("PointNameB");
+        //接收参数 DataType 0 实时数据 1 历史数据  SYS 系统名
+        var DataType = ys.request("DataType");
+        var StartTimeA = ys.request("StartTimeA") || "";
+        var EndTimeA = ys.request("EndTimeA") || "";
+        var StartTimeB = ys.request("StartTimeB") || "";
+        var EndTimeB = ys.request("EndTimeB") || "";
+        var Multiple = ys.request("Multiple") || "";
+        var Stop = ys.request("Stop") || "";
+
+
+
+        function addOneSecond(timeStr, maxTimeStr) {
+            if (!timeStr) return timeStr;
+
+            // 1. 解析输入时间
+            let cleanTime = timeStr.trim().split(':').slice(0, 3).join(':');
+            let date = new Date(cleanTime);
+            if (isNaN(date.getTime())) {
+                let now = new Date();
+                let dateStr = now.toISOString().split('T')[0] + ' ' + cleanTime;
+                date = new Date(dateStr);
+                if (isNaN(date.getTime())) {
+                    return timeStr;
+                }
+            }
+
+            // 2. 如果有结束时间限制，先解析结束时间
+            let endDate = null;
+            if (maxTimeStr) {
+                let endClean = maxTimeStr.trim().split(':').slice(0, 3).join(':');
+                endDate = new Date(endClean);
+                if (isNaN(endDate.getTime())) {
+                    // 如果结束时间解析失败，尝试补充日期
+                    let now = new Date();
+                    let endStr = now.toISOString().split('T')[0] + ' ' + endClean;
+                    endDate = new Date(endStr);
+                }
+            }
+
+            // 3. 计算+1秒后的时间
+            date.setSeconds(date.getSeconds() + 1);
+
+            // 4. 如果超过结束时间，则强制设置为结束时间
+            if (endDate && !isNaN(endDate.getTime()) && date > endDate) {
+                date = new Date(endDate);
+                pauseRefresh();
+            }
+
+            // 5. 格式化输出
+            let y = date.getFullYear();
+            let M = String(date.getMonth() + 1).padStart(2, '0');
+            let d = String(date.getDate()).padStart(2, '0');
+            let H = String(date.getHours()).padStart(2, '0');
+            let m = String(date.getMinutes()).padStart(2, '0');
+            let s = String(date.getSeconds()).padStart(2, '0');
+
+            return `${y}-${M}-${d} ${H}:${m}:${s}`;
+        }
+
+        // 接口地址
+        const API_URL ='@GlobalContext.SystemConfig.ThreeThreeRightURL'+'PointNameA='+PointNameA+'&PointNameB='+PointNameB+'&DataType='+DataType+'&StartTimeA='+StartTimeA+'&EndTimeA='+ EndTimeA+'&StartTimeB='+StartTimeB+'&EndTimeB='+ EndTimeB + '&StateA='+StateA+ '&StateB='+StateB;
+
+        // 2. 固定不变的基础接口（除了时间）
+        const API_BASE = '@GlobalContext.SystemConfig.ThreeThreeRightURL' + 'PointNameA='+PointNameA+'&PointNameB='+PointNameB+'&DataType='+ DataType;
+         // 3. 定时器 & 动态结束时间
+        let timer = null;
+        let currentTimeStartA=StartTimeA;
+        let currentTimeEndA=addOneSecond(StartTimeA,EndTimeA);
+        let currentTimeStartB=StartTimeB;
+        let currentTimeEndB=addOneSecond(StartTimeB,EndTimeB);
+
+        // 保存用户输入状态
+        const inputStates = {}; 
+        // 是否正在输入（用于暂停刷新）
+        let isInputting = false;
+        // 定时器ID
+        let refreshTimer = null;
+
+        function createConfigItem(probeNameA,probeNameB, value, value2 ,index) {
+           // 恢复之前保存的状态
+           const savedState = inputStates[index] || {};
+
+           return `
+         <div class="config-item" data-index="${index}" data-probe="${probeNameA}" data-value="${value}"  data-value2="${value2}">
+              <span class="config-label">${probeNameA}，${value} || ${probeNameB}，${value2}</span>
+            </div>
+           `;
+        }
+        // 暂停刷新
+        function pauseRefresh() {
+          isInputting = true;
+        }
+
+        // 恢复刷新
+        function resumeRefresh() {
+          isInputting = false;
+        }
+        
+        // 在 checkCondition 外部定义集合
+        const triggeredSet = new Set();
+         // 检查条件并高亮显示
+        async function checkCondition(index) {
+           const item = document.querySelector(`.config-item[data-index="${index}"]`);
+           if (!item) return;
+           const label = item.querySelector('.config-label');
+           const value = parseFloat(item.dataset.value);
+           const value2 = parseFloat(item.dataset.value2);
+           const probeName = item.dataset.probe;
+
+           // 重置样式（无论是否匹配）
+           item.classList.remove('highlight-red');
+           label.classList.remove('highlight-text');
+
+           let matched = false;
+           if (value !== value2) {
+              matched = true;
+           }
+
+           if (matched) {
+              item.classList.add('highlight-red');
+              label.classList.add('highlight-text');
+
+              // 仅当该条目尚未触发过时，才发送请求
+              if (!triggeredSet.has(probeName)) {
+                 triggeredSet.add(probeName);
+
+                 // 构造 URL（注意此处可能需要修正拼接符号）
+                 const API_BJADD = '@GlobalContext.SystemConfig.API_BJADD' + probeName +
+                                   '&Param_Value=' + value +
+                                   '&Param_Value2=' + value2 +
+                                   '&Source_SYS=三层报警点：' + probeName +
+                                   '&AlarmLayer=3';
+                 try {
+                    const response = await fetch(API_BJADD);
+                    if (!response.ok) {
+                       throw new Error('网络请求失败');
+                    }
+                    console.log(`[首次触发] ${probeName}，当前值: ${value}，条件值: ${value2}`);
+                 } catch (error) {
+                    console.error('获取数据失败:', error);
+                      //若请求失败，可考虑移除标记以允许重试（根据需求）
+                       triggeredSet.delete(probeName);
+                 }
+              } else {
+                 console.log(`[已触发过，跳过] ${probeName}`);
+              }
+           } else {
+              // 条件不满足时，清除触发记录，允许下次满足时再次触发
+              triggeredSet.delete(probeName);
+           }
+        }
+
+        // 获取接口数据
+        async function fetchData() {
+            currentTimeStartA = addOneSecond(currentTimeStartA);
+            currentTimeStartB = addOneSecond(currentTimeStartB);
+
+            const url = API_BASE + '&StartTimeA=' + currentTimeStartA + '&StartTimeB=' + currentTimeStartB+'&StateA='+ StateA +'&StateB='+StateA;
+
+            console.log("当前请求接口：", url); // 你会看到 EndTime 每秒在变
+
+          try {
+              if(DataType === "0")
+              {
+                  const response = await fetch(API_URL);
+                    if (!response.ok) {
+                        throw new Error('网络请求失败');
+                    }
+                    const data = await response.json();
+                    return data;
+              }
+              else
+              {
+                  const response = await fetch(url);
+                  if (!response.ok) {
+                      throw new Error('网络请求失败');
+                  }
+                  const data = await response.json();
+                  return data;
+              }
+
+          } catch (error) {
+            console.error('获取数据失败:', error);
+            return null;
+
+          }
+        }
+
+        // 渲染配置列表
+        function renderConfigList(data) {
+          const configList = document.getElementById('configList');
+
+          if (!data) {
+            configList.innerHTML = '<div class="config-item"><span class="config-label">暂无数据</span></div>';
+            return;
+          }
+          // 生成配置项 HTML
+          let html = '';
+
+          for (let i = 0; i < data.length; i++) {
+            const reg = /(?<=A55\.).*(?=\.value)/;
+           // const probeNameA = data[i].DeviceCode;
+            const probeNameA = getTargetVal(data[i].FSS_Path);
+            const probeNameB = getTargetVal(data[i].Reactor_Path);
+           
+            const value = data[i].FSS_Value;
+            const value2 = data[i].Reactor_Value;
+            html += createConfigItem(probeNameA, probeNameB,value, value2,i);
+          }
+
+          configList.innerHTML = html;
+
+          // 渲染后重新检查所有条件
+          for (let i = 0; i < data.length; i++) {
+            checkCondition(i);
+          }
+        }
+        function getTargetVal(str) {
+          const match = str.match(/AA5\.(.*?)\.value/);
+          return match ? match[1] : null;
+        }
+        // 初始化
+        async function init() {
+          // 首次加载数据
+          const data = await fetchData();
+          renderConfigList(data);
+
+          // 每秒刷新一次数据（如果用户没有在输入）
+          refreshTimer = setInterval(async () => {
+
+            if (!isInputting) {
+              const data = await fetchData();
+              renderConfigList(data);
+            }
+          }, 1000);
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+    <style>
+        /* Reset and Base Styles - 深天蓝科技主题（舒适亮色版） */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: radial-gradient(circle at 20% 30%, #0a2647, #051a2f);
+            color: #d4eaff;
+            line-height: 1.5;
+            min-height: 100vh;
+            position: relative;
+        }
+
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: linear-gradient(rgba(0, 200, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 200, 255, 0.1) 1px, transparent 1px);
+                background-size: 40px 40px;
+                pointer-events: none;
+                z-index: 0;
+            }
+
+        .config-btn {
+            height: 40px;
+            padding: 0 28px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(135deg, #1b5a9c, #0e3a60);
+            border: 1px solid rgba(0, 180, 255, 0.5);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+            .config-btn:hover {
+                background: linear-gradient(135deg, #2a6eb5, #144a78);
+                border-color: #6bc0ff;
+                box-shadow: 0 6px 16px rgba(0, 160, 255, 0.4);
+                transform: translateY(-2px);
+                color: #ffffff;
+            }
+
+            .config-btn:active {
+                transform: translateY(1px);
+            }
+
+        .config-list {
+            background: transparent;
+            min-height: calc(100vh - 72px);
+            padding: 24px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .config-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(8, 24, 45, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 18px 24px;
+            margin-bottom: 16px;
+            border-radius: 28px;
+            border: 1px solid rgba(0, 160, 255, 0.45);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            flex-wrap: wrap;
+        }
+
+            .config-item:hover {
+                border-color: #5cb8ff;
+                background: rgba(12, 32, 55, 0.95);
+                box-shadow: 0 12px 28px rgba(0, 120, 255, 0.3);
+                transform: translateY(-2px);
+            }
+
+        /* 标签文字 - 柔和亮蓝 */
+        .config-label {
+            font-size: 15px;
+            font-weight: 700;
+            color: #cae6ff;
+            flex-shrink: 0;
+            margin-right: 20px;
+            letter-spacing: 0.3px;
+            text-shadow: 0 0 4px rgba(0, 160, 255, 0.4);
+        }
+
+        .config-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 160px;
+        }
+
+        .config-select {
+            height: 42px;
+            padding: 0 32px 0 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #e0f0ff;
+            background: #0a1f38f5;
+            border: 1px solid #3a8bcb;
+            border-radius: 16px;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238cd4ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            transition: all 0.2s;
+        }
+
+            .config-select:hover,
+            .config-select:focus {
+                border-color: #6bc0ff;
+                background: #112c4a;
+                color: #ffffff;
+                box-shadow: 0 0 0 2px rgba(107, 192, 255, 0.3);
+            }
+
+        .config-input {
+            width: 160px;
+            height: 42px;
+            padding: 0 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #e0f0ff;
+            background: #0a1f38f5;
+            border: 1px solid #3a8bcb;
+            border-radius: 16px;
+            outline: none;
+            transition: all 0.2s;
+            font-family: 'JetBrains Mono', 'SF Mono', monospace;
+        }
+
+            .config-input::placeholder {
+                color: #8abae5;
+                font-weight: 400;
+            }
+
+            .config-input:hover,
+            .config-input:focus {
+                border-color: #6bc0ff;
+                background: #112c4a;
+                color: #ffffff;
+                box-shadow: 0 0 0 2px rgba(107, 192, 255, 0.3);
+            }
+
+        /* 高亮警示 - 亮红但不过曝 */
+        .highlight-red {
+            background: rgba(255, 80, 100, 0.22) !important;
+            border: 1px solid #ff8a9a !important;
+            box-shadow: 0 0 14px rgba(255, 80, 100, 0.5) !important;
+            backdrop-filter: blur(4px);
+        }
+
+        .highlight-text {
+            color: #ffb8c2 !important;
+            font-weight: 800;
+            text-shadow: 0 0 6px rgba(255, 80, 100, 0.7);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #07182e;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2a6ea5;
+            border-radius: 10px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #4a9bdb;
+            }
+
+        .config-item {
+            flex-wrap: wrap;
+        }
+
+        .config-controls {
+            min-width: auto;
+        }
+
+        .config-input {
+            width: 100%;
+            max-width: 220px;
+        }
+    </style>
+</body>

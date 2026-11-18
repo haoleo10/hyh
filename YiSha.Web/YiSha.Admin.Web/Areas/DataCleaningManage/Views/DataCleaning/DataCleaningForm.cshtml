@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "~/Views/Shared/_FormWhite.cshtml";
+}
+
+<div class="wrapper animated fadeInRight">
+    <form id="form" class="form-horizontal m">
+        <div class="form-group">
+            <label class="col-sm-2 control-label ">DeviceName<font class="red"> *</font></label>
+            <div class="col-sm-4">
+                <input id="deviceName" col="DeviceName" type="text" class="form-control" />
+            </div>
+            <label class="col-sm-2 control-label ">System<font class="red"> *</font></label>
+            <div class="col-sm-4">
+                <input id="system" col="System" type="text" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label ">Remark<font class="red"> *</font></label>
+            <div class="col-sm-4">
+                <input id="remark" col="Remark" type="text" class="form-control" />
+            </div>
+            <label class="col-sm-2 control-label ">Value<font class="red"> *</font></label>
+            <div class="col-sm-4">
+                <input id="value" col="Value" type="text" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label ">DeviceType<font class="red"> *</font></label>
+            <div class="col-sm-4">
+                <input id="deviceType" col="DeviceType" type="text" class="form-control" />
+            </div>
+            <label class="col-sm-2 control-label ">SanitizedValue<font class="red"> *</font></label>
+            <div class="col-sm-4">
+                <input id="sanitizedValue" col="SanitizedValue" type="text" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label ">Time<font class="red"> *</font></label>
+            <div class="col-sm-4">
+                <input id="time" col="Time" type="text" class="form-control" />
+            </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    var id = ys.request("id");
+    $(function () {
+        getForm();
+
+        $('#form').validate({
+            rules: {
+                deviceName: { required: true }
+            }
+        });
+    });
+
+    function getForm() {
+        if (id > 0) {
+            ys.ajax({
+                url: '@Url.Content("~/DataCleaningManage/DataCleaning/GetFormJson")' + '?id=' + id,
+                type: 'get',
+                success: function (obj) {
+                    if (obj.Tag == 1) {
+                        $('#form').setWebControls(obj.Data);
+                    }
+                }
+            });
+        }
+        else {
+            var defaultData = {};
+            $('#form').setWebControls(defaultData);
+        }
+    }
+
+    function saveForm(index) {
+        if ($('#form').validate().form()) {
+            var postData = $('#form').getWebControls({ Id: id });
+            ys.ajax({
+                url: '@Url.Content("~/DataCleaningManage/DataCleaning/SaveFormJson")',
+                type: 'post',
+                data: postData,
+                success: function (obj) {
+                    if (obj.Tag == 1) {
+                        ys.msgSuccess(obj.Message);
+                        parent.searchGrid();
+                        parent.layer.close(index);
+                    }
+                    else {
+                        ys.msgError(obj.Message);
+                    }
+                }
+            });
+        }
+    }
+</script>
+
