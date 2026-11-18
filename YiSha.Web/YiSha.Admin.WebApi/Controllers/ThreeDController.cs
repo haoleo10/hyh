@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NPOI.POIFS.Crypt.Dsig;
@@ -252,7 +252,7 @@ namespace YiSha.Admin.WebApi.Controllers
 
         }
 
-        public static List<DeviceMatchResult> MatchFssAndReactor(IotDBinfoLow data, char Model, bool ishistory = false)
+        public static List<DeviceMatchResult> MatchFssAndReactor(IotDBinfoLow data, char Model, bool ishistory = false, bool includeSingleSide = false)
         {
             var result = new List<DeviceMatchResult>();
 
@@ -385,6 +385,45 @@ namespace YiSha.Admin.WebApi.Controllers
                             FSS_Value = double.Parse(fssDic[code].value).ToString("F3"),
                             Reactor_Path = reactorInfo.path,
                             Reactor_Value = double.Parse(reactorInfo.value).ToString("F3")
+                        });
+                    }
+                    else if (includeSingleSide)
+                    {
+                        // 只有 FSS 单边数据：KNS 侧置 null
+                        if (!char.IsWhiteSpace(Model))
+                        {
+                            if (code.Length < 2 || char.ToUpper(code[^2]) != Model)
+                                continue;
+                        }
+                        result.Add(new DeviceMatchResult
+                        {
+                            DeviceCode = code,
+                            FSS_Path = fssDic[code].path,
+                            FSS_Value = double.Parse(fssDic[code].value).ToString("F3"),
+                            Reactor_Path = null,
+                            Reactor_Value = null
+                        });
+                    }
+                }
+
+                if (includeSingleSide)
+                {
+                    // 只有 KNS 单边数据：FSS 侧置 null
+                    foreach (var code in reactorDic.Keys)
+                    {
+                        if (fssDic.ContainsKey(code)) continue;
+                        if (!char.IsWhiteSpace(Model))
+                        {
+                            if (code.Length < 2 || char.ToUpper(code[^2]) != Model)
+                                continue;
+                        }
+                        result.Add(new DeviceMatchResult
+                        {
+                            DeviceCode = code,
+                            FSS_Path = null,
+                            FSS_Value = null,
+                            Reactor_Path = reactorDic[code].path,
+                            Reactor_Value = double.Parse(reactorDic[code].value).ToString("F3")
                         });
                     }
                 }
@@ -873,14 +912,25 @@ namespace YiSha.Admin.WebApi.Controllers
                     return new List<DeviceMatchResult>();
 
                 // 7. 匹配逻辑（无 Model 参数，默认使用空格字符？根据原代码传入 ' '）
-                if (DataType == "0")
+                var matches = DataType == "0"
+                    ? MatchFssAndReactor(jsonData, ' ')
+                    : MatchFssAndReactor(jsonData, ' ', true);
+
+                // 8. KNS 值为负数时置为 0 再参与后续对比
+                if (matches != null)
                 {
-                    return MatchFssAndReactor(jsonData, ' ');
+                    foreach (var item in matches)
+                    {
+                        if (double.TryParse(item.Reactor_Value,
+                                            System.Globalization.NumberStyles.Any,
+                                            System.Globalization.CultureInfo.InvariantCulture,
+                                            out double knsValue) && knsValue < 0)
+                        {
+                            item.Reactor_Value = 0d.ToString("F3");
+                        }
+                    }
                 }
-                else
-                {
-                    return MatchFssAndReactor(jsonData, ' ', true);
-                }
+                return matches ?? new List<DeviceMatchResult>();
             }
             catch (OperationCanceledException) when (HttpContext?.RequestAborted.IsCancellationRequested == true)
             {
@@ -1396,13 +1446,23 @@ namespace YiSha.Admin.WebApi.Controllers
             Param_RangeService Param_RangeService = new Param_RangeService();
             if (jsonData != null)
             {
-                Param_RangeEntity param = await Param_RangeService.GetRangeEntity(PointName);
-                List<DeviceMatchResult> deviceMatchResults = MatchFssAndReactor(jsonData, ' ');
-
+                List<DeviceMatchResult> deviceMatchResults = MatchFssAndReactor(jsonData, ' ', false, true);
 
                 foreach (var item in deviceMatchResults)
                 {
-                    float diff = (Math.Abs(float.Parse(item.FSS_Value) - float.Parse(item.Reactor_Value)) / ((float)param.Range - (float)param.RangeMin)) * 100;
+                    // 只有单边数据时无法对比，跳过报警判断，不影响数据返回
+                    if (item.FSS_Value == null || item.Reactor_Value == null)
+                    {
+                        item.IsAlert = null;
+                        continue;
+                    }
+                    // 与左边界面规则一致：配了量程就除量程算百分比，没配量程直接比原始差值
+                    float diff = Math.Abs(float.Parse(item.FSS_Value) - float.Parse(item.Reactor_Value));
+                    Param_RangeEntity param = await Param_RangeService.GetRangeEntity(item.DeviceCode);
+                    if (param != null && ((float)param.Range - (float)param.RangeMin) != 0)
+                    {
+                        diff = diff / ((float)param.Range - (float)param.RangeMin) * 100;
+                    }
                     param_ThresholdService param_ThresholdService = new param_ThresholdService();
                     var param_Threshold = await param_ThresholdService.GetNameEntity(item.DeviceCode);
                     if (param_Threshold != null)

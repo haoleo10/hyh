@@ -1,4 +1,4 @@
-﻿@using YiSha.Util
+@using YiSha.Util
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment HostingEnvironment
 @{
     Layout = "~/Views/Shared/_Index.cshtml";
@@ -174,14 +174,16 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function (res) {
-                        if(res.Data!== null)
+                        if(res.Data!== null && (res.Data.Range-res.Data.RangeMin) !== 0)
                         {
                             differencePercent = (Math.abs(value - value2) /  (res.Data.Range-res.Data.RangeMin)) * 100;
                             differencePercent = parseFloat(differencePercent.toFixed(2));
                         }
                         else
                         {
-                            console.log(probeName+"：未设置量程");
+                            // 未设置量程：不除量程，直接比较原始差值
+                            differencePercent = Math.abs(value - value2);
+                            console.log(probeName+"：未设置量程，按原始差值比较");
                         }
                     },
                     error: function () {
