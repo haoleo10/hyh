@@ -694,96 +694,99 @@ namespace YiSha.Admin.WebApi.Controllers
         /// <param name="Source_SYS"></param>
         /// <param name="AlarmLayer"></param>
         [HttpGet]
-        public async void AlertBJ([FromQuery] string Param_Key, [FromQuery] string Param_Value1, [FromQuery] string Param_Value2, [FromQuery] string Source_SYS, [FromQuery] string AlarmLayer ,[FromQuery] string DataType)
+        public async Task AlertBJ([FromQuery] string Param_Key, [FromQuery] string Param_Value1, [FromQuery] string Param_Value2, [FromQuery] string Source_SYS, [FromQuery] string AlarmLayer ,[FromQuery] string DataType)
         {
-            // 触发报警写入预报警表（param_pre_alerts），人工确认后才进入报警列表
-            PreAlertsService preAlertsService = new PreAlertsService();
-            List<PreAlertsEntity> paramAlertsEntities = new List<PreAlertsEntity>();
+            // 注意：此方法必须为 async Task 而非 async void，
+            // async void 中逃逸的异常会直接崩溃 w3wp 进程，导致 IIS 应用池频繁停止
             try
             {
-                paramAlertsEntities = await preAlertsService.GetLists(AlarmLayer, Source_SYS);
+                // 触发报警写入预报警表（param_pre_alerts），人工确认后才进入报警列表
+                PreAlertsService preAlertsService = new PreAlertsService();
+                List<PreAlertsEntity> paramAlertsEntities = await preAlertsService.GetLists(AlarmLayer, Source_SYS);
 
+                if (!int.TryParse(AlarmLayer, out int alarmLayer))
+                {
+                    _logger.LogError("AlertBJ 参数 AlarmLayer 无法解析: {AlarmLayer}, Param_Key: {Param_Key}", AlarmLayer, Param_Key);
+                    return;
+                }
+
+                if (paramAlertsEntities.Count == 0)
+                {
+                    PreAlertsEntity entity = new PreAlertsEntity();
+                    entity.Name = "警报参数：" + entity.Param_Key;
+                    entity.Param_Key = Param_Key;
+                    entity.Param_Value = Param_Value1;
+                    entity.Param_Value1 = Param_Value2;
+
+                    entity.Source_SYS = Source_SYS;
+                    entity.AlarmLayer = alarmLayer;
+                    await preAlertsService.SaveForm(entity);
+                    return;
+                }
+                if (DataType == "1")
+                {
+                    DateTime now = DateTime.Now;
+                    // 半小时前的时间节点
+                    DateTime halfHourAgo = now.AddMinutes(5);
+                    // LINQ 筛选（满足两个条件：Name严格等于ABP，时间大于等于半小时前）
+                    var filterList = paramAlertsEntities
+                        .Where(p => p.Param_Key == Param_Key
+                                    && p.BaseCreateTime >= halfHourAgo
+                                    && p.BaseCreateTime <= now)
+                        .ToList();
+
+                    if (filterList.Count > 0)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        PreAlertsEntity entity = new PreAlertsEntity();
+                        entity.Param_Key = Param_Key;
+                        entity.Param_Value = Param_Value1;
+                        entity.Param_Value1 = Param_Value2;
+
+                        entity.Source_SYS = Source_SYS;
+                        entity.AlarmLayer = alarmLayer;
+                        entity.Remark = "快速演变";
+                        await preAlertsService.SaveForm(entity);
+                    }
+                }
+                else
+                {
+                    DateTime now = DateTime.Now;
+                    // 半小时前的时间节点
+                    DateTime halfHourAgo = now.AddMinutes(-30);
+                    // LINQ 筛选（满足两个条件：Name严格等于ABP，时间大于等于半小时前）
+                    var filterList = paramAlertsEntities
+                        .Where(p => p.Param_Key == Param_Key
+                                    && p.BaseCreateTime >= halfHourAgo
+                                    && p.BaseCreateTime <= now)
+                        .ToList();
+
+                    if (filterList.Count > 0)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        PreAlertsEntity entity = new PreAlertsEntity();
+                        entity.Param_Key = Param_Key;
+                        entity.Param_Value = Param_Value1;
+                        entity.Param_Value1 = Param_Value2;
+
+                        entity.Source_SYS = Source_SYS;
+                        entity.AlarmLayer = alarmLayer;
+                        await preAlertsService.SaveForm(entity);
+                    }
+
+                }
             }
             catch (Exception ex)
             {
-
-                throw;
+                // 吞掉异常并记录日志，绝不能让异常逃逸出此方法导致进程崩溃
+                _logger.LogError(ex, "AlertBJ 处理失败, Param_Key: {Param_Key}, AlarmLayer: {AlarmLayer}", Param_Key, AlarmLayer);
             }
-
-
-            if (paramAlertsEntities.Count == 0)
-            {
-                PreAlertsEntity entity = new PreAlertsEntity();
-                entity.Name = "警报参数：" + entity.Param_Key;
-                entity.Param_Key = Param_Key;
-                entity.Param_Value = Param_Value1;
-                entity.Param_Value1 = Param_Value2;
-
-                entity.Source_SYS = Source_SYS;
-                entity.AlarmLayer = int.Parse(AlarmLayer);
-                await preAlertsService.SaveForm(entity);
-                return;
-            }
-            if (DataType == "1")
-            {
-                DateTime now = DateTime.Now;
-                // 半小时前的时间节点
-                DateTime halfHourAgo = now.AddMinutes(5);
-                // LINQ 筛选（满足两个条件：Name严格等于ABP，时间大于等于半小时前）
-                var filterList = paramAlertsEntities
-                    .Where(p => p.Param_Key == Param_Key
-                                && p.BaseCreateTime >= halfHourAgo
-                                && p.BaseCreateTime <= now)
-                    .ToList();
-
-                if (filterList.Count > 0)
-                {
-                    return;
-                }
-                else
-                {
-                    PreAlertsEntity entity = new PreAlertsEntity();
-                    entity.Param_Key = Param_Key;
-                    entity.Param_Value = Param_Value1;
-                    entity.Param_Value1 = Param_Value2;
-
-                    entity.Source_SYS = Source_SYS;
-                    entity.AlarmLayer = int.Parse(AlarmLayer);
-                    entity.Remark = "快速演变";
-                    await preAlertsService.SaveForm(entity);
-                }
-            }
-            else
-            {
-                DateTime now = DateTime.Now;
-                // 半小时前的时间节点
-                DateTime halfHourAgo = now.AddMinutes(-30);
-                // LINQ 筛选（满足两个条件：Name严格等于ABP，时间大于等于半小时前）
-                var filterList = paramAlertsEntities
-                    .Where(p => p.Param_Key == Param_Key
-                                && p.BaseCreateTime >= halfHourAgo
-                                && p.BaseCreateTime <= now)
-                    .ToList();
-
-                if (filterList.Count > 0)
-                {
-                    return;
-                }
-                else
-                {
-                    PreAlertsEntity entity = new PreAlertsEntity();
-                    entity.Param_Key = Param_Key;
-                    entity.Param_Value = Param_Value1;
-                    entity.Param_Value1 = Param_Value2;
-
-                    entity.Source_SYS = Source_SYS;
-                    entity.AlarmLayer = int.Parse(AlarmLayer);
-                    await preAlertsService.SaveForm(entity);
-                }
-
-            }
-
-           
         }
 
         /// <summary>
