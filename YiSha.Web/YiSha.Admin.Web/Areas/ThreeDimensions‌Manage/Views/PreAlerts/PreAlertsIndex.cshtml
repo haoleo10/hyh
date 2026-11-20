@@ -1,0 +1,103 @@
+@{
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 select-table table-striped">
+            <table id="gridTable" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var AlarmLayer = ys.request("AlarmLayer");
+    var SYS = ys.request("SYS");
+
+    // 确认报警：写入报警列表，并从预报警列表消失
+    function ConfirmAlarm(ParaId) {
+        ys.confirm('确认将该条预报警写入报警列表？', function () {
+            $.ajax({
+                url: '@Url.Content("~/ThreeDimensions‌Manage/PreAlerts/ConfirmAlarm")' + '?id=' + ParaId,
+                type: 'GET',
+                dataType: 'json',
+                success: function (res) {
+                    if (res.Tag == 1) {
+                        ys.msgSuccess('确认报警成功');
+                        loadGridData();
+                    } else {
+                        ys.msgError(res.Message || '确认报警失败');
+                    }
+                },
+                error: function () {
+                    ys.msgError('网络请求失败');
+                }
+            });
+        });
+    }
+
+    $(function () {
+        initGrid();
+    });
+
+    var gridTimer = null;
+
+    function initGrid() {
+        $('#gridTable').ysTable({
+            url: '',
+            showSearch: false,
+            showRefresh: false,
+            showToggle: false,
+            showColumns: false,
+            pagination: false,
+            columns: [
+                { checkbox: true, visible: false },
+                { field: 'Id', title: 'Id', visible: false },
+                { field: 'Name', title: '名称', visible: false },
+                { field: 'Param_Key', title: '点名', width: "18%" },
+                { field: 'Param_Value', title: '值(3k)', width: "18%" },
+                { field: 'Param_Value1', title: '值(kns)', width: "18%" },
+                { field: 'Source_SYS', title: '系统名', width: "18%" },
+                { field: 'BaseCreateTime', title: '报警时间', width: "18%", sortable: false },
+                { field: 'Remark', title: '备注', visible: false },
+                {
+                    title: '操作',
+                    align: 'center',
+                    width: "10%",
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs" onclick="ConfirmAlarm(\'' + row.Id + '\')"><i class="fa fa-check"></i>确认报警</a> ');
+                        return actions.join('');
+                    }
+                },
+            ]
+        });
+
+        loadGridData();
+        gridTimer = setInterval(loadGridData, 1000);
+    }
+
+    function loadGridData() {
+        var queryUrl = '@Url.Content("~/ThreeDimensions‌Manage/PreAlerts/GetPageListJson?AlarmLayer=")' + AlarmLayer + '&SYS=' + SYS;
+
+        $.ajax({
+            url: queryUrl,
+            type: 'GET',
+            dataType: 'json',
+            success: function (res) {
+                // API 返回的是 res.Data，不是 res.rows
+                $('#gridTable').bootstrapTable('load', res.Data || res.rows || res);
+            },
+            error: function () {
+                console.error('数据加载失败');
+            }
+        });
+    }
+
+    $(window).on('beforeunload', function () {
+        if (gridTimer) {
+            clearInterval(gridTimer);
+            gridTimer = null;
+        }
+    });
+</script>

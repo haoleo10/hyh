@@ -1,4 +1,4 @@
-﻿
+
 @{
     ViewData["Title"] = "ExtractionIndex";
     Layout = "~/Views/Shared/_Index.cshtml";
@@ -98,7 +98,7 @@
     }
 
     function loadGridData() {
-        var queryUrl = '@Url.Content("~/ThreeDimensions‌Manage/ParamAlerts/GetPageListJson?AlarmLayer=")'+ Extraction;
+        var queryUrl = '@Url.Content("~/ThreeDimensions‌Manage/PreAlerts/GetPageListJson?AlarmLayer=")'+ Extraction;
 
         $('.threshold-input').each(function () {
             var id = $(this).data('id');

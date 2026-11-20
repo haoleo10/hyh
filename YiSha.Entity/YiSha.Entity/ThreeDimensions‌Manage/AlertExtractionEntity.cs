@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using YiSha.Util;
@@ -51,5 +51,10 @@ namespace YiSha.Entity.ThreeDimensions‌Manage
         public string Source_SYS { get; set; }
 
         public int? Status { get; set; }
+
+        /// <summary>
+        /// 报警层
+        /// </summary>
+        public int? AlarmLayer { get; set; }
     }
 }

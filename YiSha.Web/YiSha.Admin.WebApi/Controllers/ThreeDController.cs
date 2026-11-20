@@ -696,10 +696,12 @@ namespace YiSha.Admin.WebApi.Controllers
         [HttpGet]
         public async void AlertBJ([FromQuery] string Param_Key, [FromQuery] string Param_Value1, [FromQuery] string Param_Value2, [FromQuery] string Source_SYS, [FromQuery] string AlarmLayer ,[FromQuery] string DataType)
         {
-            List<ParamAlertsEntity> paramAlertsEntities = new List<ParamAlertsEntity>();
+            // 触发报警写入预报警表（param_pre_alerts），人工确认后才进入报警列表
+            PreAlertsService preAlertsService = new PreAlertsService();
+            List<PreAlertsEntity> paramAlertsEntities = new List<PreAlertsEntity>();
             try
             {
-                paramAlertsEntities = await paramAlertsService.GetLists(AlarmLayer, Source_SYS);
+                paramAlertsEntities = await preAlertsService.GetLists(AlarmLayer, Source_SYS);
 
             }
             catch (Exception ex)
@@ -711,7 +713,7 @@ namespace YiSha.Admin.WebApi.Controllers
 
             if (paramAlertsEntities.Count == 0)
             {
-                ParamAlertsEntity entity = new ParamAlertsEntity();
+                PreAlertsEntity entity = new PreAlertsEntity();
                 entity.Name = "警报参数：" + entity.Param_Key;
                 entity.Param_Key = Param_Key;
                 entity.Param_Value = Param_Value1;
@@ -719,7 +721,7 @@ namespace YiSha.Admin.WebApi.Controllers
 
                 entity.Source_SYS = Source_SYS;
                 entity.AlarmLayer = int.Parse(AlarmLayer);
-                await paramAlertsService.SaveForm(entity);
+                await preAlertsService.SaveForm(entity);
                 return;
             }
             if (DataType == "1")
@@ -740,7 +742,7 @@ namespace YiSha.Admin.WebApi.Controllers
                 }
                 else
                 {
-                    ParamAlertsEntity entity = new ParamAlertsEntity();
+                    PreAlertsEntity entity = new PreAlertsEntity();
                     entity.Param_Key = Param_Key;
                     entity.Param_Value = Param_Value1;
                     entity.Param_Value1 = Param_Value2;
@@ -748,7 +750,7 @@ namespace YiSha.Admin.WebApi.Controllers
                     entity.Source_SYS = Source_SYS;
                     entity.AlarmLayer = int.Parse(AlarmLayer);
                     entity.Remark = "快速演变";
-                    await paramAlertsService.SaveForm(entity);
+                    await preAlertsService.SaveForm(entity);
                 }
             }
             else
@@ -769,14 +771,14 @@ namespace YiSha.Admin.WebApi.Controllers
                 }
                 else
                 {
-                    ParamAlertsEntity entity = new ParamAlertsEntity();
+                    PreAlertsEntity entity = new PreAlertsEntity();
                     entity.Param_Key = Param_Key;
                     entity.Param_Value = Param_Value1;
                     entity.Param_Value1 = Param_Value2;
 
                     entity.Source_SYS = Source_SYS;
                     entity.AlarmLayer = int.Parse(AlarmLayer);
-                    await paramAlertsService.SaveForm(entity);
+                    await preAlertsService.SaveForm(entity);
                 }
 
             }

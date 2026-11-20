@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Text;
 using System.Data.Common;
@@ -74,15 +74,19 @@ namespace YiSha.Service.ThreeDimensions‌Manage
 
         public async Task Extraction(string id)
         {
-            ParamAlertsEntity paramAlertsEntit = await this.BaseRepository().FindEntity<ParamAlertsEntity>(long.Parse(id));
+            // 从预报警表读取记录，复制到萃取表，并把预报警标记为已萃取（Status=2）
+            PreAlertsEntity preAlertsEntity = await this.BaseRepository().FindEntity<PreAlertsEntity>(long.Parse(id));
 
             AlertExtractionEntity alertExtractionEntit=new AlertExtractionEntity();
-            alertExtractionEntit.Name = paramAlertsEntit.Name;
-            alertExtractionEntit.Param_Key= paramAlertsEntit.Param_Key;
-            alertExtractionEntit.Param_Value=paramAlertsEntit.Param_Value;
-            alertExtractionEntit.Param_Value1 = paramAlertsEntit.Param_Value1;
-            alertExtractionEntit.Source_SYS=paramAlertsEntit.Source_SYS;
+            alertExtractionEntit.Name = preAlertsEntity.Name;
+            alertExtractionEntit.Param_Key= preAlertsEntity.Param_Key;
+            alertExtractionEntit.Param_Value=preAlertsEntity.Param_Value;
+            alertExtractionEntit.Param_Value1 = preAlertsEntity.Param_Value1;
+            alertExtractionEntit.Source_SYS=preAlertsEntity.Source_SYS;
             alertExtractionEntit.Status = 1;
+            alertExtractionEntit.AlarmLayer = preAlertsEntity.AlarmLayer;
+            // 保留原始报警产生时间
+            alertExtractionEntit.BaseCreateTime = preAlertsEntity.BaseCreateTime;
             if (alertExtractionEntit.Id.IsNullOrZero())
             {
                 await alertExtractionEntit.Create();
@@ -93,6 +97,9 @@ namespace YiSha.Service.ThreeDimensions‌Manage
                 await alertExtractionEntit.Modify();
                 await this.BaseRepository().Update(alertExtractionEntit);
             }
+
+            PreAlertsService preAlertsService = new PreAlertsService();
+            await preAlertsService.UpdateStatus(preAlertsEntity.Id.Value, 2);
         }
 
         public async Task CompleteExtraction(string id) 
@@ -101,6 +108,21 @@ namespace YiSha.Service.ThreeDimensions‌Manage
             alertExtractionEntity.Status = 2;
             await alertExtractionEntity.Modify();
             await this.BaseRepository().Update(alertExtractionEntity);
+
+            // 确认萃取后写入报警列表（param_alerts），保留原始报警产生时间
+            ParamAlertsEntity alarm = new ParamAlertsEntity
+            {
+                Name = alertExtractionEntity.Name,
+                Param_Key = alertExtractionEntity.Param_Key,
+                Param_Value = alertExtractionEntity.Param_Value,
+                Param_Value1 = alertExtractionEntity.Param_Value1,
+                Source_SYS = alertExtractionEntity.Source_SYS,
+                Remark = alertExtractionEntity.Remark,
+                AlarmLayer = alertExtractionEntity.AlarmLayer,
+                BaseCreateTime = alertExtractionEntity.BaseCreateTime
+            };
+            ParamAlertsService paramAlertsService = new ParamAlertsService();
+            await paramAlertsService.SaveForm(alarm);
         }
         
         #endregion
