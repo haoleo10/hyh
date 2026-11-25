@@ -147,37 +147,15 @@ namespace YiSha.Admin.WebApi.Controllers
         /// <param name="StartTime">开始时间</param>
         /// <param name="EndTime">结束时间</param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<List<DeviceMatchResult>> GetIOTDBThreeKNSAnd3K1([FromQuery] string SystemName, [FromQuery] string DataType, [FromQuery] string StartTime, [FromQuery] string EndTime, [FromQuery] string Model)
+        /// <summary>
+        /// 向 IoTDB 发送一次查询并反序列化结果，失败返回 null（保持原有吞错行为）
+        /// </summary>
+        private static async Task<IotDBinfoLow> QueryIotDB(string json, string url)
         {
-            //接受返回数据字符串
             string responseBody = "";
-
-            //接受错误信息
-            string error = "";
             using (HttpClient client = new HttpClient())
             {
-
-                // 添加Authorization头root.test_group.test_device
                 client.DefaultRequestHeaders.Add("Authorization", "cm9vdDpyb290");
-                //定义查询语句 
-                var json = "";
-                //定义query接口 查询前段语句 条件为空时 默认
-
-                //json = "{\"sql\":\"SELECT * FROM root.reactor.system1.techSystem1.DX.FFS_" + DoneWorkName + " where time >" + DateTime.Parse(StartTime).ToString("yyyy-MM-dd HH:mm:ss") + " and time<" + DateTime.Parse(EndTime).ToString("yyyy-MM-dd HH:mm:ss") + "\" limit 9000}";
-                if (DataType == "0")
-                {
-                    json = "{\"sql\":\"select last* value from root.KNS.AA5.*" + SystemName + "*,root.FSS.AA5.*" + SystemName + "*\" }";
-                }
-                else
-                {
-                    json = "{\"sql\":\"select * value from root.KNS.AA5.*" + SystemName + "*,root.FSS.AA5.*" + SystemName + "* where time=" + DateTime.Parse(StartTime).ToString("yyyy-MM-dd HH:mm:ss") + " limit 40000\" }";
-
-                }
-
-                //定义query接口
-                var url = GlobalContext.SystemConfig.IotDBURL;
-
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 try
                 {
@@ -185,14 +163,54 @@ namespace YiSha.Admin.WebApi.Controllers
                     response.EnsureSuccessStatusCode();
                     responseBody = await response.Content.ReadAsStringAsync();
                 }
-                catch (HttpRequestException e)
+                catch (HttpRequestException)
                 {
-
-                    error = e.Message;
+                    return null;
                 }
             }
+            return JsonConvert.DeserializeObject<IotDBinfoLow>(responseBody);
+        }
 
-            IotDBinfoLow jsonData = JsonConvert.DeserializeObject<IotDBinfoLow>(responseBody);
+        /// <summary>
+        /// 二层左边数据列表
+        /// </summary>
+        /// <param name="SystemName">系统名字</param>
+        /// <param name="DataType">数据类型（0 实时 1历史）</param>
+        /// <param name="StartTime">开始时间</param>
+        /// <param name="EndTime">结束时间</param>
+        /// <param name="StartTimeKNS">KNS开始时间（可选，不传则用StartTime）</param>
+        /// <param name="EndTimeKNS">KNS结束时间（可选，不传则用EndTime）</param>
+        /// <param name="StartTime3K">3K开始时间（可选，不传则用StartTime）</param>
+        /// <param name="EndTime3K">3K结束时间（可选，不传则用EndTime）</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<List<DeviceMatchResult>> GetIOTDBThreeKNSAnd3K1([FromQuery] string SystemName, [FromQuery] string DataType, [FromQuery] string StartTime, [FromQuery] string EndTime, [FromQuery] string Model,
+            [FromQuery] string StartTimeKNS, [FromQuery] string EndTimeKNS, [FromQuery] string StartTime3K, [FromQuery] string EndTime3K)
+        {
+            // KNS/3K 分时间段支持：未传分时段时间时回退到统一 StartTime/EndTime，旧调用方式兼容
+            if (string.IsNullOrWhiteSpace(StartTimeKNS)) StartTimeKNS = StartTime;
+            if (string.IsNullOrWhiteSpace(EndTimeKNS)) EndTimeKNS = EndTime;
+            if (string.IsNullOrWhiteSpace(StartTime3K)) StartTime3K = StartTime;
+            if (string.IsNullOrWhiteSpace(EndTime3K)) EndTime3K = EndTime;
+
+            var url = GlobalContext.SystemConfig.IotDBURL;
+            IotDBinfoLow jsonData;
+
+            if (DataType == "1")
+            {
+                // 历史模式：KNS、3K 各用各的时间分两次查询，合并后再配对
+                string jsonKns = "{\"sql\":\"select * value from root.KNS.AA5.*" + SystemName + "* where time=" + DateTime.Parse(StartTimeKNS).ToString("yyyy-MM-dd HH:mm:ss") + " limit 40000\" }";
+                string json3k = "{\"sql\":\"select * value from root.FSS.AA5.*" + SystemName + "* where time=" + DateTime.Parse(StartTime3K).ToString("yyyy-MM-dd HH:mm:ss") + " limit 40000\" }";
+                IotDBinfoLow knsData = await QueryIotDB(jsonKns, url);
+                IotDBinfoLow fssData = await QueryIotDB(json3k, url);
+                jsonData = MergeIotDBResults(knsData, fssData);
+            }
+            else
+            {
+                string json = "{\"sql\":\"select last* value from root.KNS.AA5.*" + SystemName + "*,root.FSS.AA5.*" + SystemName + "*\" }";
+                jsonData = await QueryIotDB(json, url);
+            }
+
             if (jsonData != null)
             {
                 if (DataType == "1")
@@ -250,6 +268,30 @@ namespace YiSha.Admin.WebApi.Controllers
             public bool? IsAlert { get; set; }
             public int? WarningValue  { get; set; }
 
+        }
+
+        /// <summary>
+        /// 合并两次 IoTDB 查询结果（KNS、3K 分开查时合并后再配对）；
+        /// 仅适用于单次等值时间点查询（每次查询最多 1 个时间戳），
+        /// 配对结果的时间戳取 KNS 侧时间
+        /// </summary>
+        private static IotDBinfoLow MergeIotDBResults(IotDBinfoLow a, IotDBinfoLow b)
+        {
+            if (a == null) return b;
+            if (b == null) return a;
+            IotDBinfoLow merged = new IotDBinfoLow
+            {
+                expressions = new List<string>(),
+                timestamps = new List<long>(),
+                values = new List<List<string>>()
+            };
+            if (a.expressions != null) merged.expressions.AddRange(a.expressions);
+            if (b.expressions != null) merged.expressions.AddRange(b.expressions);
+            if (a.timestamps != null) merged.timestamps.AddRange(a.timestamps);
+            if (b.timestamps != null) merged.timestamps.AddRange(b.timestamps);
+            if (a.values != null) merged.values.AddRange(a.values);
+            if (b.values != null) merged.values.AddRange(b.values);
+            return merged;
         }
 
         public static List<DeviceMatchResult> MatchFssAndReactor(IotDBinfoLow data, char Model, bool ishistory = false, bool includeSingleSide = false)
@@ -873,7 +915,11 @@ namespace YiSha.Admin.WebApi.Controllers
         [FromQuery] string PointName,
         [FromQuery] string DataType,
         [FromQuery] string StartTime,
-        [FromQuery] string EndTime)
+        [FromQuery] string EndTime,
+        [FromQuery] string StartTimeKNS,
+        [FromQuery] string EndTimeKNS,
+        [FromQuery] string StartTime3K,
+        [FromQuery] string EndTime3K)
         {
             // 1. 参数校验
             if (string.IsNullOrWhiteSpace(PointName))
@@ -882,37 +928,45 @@ namespace YiSha.Admin.WebApi.Controllers
                 return new List<DeviceMatchResult>();
             }
 
+            // KNS/3K 分时间段支持：未传分时段时间时回退到统一 StartTime/EndTime，旧调用方式兼容
+            if (string.IsNullOrWhiteSpace(StartTimeKNS)) StartTimeKNS = StartTime;
+            if (string.IsNullOrWhiteSpace(EndTimeKNS)) EndTimeKNS = EndTime;
+            if (string.IsNullOrWhiteSpace(StartTime3K)) StartTime3K = StartTime;
+            if (string.IsNullOrWhiteSpace(EndTime3K)) EndTime3K = EndTime;
+
             try
             {
-                // 2. 构建 IoTDB 路径（支持中英文逗号分隔）
-                var pointPaths = BuildPointPaths(PointName);
-                if (string.IsNullOrEmpty(pointPaths))
-                    return new List<DeviceMatchResult>();
-
-                // 3. 构建 JSON 查询语句
-                var json = BuildQueryJson(pointPaths, DataType, StartTime, EndTime);
-
-                // 4. 从工厂获取 HttpClient（不要 using 释放）
+                // 2. 从工厂获取 HttpClient（不要 using 释放）
                 var client = _httpClientFactory.CreateClient("IotDBClient");
                 var url = GlobalContext.SystemConfig.IotDBURL;
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                // 5. 支持取消令牌（前端关闭连接时自动中止）
+                // 3. 支持取消令牌（前端关闭连接时自动中止）
                 using var cts = CancellationTokenSource.CreateLinkedTokenSource(
                     CancellationToken.None,
                     HttpContext?.RequestAborted ?? CancellationToken.None);
                 cts.CancelAfter(TimeSpan.FromSeconds(30));   // 双重超时保护
 
-                var response = await client.PostAsync(url, content, cts.Token);
-                response.EnsureSuccessStatusCode();
+                IotDBinfoLow jsonData;
+                if (DataType == "1")
+                {
+                    // 历史模式：KNS、3K 各用各的时间分两次查询，合并后再配对
+                    var knsPaths = BuildPointPathsByRoot(PointName, "root.KNS.AA5.*");
+                    var fssPaths = BuildPointPathsByRoot(PointName, "root.FSS.AA5.*");
+                    if (string.IsNullOrEmpty(knsPaths) && string.IsNullOrEmpty(fssPaths))
+                        return new List<DeviceMatchResult>();
+                    var knsData = await PostIotDBJson(client, url, BuildQueryJson(knsPaths, DataType, StartTimeKNS, EndTimeKNS), cts.Token);
+                    var fssData = await PostIotDBJson(client, url, BuildQueryJson(fssPaths, DataType, StartTime3K, EndTime3K), cts.Token);
+                    jsonData = MergeIotDBResults(knsData, fssData);
+                }
+                else
+                {
+                    // 实时模式：KNS、FSS 一条 SQL 查最新值
+                    var pointPaths = BuildPointPaths(PointName);
+                    if (string.IsNullOrEmpty(pointPaths))
+                        return new List<DeviceMatchResult>();
+                    jsonData = await PostIotDBJson(client, url, BuildQueryJson(pointPaths, DataType, StartTime, EndTime), cts.Token);
+                }
 
-                var responseBody = await response.Content.ReadAsStringAsync(cts.Token);
-
-                // 6. 反序列化
-                if (string.IsNullOrEmpty(responseBody))
-                    return new List<DeviceMatchResult>();
-
-                var jsonData = JsonConvert.DeserializeObject<IotDBinfoLow>(responseBody);
                 if (jsonData == null)
                     return new List<DeviceMatchResult>();
 
@@ -950,6 +1004,40 @@ namespace YiSha.Admin.WebApi.Controllers
         }
 
         // ---------- 辅助方法（可抽取到静态工具类） ----------
+
+        /// <summary>
+        /// 向 IoTDB 发送一次查询并反序列化结果，失败返回 null
+        /// </summary>
+        private static async Task<IotDBinfoLow> PostIotDBJson(HttpClient client, string url, string json, CancellationToken ct)
+        {
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(url, content, ct);
+            response.EnsureSuccessStatusCode();
+            var body = await response.Content.ReadAsStringAsync(ct);
+            if (string.IsNullOrEmpty(body)) return null;
+            return JsonConvert.DeserializeObject<IotDBinfoLow>(body);
+        }
+
+        /// <summary>
+        /// 按指定 root 构建路径串（历史模式 KNS/3K 分开查询时使用）
+        /// </summary>
+        private string BuildPointPathsByRoot(string pointName, string rootPrefix)
+        {
+            var letters = pointName.Split(new char[] { ',', '，' }, StringSplitOptions.RemoveEmptyEntries);
+            if (letters.Length == 0) return string.Empty;
+
+            var sb = new StringBuilder();
+            int added = 0;
+            foreach (var letter in letters)
+            {
+                var clean = Regex.Replace(letter.Trim(), @"[^a-zA-Z0-9_]", "");
+                if (string.IsNullOrEmpty(clean)) continue;
+                if (added > 0) sb.Append(',');
+                sb.Append(rootPrefix).Append(clean).Append("*");
+                added++;
+            }
+            return sb.ToString();
+        }
 
         private string BuildPointPaths(string pointName)
         {
@@ -1339,8 +1427,144 @@ namespace YiSha.Admin.WebApi.Controllers
         }
 
         /// <summary>
-        /// 三层小窗口
+        ///  三维灵活查询接口（POST）
+        ///  请求体为一组或多组查询条件，每组 = 点名(逗号分隔) + 来源(0:KNS;1:FSS) + 时间段；
+        ///  返回数组与请求组顺序一一对应，某组失败或无数据时该组 Data 为 null，不影响其他组
         /// </summary>
+        /// <param name="request">查询组集合</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<List<FlexQueryResult>> FlexQueryData([FromBody] FlexQueryRequest request)
+        {
+            return await ExecuteFlexQueries(request?.Queries);
+        }
+
+        /// <summary>
+        ///  三维灵活查询接口（GET，供三维 url.json 模板方式调用）
+        ///  支持任意多组，用索引参数传递，每组 = 点名(逗号分隔) + 来源(0:KNS;1:FSS) + 起止时间；
+        ///  每个点的时间段/来源都可以不同，一个点一组或同条件合并成一组均可；
+        ///  示例：?queries[0].pointNames=5ABP001MT&queries[0].source=0&queries[0].startTime=...&queries[0].endTime=...
+        ///        &queries[1].pointNames=5ABP002MT&queries[1].source=1&queries[1].startTime=...&queries[1].endTime=...
+        ///  返回数组与请求组顺序一一对应，某组失败或无数据时该组 Data 为 null，不影响其他组
+        /// </summary>
+        /// <param name="queries">查询组集合（索引参数绑定）</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<List<FlexQueryResult>> FlexQueryData([FromQuery] List<FlexQueryGroup> queries)
+        {
+            return await ExecuteFlexQueries(queries);
+        }
+
+        /// <summary>
+        ///  三维灵活查询接口（GET 单组扁平参数版，便于 Swagger 等工具直接测试）
+        ///  只查一组：点名(逗号分隔) + 来源(0:KNS;1:FSS) + 起止时间；
+        ///  多组查询请使用 FlexQueryData（索引参数版或 POST 版）
+        /// </summary>
+        /// <param name="pointNames">点名（逗号分隔）</param>
+        /// <param name="source">来源（0:KNS;1:FSS）</param>
+        /// <param name="startTime">开始时间（2026-11-01 00:00:00）</param>
+        /// <param name="endTime">结束时间（2026-11-20 00:00:00）</param>
+        /// <returns>单元素数组，结构与 FlexQueryData 一致</returns>
+        [HttpGet]
+        public async Task<List<FlexQueryResult>> FlexQueryDataSingle(
+            [FromQuery] string pointNames, [FromQuery] string source,
+            [FromQuery] string startTime, [FromQuery] string endTime)
+        {
+            List<FlexQueryGroup> queries = new List<FlexQueryGroup>
+            {
+                new FlexQueryGroup { PointNames = pointNames, Source = source, StartTime = startTime, EndTime = endTime }
+            };
+            return await ExecuteFlexQueries(queries);
+        }
+
+        /// <summary>
+        /// 灵活查询核心逻辑：逐组查询 IoTDB，单组失败不影响其他组
+        /// </summary>
+        private async Task<List<FlexQueryResult>> ExecuteFlexQueries(List<FlexQueryGroup> queries)
+        {
+            List<FlexQueryResult> results = new List<FlexQueryResult>();
+            if (queries == null || queries.Count == 0)
+            {
+                return results;
+            }
+
+            var client = _httpClientFactory.CreateClient("IotDBClient");
+            var url = GlobalContext.SystemConfig.IotDBURL;
+
+            foreach (var query in queries)
+            {
+                FlexQueryResult result = new FlexQueryResult
+                {
+                    Source = query?.Source,
+                    PointNames = query?.PointNames
+                };
+                results.Add(result);
+
+                try
+                {
+                    // 1. 参数校验（不合格则该组 Data 保持 null）
+                    if (query == null || string.IsNullOrWhiteSpace(query.PointNames))
+                    {
+                        _logger.LogWarning("FlexQueryData 存在空点名的查询组");
+                        continue;
+                    }
+                    if (!DateTime.TryParse(query.StartTime, out DateTime start)
+                        || !DateTime.TryParse(query.EndTime, out DateTime end))
+                    {
+                        _logger.LogWarning("FlexQueryData 时间格式错误, PointNames: {PointNames}", query.PointNames);
+                        continue;
+                    }
+
+                    // 2. 拆点名、拼 IoTDB 路径（0:KNS；其他:FSS）
+                    string prefix = query.Source == "0" ? "root.KNS.AA5.*" : "root.FSS.AA5.*";
+                    string[] letters = query.PointNames.Split(new char[] { ',', '，' }, StringSplitOptions.RemoveEmptyEntries);
+                    var sb = new StringBuilder();
+                    int added = 0;
+                    foreach (string letter in letters)
+                    {
+                        string clean = Regex.Replace(letter.Trim(), @"[^a-zA-Z0-9_]", "");
+                        if (string.IsNullOrEmpty(clean)) continue;
+                        if (added > 0) sb.Append(',');
+                        sb.Append(prefix).Append(clean);
+                        added++;
+                    }
+                    if (added == 0)
+                    {
+                        _logger.LogWarning("FlexQueryData 无有效点名, PointNames: {PointNames}", query.PointNames);
+                        continue;
+                    }
+
+                    // 3. 拼 SQL 并请求 IoTDB（与 ShadowCloudData 相同的查询方式）
+                    string json = "{\"sql\":\"SELECT * FROM " + sb
+                        + " where time >" + start.ToString("yyyy-MM-dd HH:mm:ss")
+                        + " and time<" + end.ToString("yyyy-MM-dd HH:mm:ss")
+                        + " limit 40000\" }";
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    using var cts = CancellationTokenSource.CreateLinkedTokenSource(
+                        CancellationToken.None,
+                        HttpContext?.RequestAborted ?? CancellationToken.None);
+                    cts.CancelAfter(TimeSpan.FromSeconds(30));
+
+                    HttpResponseMessage response = await client.PostAsync(url, content, cts.Token);
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = await response.Content.ReadAsStringAsync(cts.Token);
+
+                    if (!string.IsNullOrEmpty(responseBody))
+                    {
+                        result.Data = JsonConvert.DeserializeObject<IotDBinfoLow>(responseBody);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // 单组失败只影响该组（Data 为 null），不中断其他组
+                    _logger.LogError(ex, "FlexQueryData 查询失败, PointNames: {PointNames}, Source: {Source}", query?.PointNames, query?.Source);
+                }
+            }
+
+            return results;
+        }
+
         /// <param name="PointName">点名（多个点名用逗号分隔）</param>
         /// <param name="Time">时间（2026-05-11 08:11:47）</param>
         /// <returns></returns>

@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.IO;
 using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
@@ -37,6 +37,7 @@ namespace YiSha.Admin.WebApi
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "红沿河二回路 WebApi", Version = "v1" });
                 options.IncludeXmlComments(xmlPath, true);
+                options.OperationFilter<YiSha.Admin.WebApi.Filter.AddApiTokenHeaderFilter>();
             });
 
             services.AddOptions();

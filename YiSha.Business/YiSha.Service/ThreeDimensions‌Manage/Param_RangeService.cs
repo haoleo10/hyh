@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Text;
 using System.Data.Common;
@@ -47,14 +47,15 @@ namespace YiSha.Service.ThreeDimensions‌Manage
             var expressionThreshold = LinqExtensions.True<param_ThresholdEntity>();
             expressionThreshold = expressionThreshold.And(t => t.Rollcall == dotName);
             param_ThresholdEntity param_ThresholdEntity = this.BaseRepository().IQueryable(expressionThreshold).FirstOrDefault();
-            
-            if (param_ThresholdEntity.Value != int.Parse(Value))
+
+            // 测点可能未配置阈值记录，或传入值不是整数（前端 parseFloat 可能带小数），两种情况都直接跳过阈值更新
+            if (param_ThresholdEntity != null && int.TryParse(Value, out int thresholdValue) && param_ThresholdEntity.Value != thresholdValue)
             {
-                param_ThresholdEntity.Value = int.Parse(Value);
+                param_ThresholdEntity.Value = thresholdValue;
 
                 await param_ThresholdEntity.Modify();
                 await this.BaseRepository().Update(param_ThresholdEntity);
-            }           
+            }
 
             var expression = ListFilter(dotName);
             Param_RangeEntity param =this.BaseRepository().IQueryable(expression).FirstOrDefault();

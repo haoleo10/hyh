@@ -25,6 +25,12 @@
 
         var Stop = ys.request("Stop") || "";
 
+        // KNS/3K 分时间段（可选，不传则与统一 StartTime/EndTime 一致，保持旧链接兼容）
+        var StartTimeKNS = ys.request("StartTimeKNS") || StartTime;
+        var EndTimeKNS = ys.request("EndTimeKNS") || EndTime;
+        var StartTime3K = ys.request("StartTime3K") || StartTime;
+        var EndTime3K = ys.request("EndTime3K") || EndTime;
+
         function addOneSecond(timeStr, maxTimeStr) {
             if (!timeStr) return timeStr;
 
@@ -83,6 +89,9 @@
         let timer = null;
         let currentTimeStart=StartTime;
         let currentTimeEnd=addOneSecond(StartTime,EndTime);
+        // KNS/3K 各自的时间游标（分时间段回放）
+        let currentTimeStartKNS = StartTimeKNS;
+        let currentTimeStart3K = StartTime3K;
 
         // 保存用户输入状态
         const inputStates = {};
@@ -174,7 +183,7 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function (res) {
-                        if(res.Data!== null && (res.Data.Range-res.Data.RangeMin) !== 0)
+                        if(res.Data != null && (res.Data.Range-res.Data.RangeMin) !== 0)
                         {
                             differencePercent = (Math.abs(value - value2) /  (res.Data.Range-res.Data.RangeMin)) * 100;
                             differencePercent = parseFloat(differencePercent.toFixed(2));
@@ -220,7 +229,12 @@
         // 获取接口数据
         async function fetchData() {
             currentTimeStart = addOneSecond(currentTimeStart,EndTime);
-            const url = API_BASE + '&StartTime=' + currentTimeStart + '&EndTime=' + EndTime;
+            // KNS、3K 游标各自前进、各自受自己的结束时间限制
+            currentTimeStartKNS = addOneSecond(currentTimeStartKNS, EndTimeKNS);
+            currentTimeStart3K = addOneSecond(currentTimeStart3K, EndTime3K);
+            const url = API_BASE + '&StartTime=' + currentTimeStart + '&EndTime=' + EndTime
+                + '&StartTimeKNS=' + currentTimeStartKNS + '&EndTimeKNS=' + EndTimeKNS
+                + '&StartTime3K=' + currentTimeStart3K + '&EndTime3K=' + EndTime3K;
 
             //console.log("当前请求接口：", url); // 你会看到 EndTime 每秒在变
 

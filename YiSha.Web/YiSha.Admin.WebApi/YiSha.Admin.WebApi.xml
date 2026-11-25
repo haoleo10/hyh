@@ -221,7 +221,7 @@
             <param name="Model"></param>
             <returns></returns>
         </member>
-        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.GetIOTDBThreeKNSAnd3K1(System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.QueryIotDB(System.String,System.String)">
             <summary>
             二层左边数据列表
             </summary>
@@ -230,10 +230,34 @@
             <param name="StartTime">开始时间</param>
             <param name="EndTime">结束时间</param>
             <returns></returns>
+            <summary>
+            向 IoTDB 发送一次查询并反序列化结果，失败返回 null（保持原有吞错行为）
+            </summary>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.GetIOTDBThreeKNSAnd3K1(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            二层左边数据列表
+            </summary>
+            <param name="SystemName">系统名字</param>
+            <param name="DataType">数据类型（0 实时 1历史）</param>
+            <param name="StartTime">开始时间</param>
+            <param name="EndTime">结束时间</param>
+            <param name="StartTimeKNS">KNS开始时间（可选，不传则用StartTime）</param>
+            <param name="EndTimeKNS">KNS结束时间（可选，不传则用EndTime）</param>
+            <param name="StartTime3K">3K开始时间（可选，不传则用StartTime）</param>
+            <param name="EndTime3K">3K结束时间（可选，不传则用EndTime）</param>
+            <returns></returns>
         </member>
         <member name="P:YiSha.Admin.WebApi.Controllers.ThreeDController.DeviceMatchResult.DeviceCode">
             <summary>
             设备编号 5ABP020SN
+            </summary>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.MergeIotDBResults(YiSha.Model.IotDBData.IotDBinfoLow,YiSha.Model.IotDBData.IotDBinfoLow)">
+            <summary>
+            合并两次 IoTDB 查询结果（KNS、3K 分开查时合并后再配对）；
+            仅适用于单次等值时间点查询（每次查询最多 1 个时间戳），
+            配对结果的时间戳取 KNS 侧时间
             </summary>
         </member>
         <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.ExtractDeviceCode(System.String)">
@@ -311,7 +335,7 @@
             <param name="PointName"></param>
             <returns></returns>
         </member>
-        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.RightView(System.String,System.String,System.String,System.String)">
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.RightView(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             状态对比分析（右边界面）NEW
             </summary>
@@ -320,6 +344,16 @@
             <param name="StartTime">开始时间</param>
             <param name="EndTime">结束时间</param>
             <returns></returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.PostIotDBJson(System.Net.Http.HttpClient,System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            向 IoTDB 发送一次查询并反序列化结果，失败返回 null
+            </summary>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.BuildPointPathsByRoot(System.String,System.String)">
+            <summary>
+            按指定 root 构建路径串（历史模式 KNS/3K 分开查询时使用）
+            </summary>
         </member>
         <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.RightView1(System.String,System.String,System.String,System.String)">
             <summary>
@@ -360,10 +394,34 @@
             <param name="EndTime">结束时间（2026-04-30 15:20:52）</param>
             <returns></returns>
         </member>
-        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.ThreeSmallWindow(System.String,System.String)">
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.FlexQueryData(YiSha.Model.IotDBData.FlexQueryRequest)">
             <summary>
-            三层小窗口
+             三维灵活查询接口（POST）
+             请求体为一组或多组查询条件，每组 = 点名(逗号分隔) + 来源(0:KNS;1:FSS) + 时间段；
+             返回数组与请求组顺序一一对应，某组失败或无数据时该组 Data 为 null，不影响其他组
             </summary>
+            <param name="request">查询组集合</param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:YiSha.Admin.WebApi.Controllers.ThreeDController.FlexQueryData(System.Collections.Generic.List{YiSha.Model.IotDBData.FlexQueryGroup})" -->
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.FlexQueryDataSingle(System.String,System.String,System.String,System.String)">
+            <summary>
+             三维灵活查询接口（GET 单组扁平参数版，便于 Swagger 等工具直接测试）
+             只查一组：点名(逗号分隔) + 来源(0:KNS;1:FSS) + 起止时间；
+             多组查询请使用 FlexQueryData（索引参数版或 POST 版）
+            </summary>
+            <param name="pointNames">点名（逗号分隔）</param>
+            <param name="source">来源（0:KNS;1:FSS）</param>
+            <param name="startTime">开始时间（2026-11-01 00:00:00）</param>
+            <param name="endTime">结束时间（2026-11-20 00:00:00）</param>
+            <returns>单元素数组，结构与 FlexQueryData 一致</returns>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.ExecuteFlexQueries(System.Collections.Generic.List{YiSha.Model.IotDBData.FlexQueryGroup})">
+            <summary>
+            灵活查询核心逻辑：逐组查询 IoTDB，单组失败不影响其他组
+            </summary>
+        </member>
+        <member name="M:YiSha.Admin.WebApi.Controllers.ThreeDController.ThreeSmallWindow(System.String,System.String)">
             <param name="PointName">点名（多个点名用逗号分隔）</param>
             <param name="Time">时间（2026-05-11 08:11:47）</param>
             <returns></returns>
@@ -435,6 +493,12 @@
             <param name="context"></param>
             <param name="next"></param>
             <returns></returns>
+        </member>
+        <member name="T:YiSha.Admin.WebApi.Filter.AddApiTokenHeaderFilter">
+            <summary>
+            Swagger 全局参数：给每个接口加上 ApiToken 请求头输入框，
+            便于在 Swagger 页面（/api-doc）上直接测试需要登录token的接口
+            </summary>
         </member>
     </members>
 </doc>
